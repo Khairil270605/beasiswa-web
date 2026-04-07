@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -40,7 +39,13 @@ class BannerController extends Controller
             'is_active' => 'required|boolean',
         ]);
 
-        $path = $request->file('image')->store('banners', 'public');
+        // Upload file
+        $file = $request->file('image');
+        $filename = time().'_'.$file->getClientOriginalName();
+
+        $file->move(public_path('uploads/banners'), $filename);
+
+        $path = 'uploads/banners/'.$filename;
 
         Banner::create([
             'title'     => $request->title,
@@ -77,11 +82,19 @@ class BannerController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($banner->image) {
-                Storage::disk('public')->delete($banner->image);
+
+            // Hapus file lama
+            if ($banner->image && file_exists(public_path($banner->image))) {
+                unlink(public_path($banner->image));
             }
 
-            $banner->image = $request->file('image')->store('banners', 'public');
+            // Upload file baru
+            $file = $request->file('image');
+            $filename = time().'_'.$file->getClientOriginalName();
+
+            $file->move(public_path('uploads/banners'), $filename);
+
+            $banner->image = 'uploads/banners/'.$filename;
         }
 
         $banner->update([
@@ -89,6 +102,7 @@ class BannerController extends Controller
             'link'      => $request->link,
             'order'     => $request->order,
             'is_active' => $request->is_active,
+            'image'     => $banner->image,
         ]);
 
         return redirect()
@@ -101,8 +115,9 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
-        if ($banner->image) {
-            Storage::disk('public')->delete($banner->image);
+        // Hapus file
+        if ($banner->image && file_exists(public_path($banner->image))) {
+            unlink(public_path($banner->image));
         }
 
         $banner->delete();

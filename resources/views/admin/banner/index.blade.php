@@ -633,12 +633,11 @@
                             <td data-label="No">
                                 <span class="number-badge">{{ $index + 1 }}</span>
                             </td>
-
                             <td data-label="Preview">
-                                <img src="{{ asset('storage/' . $banner->image) }}"
-                                     alt="Banner {{ $banner->title }}"
-                                     class="banner-preview"
-                                     onclick="showImageModal('{{ asset('storage/' . $banner->image) }}')">
+                                <img src="{{ asset($banner->image) }}"
+                                    alt="Banner {{ $banner->title }}"
+                                    class="banner-preview"
+                                    onclick="showImageModal('{{ asset($banner->image) }}')">
                             </td>
 
                             <td data-label="Judul">
