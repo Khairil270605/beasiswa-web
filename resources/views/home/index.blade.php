@@ -227,7 +227,7 @@
     @if(isset($banners) && count($banners) > 0)
         @foreach($banners as $index => $banner)
         <div class="banner-slide {{ $index === 0 ? 'active' : '' }}">
-            <img src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title ?? 'Banner ' . ($index + 1) }}">
+            <img src="{{ asset($banner->image) }}" alt="{{ $banner->title ?? 'Banner ' . ($index + 1) }}">
         </div>
         @endforeach
         
