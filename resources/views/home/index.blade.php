@@ -384,9 +384,14 @@
             <p class="lead mb-4 opacity-75">
                 Bergabunglah dengan ribuan mahasiswa yang telah mempercayai LAZISMU
             </p>
-            <a href="{{ url('/daftar') }}" class="btn btn-light btn-lg px-5 py-3 rounded-pill fw-bold btn-gradient">
-                <i class="fas fa-graduation-cap me-2"></i> Mulai Daftar Sekarang
-            </a>
+            <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+    <a href="{{ route('info.dhuafa') }}" class="btn btn-light btn-lg px-5 py-3 rounded-pill fw-bold">
+        🤲 Beasiswa Dhuafa
+    </a>
+    <a href="{{ route('info.kader') }}" class="btn btn-warning btn-lg px-5 py-3 rounded-pill fw-bold">
+        ⭐ Beasiswa Kader
+    </a>
+</div>
         </div>
     </section>
 </div>

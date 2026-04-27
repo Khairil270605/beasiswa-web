@@ -102,6 +102,7 @@ class Alternatif extends Model
         'catatan_administrasi',
         'tanggal_keputusan',
         'jumlah_beasiswa',
+        'periode_id',
     ];
 
     // =====================
@@ -111,6 +112,10 @@ class Alternatif extends Model
     {
         return $this->hasMany(Penilaian::class, 'alternatif_id');
     }
+    public function periode()
+{
+    return $this->belongsTo(\App\Models\Periode::class, 'periode_id');
+}
 
     public function hasilPerhitungan()
     {

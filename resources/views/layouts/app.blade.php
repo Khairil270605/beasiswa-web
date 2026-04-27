@@ -268,6 +268,28 @@
       transform: translateX(-50%);
       opacity: 1;
     }
+    @media (max-width: 991.98px) {
+    .hover-dropdown .dropdown-menu {
+        display: block !important;
+        position: static !important;
+        transform: none !important;
+        float: none !important;
+        border: none;
+        box-shadow: none;
+        padding-top: 6px;
+        margin-top: 0;
+        background: transparent;
+    }
+
+    .hover-dropdown .dropdown-toggle::after {
+        display: none;
+    }
+
+    .hover-dropdown .dropdown-menu .dropdown-item {
+        padding-left: 1.5rem;
+    }
+}
+
   </style>
 
   @stack('styles')

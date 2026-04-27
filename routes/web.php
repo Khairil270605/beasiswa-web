@@ -230,6 +230,30 @@ Route::middleware(['auth','role:admin'])
     // Settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
+
+// =====================
+// PERIODE
+// =====================
+Route::resource('periode', \App\Http\Controllers\Admin\PeriodeController::class);
+// =====================
+// PERIODE
+// =====================
+Route::resource('periode', \App\Http\Controllers\Admin\PeriodeController::class);
+
+// Aktifkan / nonaktifkan periode
+Route::get('periode/{id}/aktifkan', 
+    [\App\Http\Controllers\Admin\PeriodeController::class, 'aktifkan']
+)->name('periode.aktifkan');
+
+// Lihat pendaftar per periode
+Route::get('periode/{id}/pendaftar', 
+    [\App\Http\Controllers\Admin\PeriodeController::class, 'pendaftar']
+)->name('periode.pendaftar');
+
+// Export Excel per periode
+Route::get('periode/{id}/export', 
+    [\App\Http\Controllers\Admin\PeriodeController::class, 'export']
+)->name('periode.export');
 });
 
 // =====================

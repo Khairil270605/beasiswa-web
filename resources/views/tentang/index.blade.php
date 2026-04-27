@@ -118,7 +118,7 @@
                 <div class="floating-element">
                 <div class="bg-white bg-opacity-75 rounded-pill px-4 py-2 d-inline-block lazismu-text">
                     <i class="fas fa-graduation-cap me-2"></i>
-                    <span class="fw-semibold">Beasiswa Sang Surya 2024/2025</span>
+                    <span class="fw-semibold">Beasiswa Sang Surya</span>
                 </div>
             </div>
             </div>

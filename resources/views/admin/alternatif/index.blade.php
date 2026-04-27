@@ -659,12 +659,11 @@ select[name="status_administrasi"] option[value="tidak_lulus"] {
 }
 
 .file-preview-body {
-    padding: 0;
+    padding: 20px;
     height: calc(95vh - 70px);
     overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block; /* 🔥 penting */
+    text-align: center;
     background: #f8f9fa;
 }
 
@@ -676,11 +675,9 @@ select[name="status_administrasi"] option[value="tidak_lulus"] {
 }
 
 .file-preview-image {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;       /* full lebar */
+    height: auto;      /* proporsional */
     object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .file-not-supported {
@@ -1253,7 +1250,10 @@ function viewDetail(alternatif) {
                     <button class="btn-file-view" onclick="viewFile('${value}', '${filename}', '${columnName}')" title="Lihat File">
                         <i class="${fileIcon}"></i> Lihat
                     </button>
-                    <a href="${window.fileBaseUrl}/${value}" class="btn-file-download" target="_blank" title="Download File">
+                    <a href="${window.fileBaseUrl}/${value}" 
+                    class="btn-file-download" 
+                    download
+                    title="Download File">
                         <i class="fas fa-download"></i> Download
                     </a>
                 </div>
@@ -1316,7 +1316,6 @@ function viewDetail(alternatif) {
         <!-- Data Akademik -->
         ${(
             alternatif.nim ||
-            alternatif.kelas ||
             alternatif.semester ||
             alternatif.fakultas ||
             alternatif.jurusan ||
@@ -1338,10 +1337,6 @@ function viewDetail(alternatif) {
                 <div class="detail-item">
                     <span class="detail-label">NIM:</span>
                     ${formatValue(alternatif.nim)}
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Kelas:</span>
-                    ${formatValue(alternatif.kelas)}
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">Semester:</span>
@@ -1562,6 +1557,7 @@ function viewDetail(alternatif) {
         </div>
 
         <!-- Foto Kondisi Rumah -->
+        ${(alternatif.jenis_pendaftaran === 'dhuafa') ? `
         <div class="detail-section">
             <div class="detail-title">
                 <i class="fas fa-home"></i>
@@ -1590,7 +1586,7 @@ function viewDetail(alternatif) {
                 </div>
             </div>
         </div>
-
+` : ''}
         <!-- Jenis Pendaftaran -->
         <div class="detail-section">
             <div class="detail-title">
@@ -1699,9 +1695,10 @@ function viewFile(filename, displayName, columnName) {
             case 'gif':
             case 'webp':
                 previewContent = `
-                    <img class="file-preview-image" src="${filePath}" alt="${displayName}" 
-                         onload="console.log('Image loaded successfully: ${filename}')"
-                         onerror="console.error('Failed to load image: ${filename}'); this.parentElement.innerHTML='<div class=\\"file-not-supported\\"><i class=\\"fas fa-image\\"></i><h4>Gambar tidak dapat dimuat</h4><p>File: ${filename}</p><p>Path: <code>${filePath}</code></p><div style=\\"margin-top: 15px;\\"><a href=\\"${filePath}\\" class=\\"btn-file-download\\" target=\\"_blank\\"><i class=\\"fas fa-external-link-alt\\"></i> Coba Buka di Tab Baru</a></div></div>'">
+                <img class="file-preview-image" 
+                    src="${filePath}" 
+                    alt="${displayName}" 
+                    onerror="this.style.display='none'; console.log('Gagal load:', '${filePath}')">
                 `;
                 break;
                 

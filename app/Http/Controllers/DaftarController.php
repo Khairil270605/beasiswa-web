@@ -3,35 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 
 class DaftarController extends Controller
 {
     public function dhuafa()
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login')
-                ->with('info', 'Anda harus login terlebih dahulu untuk mendaftar.');
-        }
-
-        return view('daftar.dhuafa');
+{
+    if (!auth()->check()) {
+        return redirect()->route('login')
+            ->with('info', 'Anda harus login terlebih dahulu untuk mendaftar.');
     }
+
+    $periode = Periode::where('status', 'aktif')->first();
+
+    if (!$periode) {
+        return view('daftar.tutup'); // halaman pendaftaran ditutup
+    }
+
+    return view('daftar.dhuafa');
+}
 
     public function kader()
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login')
-                ->with('info', 'Anda harus login terlebih dahulu untuk mendaftar.');
-        }
-
-        return view('daftar.kader');
+{
+    if (!auth()->check()) {
+        return redirect()->route('login')
+            ->with('info', 'Anda harus login terlebih dahulu untuk mendaftar.');
     }
+
+    $periode = Periode::where('status', 'aktif')->first();
+
+    if (!$periode) {
+        return view('daftar.tutup');
+    }
+
+    return view('daftar.kader');
+}
 
     // ===============================
     // SIMPAN PENDAFTAR DHUAFA
     // ===============================
+    
     public function storeDhuafa(Request $request)
     {
+        $periode = Periode::where('status', 'aktif')->first();
+
+        if (!$periode) {
+            return back()->with('error', 'Pendaftaran sedang ditutup');
+        }
         // ✅ Ambil email dari akun login
         $request->merge([
             'email' => auth()->user()->email
@@ -44,7 +63,7 @@ class DaftarController extends Controller
 
         $sudahDaftar = Alternatif::where('email', $request->email)
             ->where('jenis_pendaftaran', 'dhuafa')
-            ->whereYear('created_at', $tahun)
+            ->where('periode_id', $periode->id)
             ->exists();
 
         if ($sudahDaftar) {
@@ -128,6 +147,7 @@ class DaftarController extends Controller
         ]);
 
         $validated['jenis_pendaftaran'] = 'dhuafa';
+        $validated['periode_id'] = $periode->id;
 
         // ✅ TAMBAHKAN 'bukti_twibbon' ke array files
         $files = [
@@ -153,6 +173,11 @@ class DaftarController extends Controller
     // ===============================
     public function storeKader(Request $request)
     {
+        $periode = Periode::where('status', 'aktif')->first();
+
+        if (!$periode) {
+            return back()->with('error', 'Pendaftaran sedang ditutup');
+        }
         // ✅ Ambil email dari akun login
         $request->merge([
             'email' => auth()->user()->email
@@ -165,7 +190,7 @@ class DaftarController extends Controller
 
         $sudahDaftar = Alternatif::where('email', $request->email)
             ->where('jenis_pendaftaran', 'kader')
-            ->whereYear('created_at', $tahun)
+            ->where('periode_id', $periode->id)
             ->exists();
 
         if ($sudahDaftar) {
@@ -239,13 +264,6 @@ class DaftarController extends Controller
             'ktam'                   => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'sertifikat_prestasi'    => 'nullable|file|mimes:pdf|max:5120',
 
-            // Foto rumah (WAJIB)
-            'foto_rumah_depan'   => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_rumah_samping' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_ruang_tamu'    => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_kamar_mandi'   => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'foto_dapur'         => 'required|image|mimes:jpg,jpeg,png|max:2048',
-
             // Pendukung (WAJIB)
             'cv'                => 'required|file|mimes:pdf,doc,docx|max:2048',
             'pas_foto'          => 'required|image|mimes:jpg,jpeg,png|max:2048',
@@ -260,12 +278,12 @@ class DaftarController extends Controller
         ]);
 
         $validated['jenis_pendaftaran'] = 'kader';
+        $validated['periode_id'] = $periode->id;
 
         // ✅ TAMBAHKAN 'bukti_twibbon' ke array files
         $files = [
             'ktp','kk','transkrip','surat_penghasilan','slip_gaji_ortu','surat_tidak_menerima_beasiswa',
             'surat_aktif_organisasi','surat_rekomendasi','ktam','sertifikat_prestasi',
-            'foto_rumah_depan','foto_rumah_samping','foto_ruang_tamu','foto_kamar_mandi','foto_dapur',
             'cv','pas_foto','motivation_letter','ktm','twibbon','bukti_twibbon','surat_kesanggupan_relawan'
         ];
 

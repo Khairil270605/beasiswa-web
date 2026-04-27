@@ -438,8 +438,15 @@
                         </li>
                     </ul>
                 </li>
-
-                <!-- Banner / Slider -->
+                            <!-- Manajemen Periode -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.periode.index') }}" 
+                    class="nav-link {{ request()->routeIs('admin.periode.*') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-alt"></i>
+                        Manajemen Periode
+                    </a>
+                </li>
+                                <!-- Banner / Slider -->
                 <li class="nav-item">
                     <a href="{{ route('admin.banner.index') }}"
                        class="nav-link {{ request()->routeIs('admin.banner.*') ? 'active' : '' }}">

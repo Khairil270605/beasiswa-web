@@ -79,9 +79,7 @@
             box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
         }
 
-        .step.completed {
-            background: var(--success-color);
-        }
+        .step.completed { background: var(--success-color); }
 
         .step::after {
             content: '';
@@ -94,9 +92,7 @@
             transform: translateY(-50%);
         }
 
-        .step:last-child::after {
-            display: none;
-        }
+        .step:last-child::after { display: none; }
 
         .form-section {
             padding: 2rem;
@@ -104,25 +100,14 @@
             animation: slideIn 0.5s ease-out;
         }
 
-        .form-section.active {
-            display: block;
-        }
+        .form-section.active { display: block; }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .form-floating {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
+        .form-floating { position: relative; margin-bottom: 1.5rem; }
 
         .form-floating input,
         .form-floating select,
@@ -149,57 +134,113 @@
             font-weight: 500;
         }
 
-        .upload-area {
-            border: 2px dashed #dee2e6;
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.5);
-            margin-bottom: 1.5rem;
+        /* ---- Upload Grid (compact card style) ---- */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 1.2rem;
         }
 
-        .upload-area:hover {
+        .upload-card {
+            border: 1.5px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 0.75rem 0.6rem;
+            text-align: center;
+            transition: all 0.25s ease;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            position: relative;
+            min-height: 118px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin: 0;
+        }
+
+        .upload-card:hover {
             border-color: var(--primary-color);
             background: rgba(255, 107, 53, 0.05);
         }
 
-        .upload-area.dragover {
+        .upload-card.done {
+            border-style: solid;
             border-color: var(--success-color);
-            background: rgba(40, 167, 69, 0.1);
+            background: rgba(40, 167, 69, 0.07);
         }
 
-        .file-input {
-            display: none;
+        .upload-card.error {
+            border-style: solid;
+            border-color: var(--accent-color);
+            background: rgba(220, 53, 69, 0.07);
         }
 
-        .upload-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        .upload-card .card-icon {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .upload-card.done .card-icon { color: var(--success-color); }
+
+        .upload-card .card-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #495057;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        .upload-card .card-hint {
+            font-size: 0.6rem;
+            color: #adb5bd;
+            margin: 0;
+        }
+
+        .upload-card .card-filename {
+            font-size: 0.6rem;
+            color: var(--success-color);
+            font-weight: 600;
+            word-break: break-all;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 4px;
+        }
+
+        .upload-card .remove-btn {
+            position: absolute;
+            top: 4px; right: 4px;
+            background: var(--accent-color);
             border: none;
             color: white;
-            padding: 0.75rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 0.5rem;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
-        }
-
-        .file-preview {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 0.5rem 0;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            font-size: 0.55rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-left: 4px solid var(--success-color);
+            justify-content: center;
+            cursor: pointer;
+            padding: 0; line-height: 1;
         }
 
+        .upload-card input[type="file"] { display: none; }
+
+        .upload-group-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary-color);
+            border-bottom: 1.5px solid var(--secondary-color);
+            padding-bottom: 4px;
+            margin: 1rem 0 0.6rem;
+        }
+
+        /* ---- Navigation ---- */
         .navigation-buttons {
             display: flex;
             justify-content: space-between;
@@ -216,26 +257,13 @@
             cursor: pointer;
         }
 
-        .btn-prev {
-            background: #6c757d;
-            color: white;
-        }
+        .btn-prev  { background: #6c757d; color: white; }
+        .btn-next  { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; }
+        .btn-submit{ background: linear-gradient(135deg, var(--success-color), var(--info-color)); color: white; }
 
-        .btn-next {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-        }
+        .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
-        .btn-submit {
-            background: linear-gradient(135deg, var(--success-color), var(--info-color));
-            color: white;
-        }
-
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
+        /* ---- Misc ---- */
         .section-title {
             color: var(--primary-color);
             font-weight: 700;
@@ -246,23 +274,17 @@
         }
 
         .section-icon {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.2rem;
         }
 
         .progress-bar-container {
             margin: 1rem 0;
-            background: rgba(255, 255, 255, 0.3);
-            height: 6px;
-            border-radius: 3px;
-            overflow: hidden;
+            background: rgba(255,255,255,0.3);
+            height: 6px; border-radius: 3px; overflow: hidden;
         }
 
         .progress-bar {
@@ -274,106 +296,43 @@
         }
 
         .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
         }
 
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
+            width: 4px; height: 4px;
+            background: rgba(255,255,255,0.5);
             border-radius: 50%;
             animation: floatParticle 15s infinite linear;
         }
 
         @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) translateX(0px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
+            0%   { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(100px) rotate(360deg); opacity: 0; }
         }
 
-        .lazismu-brand {
-            color: var(--warning-color);
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .required-star {
-            color: var(--accent-color);
-        }
+        .lazismu-brand { color: var(--warning-color); font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .required-star { color: var(--accent-color); }
 
         .form-info {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255,255,255,0.9);
             border-left: 4px solid var(--info-color);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .upload-success {
-            color: var(--success-color);
-            font-weight: 600;
-        }
-
-        .file-name {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .upload-section-title {
-            color: var(--secondary-color);
-            font-weight: 600;
-            margin: 2rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--secondary-color);
+            padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;
         }
 
         @media (max-width: 768px) {
-            .main-container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-            
-            .header-section {
-                padding: 1.5rem 1rem;
-            }
-            
-            .form-section {
-                padding: 1.5rem 1rem;
-            }
-            
-            .navigation-buttons {
-                padding: 1.5rem 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .step-indicator {
-                margin: 1rem 0;
-            }
-            
-            .step {
-                width: 35px;
-                height: 35px;
-                margin: 0 5px;
-            }
+            .main-container { margin: 10px; border-radius: 15px; }
+            .header-section { padding: 1.5rem 1rem; }
+            .form-section   { padding: 1.5rem 1rem; }
+            .navigation-buttons { padding: 1.5rem 1rem; flex-direction: column; gap: 1rem; }
+            .step-indicator { margin: 1rem 0; }
+            .step { width: 35px; height: 35px; margin: 0 5px; }
+            .upload-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 
@@ -381,7 +340,8 @@
 
     <div class="container">
         <div class="main-container">
-            <!-- Header Section -->
+
+            <!-- Header -->
             <div class="header-section">
                 <h1 class="mb-3">
                     <i class="fas fa-graduation-cap me-3"></i>
@@ -389,13 +349,11 @@
                 </h1>
                 <h5 class="mb-3 opacity-90">Kategori: Kader Muhammadiyah</h5>
                 <p class="mb-0">Silakan lengkapi semua data dengan benar dan upload dokumen yang diperlukan</p>
-                
-                <!-- Progress Bar -->
+
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
 
-                <!-- Step Indicator -->
                 <div class="step-indicator">
                     <div class="step active" data-step="1">1</div>
                     <div class="step" data-step="2">2</div>
@@ -423,12 +381,10 @@
                 @csrf
                 <input type="hidden" name="jenis_pendaftaran" value="kader">
 
-                <!-- Step 1: Data Pribadi -->
+                <!-- ===================== STEP 1: Data Pribadi ===================== -->
                 <div class="form-section active" data-step="1">
                     <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-user"></i>
-                        </div>
+                        <div class="section-icon"><i class="fas fa-user"></i></div>
                         Data Pribadi <span class="required-star">*</span>
                     </h3>
 
@@ -481,7 +437,7 @@
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" id="alamat" name="alamat" style="height: 120px" placeholder="Alamat Lengkap" required></textarea>
+                        <textarea class="form-control" id="alamat" name="alamat" style="height:120px" placeholder="Alamat Lengkap" required></textarea>
                         <label for="alamat">Alamat Lengkap <span class="required-star">*</span></label>
                     </div>
 
@@ -494,24 +450,18 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email"
-       class="form-control"
-       id="email"
-       name="email"
-       value="{{ auth()->user()->email }}"
-       readonly>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       value="{{ auth()->user()->email }}" readonly>
                                 <label for="email">Alamat Email <span class="required-star">*</span></label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 2: Data Akademik -->
+                <!-- ===================== STEP 2: Data Akademik ===================== -->
                 <div class="form-section" data-step="2">
                     <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-book"></i>
-                        </div>
+                        <div class="section-icon"><i class="fas fa-book"></i></div>
                         Data Akademik <span class="required-star">*</span>
                     </h3>
 
@@ -536,14 +486,9 @@
                             <div class="form-floating">
                                 <select class="form-select" id="semester" name="semester" required>
                                     <option value="">Pilih Semester</option>
-                                    <option value="1">Semester 1</option>
-                                    <option value="2">Semester 2</option>
-                                    <option value="3">Semester 3</option>
-                                    <option value="4">Semester 4</option>
-                                    <option value="5">Semester 5</option>
-                                    <option value="6">Semester 6</option>
-                                    <option value="7">Semester 7</option>
-                                    <option value="8">Semester 8</option>
+                                    @for($i=1;$i<=8;$i++)
+                                        <option value="{{ $i }}">Semester {{ $i }}</option>
+                                    @endfor
                                 </select>
                                 <label for="semester">Semester Saat Ini <span class="required-star">*</span></label>
                             </div>
@@ -581,17 +526,15 @@
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" id="prestasi" name="prestasi" style="height: 120px" placeholder="Prestasi Akademik/Non-Akademik (Optional)"></textarea>
+                        <textarea class="form-control" id="prestasi" name="prestasi" style="height:120px" placeholder="Prestasi Akademik/Non-Akademik (Optional)"></textarea>
                         <label for="prestasi">Prestasi Akademik/Non-Akademik (Jika Ada)</label>
                     </div>
                 </div>
 
-                <!-- Step 3: Data Organisasi -->
+                <!-- ===================== STEP 3: Data Organisasi ===================== -->
                 <div class="form-section" data-step="3">
                     <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-star-and-crescent"></i>
-                        </div>
+                        <div class="section-icon"><i class="fas fa-star-and-crescent"></i></div>
                         Data Organisasi Muhammadiyah <span class="required-star">*</span>
                     </h3>
 
@@ -642,32 +585,30 @@
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" id="riwayat_aktivitas" name="riwayat_aktivitas" style="height: 150px" placeholder="Riwayat Aktivitas dalam Muhammadiyah" required></textarea>
+                        <textarea class="form-control" id="riwayat_aktivitas" name="riwayat_aktivitas" style="height:150px" placeholder="Riwayat Aktivitas dalam Muhammadiyah" required></textarea>
                         <label for="riwayat_aktivitas">Riwayat Aktivitas dalam Muhammadiyah <span class="required-star">*</span></label>
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" id="kontribusi" name="kontribusi" style="height: 120px" placeholder="Kontribusi untuk Muhammadiyah" required></textarea>
+                        <textarea class="form-control" id="kontribusi" name="kontribusi" style="height:120px" placeholder="Kontribusi untuk Muhammadiyah" required></textarea>
                         <label for="kontribusi">Kontribusi yang telah diberikan untuk Muhammadiyah <span class="required-star">*</span></label>
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" id="rencana_masa_depan" name="rencana_masa_depan" style="height: 120px" placeholder="Rencana masa depan untuk Muhammadiyah" required></textarea>
+                        <textarea class="form-control" id="rencana_masa_depan" name="rencana_masa_depan" style="height:120px" placeholder="Rencana masa depan untuk Muhammadiyah" required></textarea>
                         <label for="rencana_masa_depan">Rencana masa depan untuk berkontribusi pada Muhammadiyah <span class="required-star">*</span></label>
                     </div>
                 </div>
 
-                <!-- Step 4: Data Ekonomi Keluarga -->
+                <!-- ===================== STEP 4: Data Ekonomi Keluarga ===================== -->
                 <div class="form-section" data-step="4">
                     <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
+                        <div class="section-icon"><i class="fas fa-home"></i></div>
                         Data Ekonomi Keluarga <span class="required-star">*</span>
                     </h3>
 
                     <div class="form-info">
-                        <i class="fas fa-family me-2 text-info"></i>
+                        <i class="fas fa-info-circle me-2 text-info"></i>
                         <strong>Penting:</strong> Data ekonomi keluarga akan digunakan untuk menilai kebutuhan beasiswa.
                     </div>
 
@@ -738,310 +679,216 @@
                     </div>
 
                     <div class="form-floating">
-                        <textarea class="form-control" id="kondisi_ekonomi" name="kondisi_ekonomi" style="height: 120px" placeholder="Kondisi Ekonomi Keluarga" required></textarea>
+                        <textarea class="form-control" id="kondisi_ekonomi" name="kondisi_ekonomi" style="height:120px" placeholder="Kondisi Ekonomi Keluarga" required></textarea>
                         <label for="kondisi_ekonomi">Deskripsi Kondisi Ekonomi Keluarga <span class="required-star">*</span></label>
                     </div>
                 </div>
 
-                <!-- Step 5: Upload Dokumen -->
+                <!-- ===================== STEP 5: Upload Dokumen ===================== -->
                 <div class="form-section" data-step="5">
                     <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-upload"></i>
-                        </div>
+                        <div class="section-icon"><i class="fas fa-upload"></i></div>
                         Upload Dokumen <span class="required-star">*</span>
                     </h3>
 
                     <div class="form-info">
                         <i class="fas fa-file-upload me-2 text-info"></i>
-                        <strong>Perhatian:</strong> Pastikan file yang diupload jelas dan dapat dibaca. Format yang didukung: JPG, PNG, PDF.
+                        <strong>Perhatian:</strong> Klik kartu untuk memilih file. Format JPG/PNG/PDF, ukuran sesuai keterangan.
                     </div>
 
-                    <h5 class="upload-section-title"><i class="fas fa-id-card me-2"></i>Dokumen Identitas</h5>
+                    <!-- Identitas -->
+                    <p class="upload-group-label"><i class="fas fa-id-card me-1"></i> Dokumen Identitas</p>
+                    <div class="upload-grid">
 
-                    <!-- KTP -->
-                    <div class="upload-area" data-file-type="ktp">
-                        <i class="fas fa-id-card fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload KTP <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">File format: JPG, PNG, PDF (Maksimal: 2MB)</p>
-                        <input type="file" id="ktp" name="ktp" class="file-input" accept=".jpg,.jpeg,.png,.pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('ktp').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File KTP
-                        </button>
-                        <div id="ktp-preview"></div>
+                        <label class="upload-card" id="card-ktp" for="ktp">
+                            <i class="fas fa-id-card card-icon"></i>
+                            <p class="card-label">KTP <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG/PDF · maks 2MB</p>
+                            <span class="card-filename" id="name-ktp"></span>
+                            <button type="button" class="remove-btn" id="rm-ktp" onclick="removeFileCard(event,'ktp')" style="display:none">✕</button>
+                            <input type="file" id="ktp" name="ktp" accept=".jpg,.jpeg,.png,.pdf" required>
+                        </label>
+
+                        <label class="upload-card" id="card-kk" for="kk">
+                            <i class="fas fa-users card-icon"></i>
+                            <p class="card-label">Kartu Keluarga <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG/PDF · maks 2MB</p>
+                            <span class="card-filename" id="name-kk"></span>
+                            <button type="button" class="remove-btn" id="rm-kk" onclick="removeFileCard(event,'kk')" style="display:none">✕</button>
+                            <input type="file" id="kk" name="kk" accept=".jpg,.jpeg,.png,.pdf" required>
+                        </label>
+
                     </div>
 
-                    <!-- Kartu Keluarga -->
-                    <div class="upload-area" data-file-type="kk">
-                        <i class="fas fa-users fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Kartu Keluarga <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">File format: JPG, PNG, PDF (Maksimal: 2MB)</p>
-                        <input type="file" id="kk" name="kk" class="file-input" accept=".jpg,.jpeg,.png,.pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('kk').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File KK
-                        </button>
-                        <div id="kk-preview"></div>
+                    <!-- Akademik -->
+                    <p class="upload-group-label"><i class="fas fa-graduation-cap me-1"></i> Dokumen Akademik</p>
+                    <div class="upload-grid">
+
+                        <label class="upload-card" id="card-transkrip" for="transkrip">
+                            <i class="fas fa-file-alt card-icon"></i>
+                            <p class="card-label">Transkrip Nilai <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF · maks 5MB</p>
+                            <span class="card-filename" id="name-transkrip"></span>
+                            <button type="button" class="remove-btn" id="rm-transkrip" onclick="removeFileCard(event,'transkrip')" style="display:none">✕</button>
+                            <input type="file" id="transkrip" name="transkrip" accept=".pdf" required>
+                        </label>
+
+                        <label class="upload-card" id="card-ktm" for="ktm">
+                            <i class="fas fa-id-badge card-icon"></i>
+                            <p class="card-label">KTM <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-ktm"></span>
+                            <button type="button" class="remove-btn" id="rm-ktm" onclick="removeFileCard(event,'ktm')" style="display:none">✕</button>
+                            <input type="file" id="ktm" name="ktm" accept=".jpg,.jpeg,.png" required>
+                        </label>
+
                     </div>
 
-                    <h5 class="upload-section-title"><i class="fas fa-graduation-cap me-2"></i>Dokumen Akademik</h5>
+                    <!-- Ekonomi -->
+                    <p class="upload-group-label"><i class="fas fa-money-check-alt me-1"></i> Dokumen Ekonomi</p>
+                    <div class="upload-grid">
 
-                    <!-- Transkrip Nilai -->
-                    <div class="upload-area" data-file-type="transkrip">
-                        <i class="fas fa-file-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Transkrip Nilai <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">File format: PDF (Maksimal: 5MB)</p>
-                        <input type="file" id="transkrip" name="transkrip" class="file-input" accept=".pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('transkrip').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Transkrip
-                        </button>
-                        <div id="transkrip-preview"></div>
+                        <label class="upload-card" id="card-penghasilan" for="penghasilan">
+                            <i class="fas fa-money-bill-wave card-icon"></i>
+                            <p class="card-label">Surat Penghasilan <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF · maks 3MB</p>
+                            <span class="card-filename" id="name-penghasilan"></span>
+                            <button type="button" class="remove-btn" id="rm-penghasilan" onclick="removeFileCard(event,'penghasilan')" style="display:none">✕</button>
+                            <input type="file" id="penghasilan" name="surat_penghasilan" accept=".pdf" required>
+                        </label>
+
+                        <label class="upload-card" id="card-slip_gaji" for="slip_gaji">
+                            <i class="fas fa-receipt card-icon"></i>
+                            <p class="card-label">Slip Gaji Ortu <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF/JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-slip_gaji"></span>
+                            <button type="button" class="remove-btn" id="rm-slip_gaji" onclick="removeFileCard(event,'slip_gaji')" style="display:none">✕</button>
+                            <input type="file" id="slip_gaji" name="slip_gaji_ortu" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
+
+                        <label class="upload-card" id="card-tidak_beasiswa" for="tidak_beasiswa">
+                            <i class="fas fa-file-contract card-icon"></i>
+                            <p class="card-label">Surat Tidak Beasiswa <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF/JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-tidak_beasiswa"></span>
+                            <button type="button" class="remove-btn" id="rm-tidak_beasiswa" onclick="removeFileCard(event,'tidak_beasiswa')" style="display:none">✕</button>
+                            <input type="file" id="tidak_beasiswa" name="surat_tidak_menerima_beasiswa" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
+
                     </div>
 
-                    <!-- KTM -->
-                    <div class="upload-area" data-file-type="ktm">
-                        <i class="fas fa-id-badge fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload KTM (Kartu Tanda Mahasiswa) <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto KTM - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="ktm" name="ktm" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('ktm').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto KTM
-                        </button>
-                        <div id="ktm-preview"></div>
+                    <!-- Organisasi Muhammadiyah -->
+                    <p class="upload-group-label"><i class="fas fa-star-and-crescent me-1"></i> Dokumen Organisasi Muhammadiyah</p>
+                    <div class="upload-grid">
+
+                        <label class="upload-card" id="card-surat_aktif" for="surat_aktif">
+                            <i class="fas fa-star-and-crescent card-icon"></i>
+                            <p class="card-label">Surat Aktif Organisasi <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF · maks 3MB</p>
+                            <span class="card-filename" id="name-surat_aktif"></span>
+                            <button type="button" class="remove-btn" id="rm-surat_aktif" onclick="removeFileCard(event,'surat_aktif')" style="display:none">✕</button>
+                            <input type="file" id="surat_aktif" name="surat_aktif_organisasi" accept=".pdf" required>
+                        </label>
+
+                        <label class="upload-card" id="card-ktam" for="ktam">
+                            <i class="fas fa-id-card-alt card-icon"></i>
+                            <p class="card-label">KTAM <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-ktam"></span>
+                            <button type="button" class="remove-btn" id="rm-ktam" onclick="removeFileCard(event,'ktam')" style="display:none">✕</button>
+                            <input type="file" id="ktam" name="ktam" accept=".jpg,.jpeg,.png" required>
+                        </label>
+
+                        <label class="upload-card" id="card-surat_rekomendasi" for="surat_rekomendasi">
+                            <i class="fas fa-file-signature card-icon"></i>
+                            <p class="card-label">Surat Rekomendasi <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF/JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-surat_rekomendasi"></span>
+                            <button type="button" class="remove-btn" id="rm-surat_rekomendasi" onclick="removeFileCard(event,'surat_rekomendasi')" style="display:none">✕</button>
+                            <input type="file" id="surat_rekomendasi" name="surat_rekomendasi" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
+
+                        <label class="upload-card" id="card-sertifikat" for="sertifikat">
+                            <i class="fas fa-certificate card-icon" style="color:var(--secondary-color)"></i>
+                            <p class="card-label">Sertifikat/Piagam</p>
+                            <p class="card-hint">PDF · maks 5MB · Opsional</p>
+                            <span class="card-filename" id="name-sertifikat"></span>
+                            <button type="button" class="remove-btn" id="rm-sertifikat" onclick="removeFileCard(event,'sertifikat')" style="display:none">✕</button>
+                            <input type="file" id="sertifikat" name="sertifikat_prestasi" accept=".pdf">
+                        </label>
+
                     </div>
 
-                    <h5 class="upload-section-title"><i class="fas fa-money-check-alt me-2"></i>Dokumen Ekonomi</h5>
+                    <!-- Dokumen Pendukung -->
+                    <p class="upload-group-label"><i class="fas fa-file-alt me-1"></i> Dokumen Pendukung Lainnya</p>
+                    <div class="upload-grid">
 
-                    <!-- Surat Keterangan Penghasilan -->
-                    <div class="upload-area" data-file-type="penghasilan">
-                        <i class="fas fa-money-bill-wave fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Keterangan Penghasilan <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">File format: PDF (Maksimal: 3MB)</p>
-                        <input type="file" id="penghasilan" name="surat_penghasilan" class="file-input" accept=".pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('penghasilan').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="penghasilan-preview"></div>
-                    </div>
+                        <label class="upload-card" id="card-cv" for="cv">
+                            <i class="fas fa-file-alt card-icon"></i>
+                            <p class="card-label">CV <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF/DOC/DOCX · maks 2MB</p>
+                            <span class="card-filename" id="name-cv"></span>
+                            <button type="button" class="remove-btn" id="rm-cv" onclick="removeFileCard(event,'cv')" style="display:none">✕</button>
+                            <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                        </label>
 
-                    <!-- Slip Gaji Orang Tua -->
-                    <div class="upload-area" data-file-type="slip_gaji">
-                        <i class="fas fa-receipt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Slip Gaji Orang Tua <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">File format: PDF, JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="slip_gaji" name="slip_gaji_ortu" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('slip_gaji').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Slip Gaji
-                        </button>
-                        <div id="slip_gaji-preview"></div>
-                    </div>
+                        <label class="upload-card" id="card-pas_foto" for="pas_foto">
+                            <i class="fas fa-portrait card-icon"></i>
+                            <p class="card-label">Pas Foto 3x4 <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-pas_foto"></span>
+                            <button type="button" class="remove-btn" id="rm-pas_foto" onclick="removeFileCard(event,'pas_foto')" style="display:none">✕</button>
+                            <input type="file" id="pas_foto" name="pas_foto" accept=".jpg,.jpeg,.png" required>
+                        </label>
 
-                    <!-- Surat Tidak Menerima Beasiswa -->
-                    <div class="upload-area" data-file-type="surat_tidak_beasiswa">
-                        <i class="fas fa-file-contract fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Tidak Menerima Beasiswa <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Surat keterangan tidak menerima beasiswa lain - Format: PDF (Maksimal: 2MB)</p>
-                        <input type="file" id="surat_tidak_beasiswa" name="surat_tidak_menerima_beasiswa" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_tidak_beasiswa').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="surat_tidak_beasiswa-preview"></div>
-                    </div>
+                        <label class="upload-card" id="card-motivation_letter" for="motivation_letter">
+                            <i class="fas fa-envelope-open-text card-icon"></i>
+                            <p class="card-label">Motivation Letter <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF/DOC/DOCX · maks 2MB</p>
+                            <span class="card-filename" id="name-motivation_letter"></span>
+                            <button type="button" class="remove-btn" id="rm-motivation_letter" onclick="removeFileCard(event,'motivation_letter')" style="display:none">✕</button>
+                            <input type="file" id="motivation_letter" name="motivation_letter" accept=".pdf,.doc,.docx" required>
+                        </label>
 
-                    <h5 class="upload-section-title"><i class="fas fa-star-and-crescent me-2"></i>Dokumen Organisasi Muhammadiyah</h5>
+                        <label class="upload-card" id="card-twibbon" for="twibbon">
+                            <i class="fas fa-image card-icon"></i>
+                            <p class="card-label">Twibbon <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-twibbon"></span>
+                            <button type="button" class="remove-btn" id="rm-twibbon" onclick="removeFileCard(event,'twibbon')" style="display:none">✕</button>
+                            <input type="file" id="twibbon" name="twibbon" accept=".jpg,.jpeg,.png" required>
+                        </label>
 
-                    <!-- Surat Aktif Organisasi -->
-                    <div class="upload-area" data-file-type="surat_aktif">
-                        <i class="fas fa-star-and-crescent fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Keterangan Aktif Organisasi <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Surat dari pengurus organisasi Muhammadiyah - Format: PDF (Maksimal: 3MB)</p>
-                        <input type="file" id="surat_aktif" name="surat_aktif_organisasi" class="file-input" accept=".pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_aktif').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat Aktif
-                        </button>
-                        <div id="surat_aktif-preview"></div>
-                    </div>
+                        <label class="upload-card" id="card-bukti_twibbon" for="bukti_twibbon">
+                            <i class="fas fa-share-alt card-icon"></i>
+                            <p class="card-label">Bukti Twibbon <span class="required-star">*</span></p>
+                            <p class="card-hint">JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-bukti_twibbon"></span>
+                            <button type="button" class="remove-btn" id="rm-bukti_twibbon" onclick="removeFileCard(event,'bukti_twibbon')" style="display:none">✕</button>
+                            <input type="file" id="bukti_twibbon" name="bukti_twibbon" accept=".jpg,.jpeg,.png" required>
+                        </label>
 
-                    <!-- KTAM -->
-                    <div class="upload-area" data-file-type="ktam">
-                        <i class="fas fa-id-card-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload KTAM (Kartu Tanda Anggota Muhammadiyah) <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto KTAM - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="ktam" name="ktam" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('ktam').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto KTAM
-                        </button>
-                        <div id="ktam-preview"></div>
-                    </div>
+                        <label class="upload-card" id="card-surat_relawan" for="surat_relawan">
+                            <i class="fas fa-hands-helping card-icon"></i>
+                            <p class="card-label">Surat Relawan <span class="required-star">*</span></p>
+                            <p class="card-hint">PDF/JPG/PNG · maks 2MB</p>
+                            <span class="card-filename" id="name-surat_relawan"></span>
+                            <button type="button" class="remove-btn" id="rm-surat_relawan" onclick="removeFileCard(event,'surat_relawan')" style="display:none">✕</button>
+                            <input type="file" id="surat_relawan" name="surat_kesanggupan_relawan" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
 
-                    <!-- Surat Rekomendasi -->
-                    <div class="upload-area" data-file-type="surat_rekomendasi">
-                        <i class="fas fa-file-signature fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Rekomendasi <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Surat rekomendasi dari pengurus - Format: PDF (Maksimal: 2MB)</p>
-                        <input type="file" id="surat_rekomendasi" name="surat_rekomendasi" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_rekomendasi').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="surat_rekomendasi-preview"></div>
-                    </div>
-
-                    <!-- Sertifikat/Piagam (Optional) -->
-                    <div class="upload-area" data-file-type="sertifikat">
-                        <i class="fas fa-certificate fa-3x mb-3" style="color: var(--secondary-color);"></i>
-                        <h5>Upload Sertifikat/Piagam Penghargaan</h5>
-                        <p class="mb-3 text-muted">Sertifikat prestasi dalam organisasi (Opsional) - Format: PDF (Maksimal: 5MB)</p>
-                        <input type="file" id="sertifikat" name="sertifikat_prestasi" class="file-input" accept=".pdf">
-                        <button type="button" class="upload-btn" onclick="document.getElementById('sertifikat').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Sertifikat
-                        </button>
-                        <div id="sertifikat-preview"></div>
-                    </div>
-
-                    <h5 class="upload-section-title"><i class="fas fa-home me-2"></i>Foto Kondisi Rumah</h5>
-
-                    <!-- Foto Rumah Depan -->
-                    <div class="upload-area" data-file-type="foto_rumah_depan">
-                        <i class="fas fa-home fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Rumah Tampak Depan <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto bagian depan rumah - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="foto_rumah_depan" name="foto_rumah_depan" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_rumah_depan').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_rumah_depan-preview"></div>
-                    </div>
-
-                    <!-- Foto Rumah Samping -->
-                    <div class="upload-area" data-file-type="foto_rumah_samping">
-                        <i class="fas fa-home fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Rumah Tampak Samping <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto bagian samping rumah - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="foto_rumah_samping" name="foto_rumah_samping" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_rumah_samping').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_rumah_samping-preview"></div>
-                    </div>
-
-                    <!-- Foto Ruang Tamu -->
-                    <div class="upload-area" data-file-type="foto_ruang_tamu">
-                        <i class="fas fa-couch fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Ruang Tamu <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto ruang tamu di dalam rumah - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="foto_ruang_tamu" name="foto_ruang_tamu" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_ruang_tamu').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_ruang_tamu-preview"></div>
-                    </div>
-
-                    <!-- Foto Kamar Mandi -->
-                    <div class="upload-area" data-file-type="foto_kamar_mandi">
-                        <i class="fas fa-bath fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Kamar Mandi <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto kamar mandi - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="foto_kamar_mandi" name="foto_kamar_mandi" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_kamar_mandi').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_kamar_mandi-preview"></div>
-                    </div>
-
-                    <!-- Foto Dapur -->
-                    <div class="upload-area" data-file-type="foto_dapur">
-                        <i class="fas fa-utensils fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Dapur <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto dapur - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="foto_dapur" name="foto_dapur" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_dapur').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_dapur-preview"></div>
-                    </div>
-
-                    <h5 class="upload-section-title"><i class="fas fa-file-alt me-2"></i>Dokumen Pendukung Lainnya</h5>
-
-                    <!-- CV -->
-                    <div class="upload-area" data-file-type="cv">
-                        <i class="fas fa-file-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload CV (Curriculum Vitae) <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Curriculum Vitae - Format: PDF, DOC, DOCX (Maksimal: 2MB)</p>
-                        <input type="file" id="cv" name="cv" class="file-input" accept=".pdf,.doc,.docx" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('cv').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File CV
-                        </button>
-                        <div id="cv-preview"></div>
-                    </div>
-
-                    <!-- Pas Foto -->
-                    <div class="upload-area" data-file-type="pas_foto">
-                        <i class="fas fa-portrait fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Pas Foto <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Pas foto 3x4 atau 4x6 - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="pas_foto" name="pas_foto" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('pas_foto').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Pas Foto
-                        </button>
-                        <div id="pas_foto-preview"></div>
-                    </div>
-
-                    <!-- Motivation Letter -->
-                    <div class="upload-area" data-file-type="motivation_letter">
-                        <i class="fas fa-envelope-open-text fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Motivation Letter <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Surat motivasi - Format: PDF, DOC, DOCX (Maksimal: 2MB)</p>
-                        <input type="file" id="motivation_letter" name="motivation_letter" class="file-input" accept=".pdf,.doc,.docx" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('motivation_letter').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File
-                        </button>
-                        <div id="motivation_letter-preview"></div>
-                    </div>
-
-                    <!-- Twibbon -->
-                    <div class="upload-area" data-file-type="twibbon">
-                        <i class="fas fa-image fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Twibbon <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Foto dengan twibbon beasiswa - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="twibbon" name="twibbon" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('twibbon').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto Twibbon
-                        </button>
-                        <div id="twibbon-preview"></div>
-                    </div>
-                    
-                    <div class="upload-area" data-file-type="bukti_twibbon">
-                        <i class="fas fa-share-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Bukti Twibbon (Screenshot Postingan) <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Screenshot bukti posting twibbon di media sosial - Format: JPG, PNG (Maksimal: 2MB)</p>
-                        <input type="file" id="bukti_twibbon" name="bukti_twibbon" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('bukti_twibbon').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Bukti Twibbon
-                        </button>
-                        <div id="bukti_twibbon-preview"></div>
-                    </div>
-
-                    <!-- Surat Kesanggupan Relawan -->
-                    <div class="upload-area" data-file-type="surat_relawan">
-                        <i class="fas fa-hands-helping fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Kesanggupan Relawan <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Surat kesanggupan menjadi relawan - Format: PDF (Maksimal: 2MB)</p>
-                        <input type="file" id="surat_relawan" name="surat_kesanggupan_relawan" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_relawan').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="surat_relawan-preview"></div>
                     </div>
                 </div>
 
                 <!-- Navigation Buttons -->
                 <div class="navigation-buttons">
-                    <button type="button" class="nav-btn btn-prev" id="prevBtn" style="display: none;">
+                    <button type="button" class="nav-btn btn-prev" id="prevBtn" style="display:none">
                         <i class="fas fa-arrow-left me-2"></i>Sebelumnya
                     </button>
                     <button type="button" class="nav-btn btn-next" id="nextBtn">
                         Selanjutnya<i class="fas fa-arrow-right ms-2"></i>
                     </button>
-                    <button type="submit" class="nav-btn btn-submit" id="submitBtn" style="display: none;">
+                    <button type="submit" class="nav-btn btn-submit" id="submitBtn" style="display:none">
                         <i class="fas fa-paper-plane me-2"></i>Kirim Pendaftaran
                     </button>
                 </div>
@@ -1049,364 +896,246 @@
         </div>
     </div>
 
-    <script>
-    let currentStep = 1;
-    const totalSteps = 5;
+<script>
+let currentStep = 1;
+const totalSteps = 5;
 
-    function createParticles() {
-        const particleContainer = document.getElementById('particles');
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            particleContainer.appendChild(particle);
-        }
+/* ---- Particles ---- */
+function createParticles() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay    = Math.random() * 15 + 's';
+        p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        container.appendChild(p);
     }
+}
 
-    function updateProgress() {
-        const progress = (currentStep / totalSteps) * 100;
-        document.getElementById('progressBar').style.width = progress + '%';
-    }
+/* ---- Progress ---- */
+function updateProgress() {
+    document.getElementById('progressBar').style.width = (currentStep / totalSteps * 100) + '%';
+}
 
-    function showStep(step) {
-        document.querySelectorAll('.form-section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.querySelector(`.form-section[data-step="${step}"]`).classList.add('active');
+/* ---- Show step ---- */
+function showStep(step) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.querySelector(`.form-section[data-step="${step}"]`).classList.add('active');
 
-        document.querySelectorAll('.step').forEach((stepEl, index) => {
-            stepEl.classList.remove('active', 'completed');
-            if (index + 1 < step) {
-                stepEl.classList.add('completed');
-            } else if (index + 1 === step) {
-                stepEl.classList.add('active');
+    document.querySelectorAll('.step').forEach((el, idx) => {
+        el.classList.remove('active', 'completed');
+        if (idx + 1 < step) el.classList.add('completed');
+        else if (idx + 1 === step) el.classList.add('active');
+    });
+
+    const prev   = document.getElementById('prevBtn');
+    const next   = document.getElementById('nextBtn');
+    const submit = document.getElementById('submitBtn');
+
+    prev.style.display   = step === 1 ? 'none' : 'inline-block';
+    next.style.display   = step === totalSteps ? 'none' : 'inline-block';
+    submit.style.display = step === totalSteps ? 'inline-block' : 'none';
+
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ---- Validation error banner ---- */
+function showValidationError(messages) {
+    document.querySelector('.alert-danger.validation-error')?.remove();
+
+    const div = document.createElement('div');
+    div.className = 'alert alert-danger mt-3 validation-error';
+    div.innerHTML = messages.length
+        ? `<i class="fas fa-exclamation-triangle me-2"></i><strong>Mohon lengkapi field berikut:</strong><ul class="mb-0 mt-2">${messages.map(m=>`<li>${m}</li>`).join('')}</ul>`
+        : `<i class="fas fa-exclamation-triangle me-2"></i><strong>Mohon lengkapi semua field yang wajib diisi.</strong>`;
+
+    const section = document.querySelector(`.form-section[data-step="${currentStep}"]`);
+    section.insertBefore(div, section.firstChild);
+    div.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => div.remove(), 8000);
+}
+
+/* ---- File size limits ---- */
+const fileSizeLimits = { transkrip: 5, sertifikat: 5, penghasilan: 3, surat_aktif: 3 };
+function maxMB(id) { return fileSizeLimits[id] ?? 2; }
+
+/* ---- Upload card: change handler ---- */
+function handleFileUpload() {
+    document.querySelectorAll('.upload-card input[type="file"]').forEach(input => {
+        input.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+
+            const id     = this.id;
+            const sizeMB = file.size / 1024 / 1024;
+
+            if (sizeMB > maxMB(id)) {
+                alert(`File terlalu besar. Maksimal ${maxMB(id)}MB`);
+                this.value = '';
+                return;
             }
+
+            const card   = document.getElementById('card-' + id);
+            const nameEl = document.getElementById('name-' + id);
+            const rmBtn  = document.getElementById('rm-' + id);
+
+            nameEl.textContent = file.name.length > 20 ? file.name.substring(0, 18) + '…' : file.name;
+            card.classList.add('done');
+            card.classList.remove('error');
+            if (rmBtn) rmBtn.style.display = 'flex';
         });
+    });
+}
 
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const submitBtn = document.getElementById('submitBtn');
+/* ---- Remove file from card ---- */
+function removeFileCard(event, id) {
+    event.preventDefault();
+    event.stopPropagation();
+    const input  = document.getElementById(id);
+    const card   = document.getElementById('card-' + id);
+    const nameEl = document.getElementById('name-' + id);
+    const rmBtn  = document.getElementById('rm-' + id);
 
-        if (step === 1) {
-            prevBtn.style.display = 'none';
-            nextBtn.style.display = 'inline-block';
-            submitBtn.style.display = 'none';
-        } else if (step === totalSteps) {
-            prevBtn.style.display = 'inline-block';
-            nextBtn.style.display = 'none';
-            submitBtn.style.display = 'inline-block';
-        } else {
-            prevBtn.style.display = 'inline-block';
-            nextBtn.style.display = 'inline-block';
-            submitBtn.style.display = 'none';
-        }
+    input.value = '';
+    nameEl.textContent = '';
+    card.classList.remove('done', 'error');
+    if (rmBtn) rmBtn.style.display = 'none';
+}
 
-        updateProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+/* ---- Validate step ---- */
+function validateStep(step) {
+    const section = document.querySelector(`.form-section[data-step="${step}"]`);
+    let isValid = true;
+    let errors  = [];
 
-    function showValidationError(messages) {
-        const existingError = document.querySelector('.alert-danger.validation-error');
-        if (existingError) {
-            existingError.remove();
-        }
-        
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'alert alert-danger mt-3 validation-error';
-        
-        if (messages.length > 0) {
-            errorDiv.innerHTML = `
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                <strong>Mohon lengkapi field berikut:</strong>
-                <ul class="mb-0 mt-2">
-                    ${messages.map(msg => `<li>${msg}</li>`).join('')}
-                </ul>
-            `;
-        } else {
-            errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i><strong>Mohon lengkapi semua field yang wajib diisi dengan benar.</strong>';
-        }
-        
-        const currentSection = document.querySelector(`.form-section[data-step="${currentStep}"]`);
-        currentSection.insertBefore(errorDiv, currentSection.firstChild);
-        
-        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        setTimeout(() => {
-            if (errorDiv.parentNode) {
-                errorDiv.remove();
-            }
-        }, 8000);
-    }
-
-    function validateStep(step) {
-        const currentSection = document.querySelector(`.form-section[data-step="${step}"]`);
-        const requiredFields = currentSection.querySelectorAll('[required]');
-        let isValid = true;
-        let errorMessages = [];
-
-        requiredFields.forEach(field => {
-            if (field.type === 'file') {
-                if (!field.files || field.files.length === 0) {
-                    const uploadArea = field.closest('.upload-area');
-                    uploadArea.style.borderColor = 'var(--accent-color)';
-                    uploadArea.style.backgroundColor = 'rgba(220, 53, 69, 0.1)';
-                    isValid = false;
-                    
-                    const label = uploadArea.querySelector('h5');
-                    if (label) {
-                        errorMessages.push(label.textContent.replace(' *', '').trim());
-                    }
-                } else {
-                    const uploadArea = field.closest('.upload-area');
-                    uploadArea.style.borderColor = 'var(--success-color)';
-                    uploadArea.style.backgroundColor = 'rgba(40, 167, 69, 0.1)';
-                }
+    section.querySelectorAll('[required]').forEach(field => {
+        if (field.type === 'file') {
+            const card = field.closest('.upload-card');
+            if (!field.files || !field.files.length) {
+                card?.classList.add('error');
+                card?.classList.remove('done');
+                isValid = false;
+                const lbl = card?.querySelector('.card-label');
+                if (lbl) errors.push(lbl.textContent.trim());
             } else {
-                if (!field.value.trim()) {
-                    field.classList.add('is-invalid');
-                    isValid = false;
-                    
-                    const label = field.previousElementSibling || field.parentElement.querySelector('label');
-                    if (label) {
-                        errorMessages.push(label.textContent.replace(' *', '').trim());
-                    }
-                } else {
-                    field.classList.remove('is-invalid');
-                }
+                card?.classList.remove('error');
+                card?.classList.add('done');
             }
-        });
-
-        if (step === 1) {
-            const emailField = document.getElementById('email');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (emailField.value && !emailRegex.test(emailField.value)) {
-                emailField.classList.add('is-invalid');
-                isValid = false;
-                if (!errorMessages.includes('Alamat Email')) {
-                    errorMessages.push('Alamat Email (format tidak valid)');
-                }
-            }
-
-            const nikField = document.getElementById('nik');
-            if (nikField.value && nikField.value.length !== 16) {
-                nikField.classList.add('is-invalid');
-                isValid = false;
-                if (!errorMessages.some(msg => msg.includes('NIK'))) {
-                    errorMessages.push('NIK (harus 16 digit)');
-                }
-            }
-        }
-
-        if (step === 2) {
-            const ipkField = document.getElementById('ipk');
-            if (ipkField.value && (parseFloat(ipkField.value) < 0 || parseFloat(ipkField.value) > 4)) {
-                ipkField.classList.add('is-invalid');
-                isValid = false;
-                if (!errorMessages.some(msg => msg.includes('IPK'))) {
-                    errorMessages.push('IPK (harus antara 0-4)');
-                }
-            }
-        }
-
-        if (!isValid) {
-            showValidationError(errorMessages);
-        }
-
-        return isValid;
-    }
-
-    function handleFileUpload() {
-        const fileInputs = document.querySelectorAll('.file-input');
-        
-        fileInputs.forEach(input => {
-            input.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                const previewDiv = document.getElementById(this.id + '-preview');
-                const uploadArea = this.closest('.upload-area');
-
-                if (file) {
-                    const fileSize = file.size / 1024 / 1024;
-                    let maxSize;
-                    
-                    if (this.id === 'transkrip' || this.id === 'sertifikat') {
-                        maxSize = 5;
-                    } else if (this.id === 'ktp' || this.id === 'kk') {
-                        maxSize = 2;
-                    } else {
-                        maxSize = 3;
-                    }
-
-                    if (fileSize > maxSize) {
-                        alert(`File terlalu besar. Maksimal ${maxSize}MB`);
-                        this.value = '';
-                        return;
-                    }
-
-                    previewDiv.innerHTML = `
-                        <div class="file-preview">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-file me-3 text-success"></i>
-                                <div class="flex-grow-1">
-                                    <div class="file-name">${file.name}</div>
-                                    <small class="text-muted">${(fileSize).toFixed(2)} MB</small>
-                                </div>
-                                <div class="upload-success">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-outline-danger ms-2" onclick="removeFile('${this.id}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
-
-                    uploadArea.style.borderColor = 'var(--success-color)';
-                    uploadArea.style.backgroundColor = 'rgba(40, 167, 69, 0.1)';
-                }
-            });
-        });
-    }
-
-    function removeFile(inputId) {
-        const input = document.getElementById(inputId);
-        const previewDiv = document.getElementById(inputId + '-preview');
-        const uploadArea = input.closest('.upload-area');
-
-        input.value = '';
-        previewDiv.innerHTML = '';
-        uploadArea.style.borderColor = '#dee2e6';
-        uploadArea.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
-    }
-
-    function initDragDrop() {
-        const uploadAreas = document.querySelectorAll('.upload-area');
-        
-        uploadAreas.forEach(area => {
-            const input = area.querySelector('.file-input');
-
-            area.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                area.classList.add('dragover');
-            });
-
-            area.addEventListener('dragleave', () => {
-                area.classList.remove('dragover');
-            });
-
-            area.addEventListener('drop', (e) => {
-                e.preventDefault();
-                area.classList.remove('dragover');
-
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    input.files = files;
-                    input.dispatchEvent(new Event('change'));
-                }
-            });
-        });
-    }
-
-    document.getElementById('nextBtn').addEventListener('click', () => {
-        if (validateStep(currentStep)) {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                showStep(currentStep);
-            }
-        }
-    });
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
-        if (currentStep > 1) {
-            currentStep--;
-            showStep(currentStep);
-        }
-    });
-
-    document.getElementById('kaderForm').addEventListener('submit', function(e) {
-        let allValid = true;
-        let firstInvalidStep = null;
-        
-        for (let i = 1; i <= totalSteps; i++) {
-            if (!validateStep(i)) {
-                allValid = false;
-                if (firstInvalidStep === null) {
-                    firstInvalidStep = i;
-                }
-            }
-        }
-
-        if (!allValid) {
-            e.preventDefault();
-            
-            if (firstInvalidStep !== null) {
-                currentStep = firstInvalidStep;
-                showStep(currentStep);
-            }
-            
-            alert('❌ Mohon lengkapi semua field yang wajib diisi!\n\nSilakan periksa kembali semua data yang telah Anda isi.');
         } else {
-            if (!confirm('✅ Apakah Anda yakin semua data yang diisi sudah benar?\n\nData yang sudah dikirim tidak dapat diubah.')) {
-                e.preventDefault();
+            if (!field.value.trim()) {
+                field.classList.add('is-invalid');
+                isValid = false;
+                const lbl = field.previousElementSibling || field.parentElement.querySelector('label');
+                if (lbl) errors.push(lbl.textContent.trim());
+            } else {
+                field.classList.remove('is-invalid');
             }
         }
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        createParticles();
-        handleFileUpload();
-        initDragDrop();
+    if (step === 1) {
+        const email = document.getElementById('email');
+        if (email?.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+            email.classList.add('is-invalid'); isValid = false;
+            if (!errors.some(m => m.includes('Email'))) errors.push('Alamat Email (format tidak valid)');
+        }
+        const nik = document.getElementById('nik');
+        if (nik?.value && nik.value.length !== 16) {
+            nik.classList.add('is-invalid'); isValid = false;
+            if (!errors.some(m => m.includes('NIK'))) errors.push('NIK (harus 16 digit)');
+        }
+    }
+
+    if (step === 2) {
+        const ipk = document.getElementById('ipk');
+        if (ipk?.value && (parseFloat(ipk.value) < 0 || parseFloat(ipk.value) > 4)) {
+            ipk.classList.add('is-invalid'); isValid = false;
+            if (!errors.some(m => m.includes('IPK'))) errors.push('IPK (harus antara 0–4)');
+        }
+    }
+
+    if (!isValid) showValidationError(errors);
+    return isValid;
+}
+
+/* ---- Navigation ---- */
+document.getElementById('nextBtn').addEventListener('click', () => {
+    if (validateStep(currentStep) && currentStep < totalSteps) {
+        currentStep++;
         showStep(currentStep);
+    }
+});
 
-        const currencyInputs = ['penghasilan_ayah', 'penghasilan_ibu'];
-        currencyInputs.forEach(id => {
-            const input = document.getElementById(id);
-            if (input) {
-                input.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    e.target.value = value;
-                });
-                
-                input.addEventListener('blur', function(e) {
-                    if (e.target.value) {
-                        const formatted = parseInt(e.target.value).toLocaleString('id-ID');
-                        const display = document.createElement('small');
-                        display.className = 'text-muted d-block mt-1';
-                        display.textContent = 'Rp ' + formatted;
-                        
-                        const oldDisplay = e.target.parentElement.querySelector('small.text-muted');
-                        if (oldDisplay) oldDisplay.remove();
-                        
-                        e.target.parentElement.appendChild(display);
-                    }
-                });
-            }
-        });
+document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentStep > 1) { currentStep--; showStep(currentStep); }
+});
 
-        const nameInputs = ['nama', 'nama_ayah', 'nama_ibu', 'tempat_lahir', 'nama_organisasi'];
-        nameInputs.forEach(id => {
-            const input = document.getElementById(id);
-            if (input) {
-                input.addEventListener('input', function(e) {
-                    e.target.value = e.target.value.replace(/\b\w/g, l => l.toUpperCase());
-                });
-            }
-        });
+/* ---- Submit ---- */
+document.getElementById('kaderForm').addEventListener('submit', function (e) {
+    let allValid = true;
+    let firstBad = null;
 
-        const nikInput = document.getElementById('nik');
-        if (nikInput) {
-            nikInput.addEventListener('input', function(e) {
-                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 16);
-            });
+    for (let i = 1; i <= totalSteps; i++) {
+        if (!validateStep(i)) {
+            allValid = false;
+            if (!firstBad) firstBad = i;
         }
+    }
 
-        const phoneInput = document.getElementById('no_telepon');
-        if (phoneInput) {
-            phoneInput.addEventListener('input', function(e) {
-                e.target.value = e.target.value.replace(/[^\d\+\-\s]/g, '');
-            });
-        }
+    if (!allValid) {
+        e.preventDefault();
+        currentStep = firstBad;
+        showStep(currentStep);
+        alert('❌ Mohon lengkapi semua field yang wajib diisi!');
+    } else if (!confirm('✅ Apakah Anda yakin semua data sudah benar?\n\nData yang sudah dikirim tidak dapat diubah.')) {
+        e.preventDefault();
+    }
+});
+
+/* ---- DOMContentLoaded ---- */
+document.addEventListener('DOMContentLoaded', function () {
+    createParticles();
+    handleFileUpload();
+    showStep(currentStep);
+
+    /* Currency display */
+    ['penghasilan_ayah', 'penghasilan_ibu'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
+        el.addEventListener('blur', e => {
+            if (!e.target.value) return;
+            const old = e.target.parentElement.querySelector('small.currency-display');
+            if (old) old.remove();
+            const s = document.createElement('small');
+            s.className = 'text-muted d-block mt-1 currency-display';
+            s.textContent = 'Rp ' + parseInt(e.target.value).toLocaleString('id-ID');
+            e.target.parentElement.appendChild(s);
+        });
     });
+
+    /* Auto capitalize name fields */
+    ['nama','nama_ayah','nama_ibu','tempat_lahir','nama_organisasi'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', e => {
+            e.target.value = e.target.value.replace(/\b\w/g, l => l.toUpperCase());
+        });
+    });
+
+    /* NIK: digits only, max 16 */
+    const nik = document.getElementById('nik');
+    if (nik) nik.addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0, 16);
+    });
+
+    /* Phone: digits + allowed chars */
+    const phone = document.getElementById('no_telepon');
+    if (phone) phone.addEventListener('input', e => {
+        e.target.value = e.target.value.replace(/[^\d+\-\s]/g, '');
+    });
+});
 </script>
+
 @endsection
