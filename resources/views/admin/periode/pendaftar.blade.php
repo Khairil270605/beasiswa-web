@@ -545,7 +545,7 @@
             </div>
             <div class="stat-info">
                 <div class="stat-value">
-                    {{ $pendaftar->whereIn('status', ['lolos','diterima'])->count() }}
+                    {{ $pendaftar->where('status_beasiswa', 'diterima')->count() }}
                 </div>
                 <div class="stat-label">Diterima / Lolos</div>
             </div>
@@ -557,7 +557,7 @@
             </div>
             <div class="stat-info">
                 <div class="stat-value">
-                    {{ $pendaftar->whereIn('status', ['pending','proses'])->count() }}
+                    {{ $pendaftar->where('status_beasiswa', 'menunggu')->count() }}
                 </div>
                 <div class="stat-label">Pending / Proses</div>
             </div>
@@ -569,7 +569,7 @@
             </div>
             <div class="stat-info">
                 <div class="stat-value">
-                    {{ $pendaftar->whereIn('status', ['ditolak','gagal'])->count() }}
+                    {{ $pendaftar->where('status_beasiswa', 'tidak_diterima')->count() }}
                 </div>
                 <div class="stat-label">Ditolak / Gagal</div>
             </div>
@@ -646,25 +646,29 @@
                                     @endif
                                 </td>
                                 <td class="text-center" data-label="Status">
-                                    @php $status = strtolower($p->status ?? ''); @endphp
-                                    @if(in_array($status, ['lolos','diterima']))
-                                        <span class="badge-status badge-lolos">
-                                            <i class="fas fa-check-circle"></i> {{ ucfirst($p->status) }}
-                                        </span>
-                                    @elseif(in_array($status, ['pending','proses']))
-                                        <span class="badge-status badge-pending">
-                                            <i class="fas fa-clock"></i> {{ ucfirst($p->status) }}
-                                        </span>
-                                    @elseif(in_array($status, ['ditolak','gagal']))
-                                        <span class="badge-status badge-ditolak">
-                                            <i class="fas fa-times-circle"></i> {{ ucfirst($p->status) }}
-                                        </span>
-                                    @else
-                                        <span class="badge-status badge-default">
-                                            <i class="fas fa-minus-circle"></i> {{ ucfirst($p->status ?? '-') }}
-                                        </span>
-                                    @endif
-                                </td>
+                            @php 
+                                $status = strtolower($p->status_beasiswa ?? 'menunggu'); 
+                            @endphp
+
+                            @if($status == 'diterima')
+                                <span class="badge-status badge-lolos">
+                                    <i class="fas fa-check-circle"></i> 
+                                    {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                </span>
+
+                            @elseif($status == 'tidak_diterima')
+                                <span class="badge-status badge-ditolak">
+                                    <i class="fas fa-times-circle"></i> 
+                                    {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                </span>
+
+                            @else
+                                <span class="badge-status badge-pending">
+                                    <i class="fas fa-clock"></i> 
+                                    {{ ucfirst(str_replace('_', ' ', $status)) }}
+                                </span>
+                            @endif
+                            </td>
                             </tr>
                         @empty
                             <tr id="emptyRow">

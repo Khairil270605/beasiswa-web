@@ -229,6 +229,30 @@
         color: white;
     }
 
+    /* Import button override to match btn-action size */
+    .btn-import {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        text-decoration: none;
+    }
+
+    .btn-import:hover {
+        background: linear-gradient(45deg, #e55a2b, #e6841a);
+        color: white;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    }
+
     .empty-state {
         padding: 60px 20px;
         text-align: center;
@@ -322,6 +346,11 @@
             width: 100%;
             justify-content: center;
         }
+
+        .btn-import {
+            width: 100%;
+            justify-content: center;
+        }
     }
 
     @media (max-width: 576px) {
@@ -382,17 +411,6 @@
         </div>
     </div>
 
-    <!-- Success Alert -->
-    @if(session('success'))
-        <div class="alert alert-lazismu alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle"></i>
-            <div class="flex-grow-1">
-                <strong>Berhasil!</strong> {{ session('success') }}
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <!-- Periode Table Card -->
     <div class="card card-custom">
         <div class="card-header card-header-custom">
@@ -418,7 +436,7 @@
                             <th width="130" class="text-center">
                                 <i class="fas fa-toggle-on me-2"></i>Status
                             </th>
-                            <th width="230" class="text-center">
+                            <th width="300" class="text-center">
                                 <i class="fas fa-cog me-2"></i>Aksi
                             </th>
                         </tr>
@@ -457,10 +475,33 @@
                                 </td>
                                 <td class="text-center" data-label="Aksi">
                                     <div class="action-buttons">
-                                    <a href="{{ route('admin.periode.pendaftar', $p->id) }}" 
-                                    class="btn btn-info btn-action">
-                                    <i class="fas fa-users"></i> Pendaftar
-                                    </a>
+
+                                        {{-- Lihat Pendaftar --}}
+                                        <a href="{{ route('admin.periode.pendaftar', $p->id) }}"
+                                           class="btn btn-info btn-action">
+                                            <i class="fas fa-users"></i> Pendaftar
+                                        </a>
+
+                                        {{-- Import CSV --}}
+                                        <form action="{{ route('admin.periode.import', $p->id) }}"
+                                              method="POST"
+                                              enctype="multipart/form-data"
+                                              style="display:inline;">
+                                            @csrf
+                                            <input type="file"
+                                                   name="file"
+                                                   accept=".csv"
+                                                   onchange="this.form.submit()"
+                                                   style="display:none"
+                                                   id="file-{{ $p->id }}">
+                                            <button type="button"
+                                                    onclick="document.getElementById('file-{{ $p->id }}').click()"
+                                                    class="btn-import"
+                                                    title="Import Data CSV">
+                                                <i class="fas fa-upload"></i> Import
+                                            </button>
+                                        </form>
+
                                         {{-- Toggle Aktif / Nonaktif --}}
                                         @if($p->status == 'aktif')
                                             <button type="button"
@@ -495,9 +536,9 @@
 
                                         {{-- Hidden forms --}}
                                         <form id="toggle-form-{{ $p->id }}"
-                                        action="{{ route('admin.periode.aktifkan', $p->id) }}"
-                                        method="GET"
-                                        style="display: none;">
+                                              action="{{ route('admin.periode.aktifkan', $p->id) }}"
+                                              method="GET"
+                                              style="display: none;">
                                         </form>
 
                                         <form id="delete-form-{{ $p->id }}"

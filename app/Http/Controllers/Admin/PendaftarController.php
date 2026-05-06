@@ -9,11 +9,15 @@ use App\Models\Alternatif;
 class PendaftarController extends Controller
 {
     public function index()
-    {
-        $pageTitle = 'Data Pendaftar';
-        $alternatifs = Alternatif::latest()->get();
-        return view('admin.alternatif.index', compact('pageTitle', 'alternatifs'));
-    }
+{
+    $pageTitle = 'Data Pendaftar';
+
+    $alternatifs = Alternatif::where('status_data', 'aktif')
+        ->latest()
+        ->get();
+
+    return view('admin.alternatif.index', compact('pageTitle', 'alternatifs'));
+}
 
     public function updateStatusAdministrasi(Request $request, Alternatif $alternatif)
     {
@@ -144,7 +148,7 @@ class PendaftarController extends Controller
                 $validated[$field] = $request->file($field)->store($uploadFolder, 'public');
             }
         }
-
+        $validated['status_data'] = 'aktif';
         Alternatif::create($validated);
 
         return redirect()->route('admin.pendaftar.index')->with('success', 'Pendaftar berhasil ditambahkan.');

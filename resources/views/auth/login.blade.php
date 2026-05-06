@@ -78,24 +78,24 @@
             <h3 class="text-center mb-4">Login</h3>
 
             {{-- Pesan info untuk user yang harus login terlebih dahulu --}}
-            @if(session('info'))
+            <!-- @if(session('info'))
                 <div class="info-message p-3 rounded mb-3 text-center">
                     <i class="fas fa-info-circle me-2"></i>
                     {{ session('info') }}
                 </div>
-            @endif
+            @endif -->
 
-            @if(session('error'))
+            <!-- @if(session('error'))
                 <div class="error-message p-3 rounded mb-3">
                     {{ session('error') }}
                 </div>
-            @endif
+            @endif -->
 
-            @if(session('success'))
+            <!-- @if(session('success'))
                 <div class="success-message p-3 rounded mb-3">
                     {{ session('success') }}
                 </div>
-            @endif
+            @endif -->
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf

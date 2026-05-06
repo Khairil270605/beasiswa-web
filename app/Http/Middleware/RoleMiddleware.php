@@ -9,17 +9,18 @@ use Illuminate\Support\Facades\Auth;
 class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, ...$roles)
-    {
-        // belum login
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        // role tidak sesuai
-        if (!in_array(Auth::user()->role, $roles)) {
-            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
-        }
-
-        return $next($request);
+{
+    // belum login
+    if (!Auth::check()) {
+        return redirect()->route('login')
+            ->with('info', 'Silakan login terlebih dahulu untuk mengakses halaman ini');
     }
+
+    // role tidak sesuai
+    if (!in_array(Auth::user()->role, $roles)) {
+        abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+    }
+
+    return $next($request);
+}
 }

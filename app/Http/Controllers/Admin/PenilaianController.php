@@ -21,6 +21,7 @@ class PenilaianController extends Controller
         // ✅ Ambil peserta dhuafa yang LOLOS administrasi saja
         $alternatifs = Alternatif::where('jenis_pendaftaran', 'dhuafa')
             ->where('status_administrasi', 'lulus')
+            ->where('status_data', 'aktif')
             ->get();
 
         // Ambil kriteria & sub kriteria berdasarkan kategori
@@ -31,7 +32,8 @@ class PenilaianController extends Controller
         $penilaian = Penilaian::with('subKriteria')
             ->whereHas('alternatif', function ($query) {
                 $query->where('jenis_pendaftaran', 'dhuafa')
-                      ->where('status_administrasi', 'lulus');
+                      ->where('status_administrasi', 'lulus')
+                      ->where('status_data', 'aktif');
             })
             ->get();
 
@@ -60,6 +62,7 @@ class PenilaianController extends Controller
         // ✅ Ambil peserta kader yang LOLOS administrasi saja
         $alternatifs = Alternatif::where('jenis_pendaftaran', 'kader')
             ->where('status_administrasi', 'lulus')
+            ->where('status_data', 'aktif')
             ->get();
 
         $kriterias = Kriteria::where('kategori', 'kader')->get();
@@ -69,7 +72,8 @@ class PenilaianController extends Controller
         $penilaian = Penilaian::with('subKriteria')
             ->whereHas('alternatif', function ($query) {
                 $query->where('jenis_pendaftaran', 'kader')
-                      ->where('status_administrasi', 'lulus');
+                      ->where('status_administrasi', 'lulus')
+                      ->where('status_data', 'aktif');
             })
             ->get();
 

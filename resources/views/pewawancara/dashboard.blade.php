@@ -109,7 +109,6 @@
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
-                                <th width="15%">No. Pendaftaran</th>
                                 <th width="25%">Nama Lengkap</th>
                                 <th width="15%">Kategori</th>
                                 <th width="15%">Status</th>
@@ -121,9 +120,6 @@
                             @foreach($peserta as $index => $p)
                             <tr data-kategori="{{ $p->jenis_pendaftaran }}">
                                 <td class="text-muted fw-medium">{{ $index + 1 }}</td>
-                                <td>
-                                    <span class="badge bg-secondary bg-opacity-75">{{ $p->no_pendaftaran }}</span>
-                                </td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="user-avatar-small me-2">

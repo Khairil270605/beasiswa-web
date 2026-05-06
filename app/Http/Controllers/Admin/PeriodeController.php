@@ -80,7 +80,23 @@ public function pendaftar($id)
 
     $pendaftar = Alternatif::where('periode_id', $id)->get();
 
-    return view('admin.periode.pendaftar', compact('periode', 'pendaftar'));
+    // 🔥 TAMBAHAN (PENTING)
+    $totalPendaftar = $pendaftar->count();
+
+    $totalDiterima = $pendaftar->where('status_beasiswa', 'diterima')->count();
+
+    $totalDitolak = $pendaftar->where('status_beasiswa', 'tidak_diterima')->count();
+
+    $totalPending = $pendaftar->where('status_beasiswa', 'menunggu')->count();
+
+    return view('admin.periode.pendaftar', compact(
+        'periode',
+        'pendaftar',
+        'totalPendaftar',
+        'totalDiterima',
+        'totalDitolak',
+        'totalPending'
+    ));
 }
 public function export($id)
 {
@@ -98,6 +114,48 @@ public function export($id)
 
     return response($content, 200, $headers);
 }
+public function import(Request $request, $id)
+{
+    $request->validate([
+        'file' => 'required|mimes:csv,txt'
+    ]);
 
+    $file = fopen($request->file('file'), 'r');
+
+    // skip header
+    fgetcsv($file);
+
+    // 🔥 HAPUS DATA LAMA PERIODE INI
+    Alternatif::where('periode_id', $id)->delete();
+
+    $jumlah = 0;
+
+    while ($row = fgetcsv($file)) {
+
+        if (count($row) < 4) continue;
+
+        $email = trim(strtolower($row[1]));
+        $status = strtolower(trim($row[3]));
+
+        if (!in_array($status, ['diterima', 'menunggu', 'tidak_diterima'])) {
+            $status = 'menunggu';
+        }
+
+        Alternatif::create([
+            'nama' => $row[0],
+            'email' => $email,
+            'jenis_pendaftaran' => strtolower($row[2]),
+            'status_beasiswa' => $status,
+            'periode_id' => $id,
+            'status_data' => 'arsip'
+        ]);
+
+        $jumlah++;
+    }
+
+    fclose($file);
+
+    return back()->with('success', "Berhasil import $jumlah data (data lama diganti)");
+}
 }
 

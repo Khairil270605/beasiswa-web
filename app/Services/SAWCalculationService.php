@@ -17,6 +17,7 @@ class SAWCalculationService
         $alternatifs = Alternatif::with('penilaian')
         ->where('jenis_pendaftaran', $kategori)
         ->where('status_administrasi', 'lulus')
+        ->where('status_data', 'aktif')
         ->get();
 
 
@@ -117,8 +118,9 @@ class SAWCalculationService
         // Hapus hasil lama sesuai kategori
        HasilPerhitungan::whereHas('alternatif', function ($q) use ($kategori) {
     $q->where('jenis_pendaftaran', $kategori)
-      ->where('status_administrasi', 'lulus');
-})->delete();
+      ->where('status_administrasi', 'lulus')
+      ->where('status_data', 'aktif');
+    })->delete();
 
 
         foreach ($hasil as $row) {

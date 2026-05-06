@@ -90,4 +90,19 @@ public function update(Request $request, $id)
         ->with('success', 'User berhasil diperbarui.');
 }
 
+public function destroy($id)
+{
+    $user = User::findOrFail($id);
+
+    // ❗ optional: cegah hapus diri sendiri
+    if (auth()->id() === $user->id) {
+        return back()->with('error', 'Anda tidak bisa menghapus akun sendiri.');
+    }
+
+    $user->delete();
+
+    return redirect()
+        ->route('admin.users.index')
+        ->with('success', 'User berhasil dihapus.');
+}
 }

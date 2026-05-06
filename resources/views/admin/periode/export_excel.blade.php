@@ -17,7 +17,7 @@
             <td>{{ $p->email }}</td>
             <td>{{ $p->nim }}</td>
             <td>{{ ucfirst($p->jenis_pendaftaran) }}</td>
-            <td>{{ ucfirst($p->status) }}</td>
+            <td>{{ ucfirst(str_replace('_', ' ', $p->status_beasiswa ?? 'menunggu')) }}</td>
         </tr>
         @endforeach
     </tbody>

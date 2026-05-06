@@ -390,16 +390,6 @@
         </div>
     </div>
 
-    <!-- Success Alert -->
-    @if(session('success'))
-        <div class="alert alert-lazismu alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle"></i>
-            <div class="flex-grow-1">
-                <strong>Berhasil!</strong> {{ session('success') }}
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 
     <!-- User Table Card -->
     <div class="card card-custom">

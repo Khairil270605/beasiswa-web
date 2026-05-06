@@ -103,6 +103,8 @@ class Alternatif extends Model
         'tanggal_keputusan',
         'jumlah_beasiswa',
         'periode_id',
+        'status_data',
+        'status_beasiswa',
     ];
 
     // =====================

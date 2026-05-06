@@ -13,6 +13,7 @@ class AdminController extends Controller
 {
     public function index()
     {
+        $periodeAktif = Periode::where('status', 'aktif')->first();
         // =====================
         // DATA PERIODE
         // =====================
@@ -103,7 +104,8 @@ class AdminController extends Controller
             'labels',
             'data',
             'chartData',
-            'periodeList'
+            'periodeList',
+            'periodeAktif'
         ));
     }
 }

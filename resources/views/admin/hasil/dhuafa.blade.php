@@ -791,7 +791,6 @@
                         <th>Peserta</th>
                         <th>Nilai SAW</th>
                         <th>Status Beasiswa</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -864,25 +863,6 @@
                 {{ $item['alternatif']['tanggal_keputusan_beasiswa'] ?? '' }}
             </small>
         </td>
-
-        {{-- AKSI --}}
-        <td data-label="Aksi">
-            <div class="d-flex gap-2 flex-wrap">
-                <button class="btn btn-info btn-sm"
-                        onclick="showDetail({{ $item['alternatif']['id'] }}, '{{ $item['alternatif']['nama'] }}')"
-                        title="Lihat Detail Perhitungan">
-                    <i class="fas fa-eye"></i> Detail
-                </button>
-
-                {{-- Catatan (pakai Bootstrap 4 modal karena detailModal kamu Bootstrap 4) --}}
-                <button type="button"
-                        class="btn btn-secondary btn-sm"
-                        data-toggle="modal"
-                        data-target="#catatanModal-{{ $item['alternatif']['id'] }}">
-                    <i class="fas fa-sticky-note"></i> Catatan
-                </button>
-            </div>
-
             {{-- Modal Catatan (Bootstrap 4) --}}
             <div class="modal fade" id="catatanModal-{{ $item['alternatif']['id'] }}" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -949,39 +929,6 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Detail Perhitungan -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color: white;">
-                <h5 class="modal-title" id="detailModalLabel">
-                    <i class="fas fa-calculator mr-2"></i>
-                    Detail Perhitungan SAW - Dhuafa
-                </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="detailContent">
-                    <div class="text-center">
-                        <div class="spinner-border text-success" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <p class="mt-2">Memuat data perhitungan...</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    <i class="fas fa-times mr-1"></i>
-                    Tutup
-                </button>
-            </div>
         </div>
     </div>
 </div>
@@ -1056,72 +1003,6 @@ function exportResults() {
     link.click();
     document.body.removeChild(link);
 }
-
-// Show detail calculation modal
-function showDetail(alternatifId, namaAlternatif) {
-    // Update modal title
-    document.getElementById('detailModalLabel').innerHTML = `
-        <i class="fas fa-calculator mr-2"></i>
-        Detail Perhitungan SAW Dhuafa - ${namaAlternatif}
-    `;
-    
-    // Show modal
-    $('#detailModal').modal('show');
-    
-    // Simulate loading - replace with actual AJAX call
-    setTimeout(() => {
-        loadDetailData(alternatifId, namaAlternatif);
-    }, 500);
-}
-
-// Load detail data (replace with actual AJAX call to your backend)
-function loadDetailData(alternatifId, namaAlternatif) {
-    // Sample data for Dhuafa - replace with actual AJAX call
-    const detailData = {
-        nama: namaAlternatif,
-        kriteria: [
-            { 
-                nama: 'IPK', 
-                bobot: 0.3, 
-                nilai_asli: 3.75, 
-                normalisasi: 0.9375, 
-                bobot_x_normalisasi: 0.28125,
-                tipe: 'benefit'
-            },
-            { 
-                nama: 'Penghasilan Orang Tua', 
-                bobot: 0.3, 
-                nilai_asli: 1500000, 
-                normalisasi: 0.9, 
-                bobot_x_normalisasi: 0.27,
-                tipe: 'cost'
-            },
-            { 
-                nama: 'Jumlah Tanggungan', 
-                bobot: 0.2, 
-                nilai_asli: 5, 
-                normalisasi: 1.0, 
-                bobot_x_normalisasi: 0.2,
-                tipe: 'benefit'
-            },
-            { 
-                nama: 'Kondisi Rumah', 
-                bobot: 0.15, 
-                nilai_asli: 75, 
-                normalisasi: 0.75, 
-                bobot_x_normalisasi: 0.1125,
-                tipe: 'benefit'
-            },
-            { 
-                nama: 'Prestasi', 
-                bobot: 0.05, 
-                nilai_asli: 80, 
-                normalisasi: 0.8, 
-                bobot_x_normalisasi: 0.04,
-                tipe: 'benefit'
-            }
-        ]
-    };
     
     // Calculate total
     const totalAkhir = detailData.kriteria.reduce((sum, item) => sum + item.bobot_x_normalisasi, 0);

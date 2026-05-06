@@ -443,6 +443,13 @@
                     <i class="fas fa-chart-bar me-2" style="color:var(--primary-color);"></i>
                     Grafik Pendaftar per Periode
                 </p>
+                 <div class="text-muted">
+            <i class="fas fa-calendar-alt me-1"></i>
+            Periode Aktif:
+            <strong>
+                {{ $periodeAktif->nama_periode ?? 'Belum ada periode aktif' }}
+            </strong>
+        </div>
                 <p class="chart-card-subtitle">Perbandingan jumlah pendaftar Beasiswa Dhuafa dan Kader</p>
             </div>
             <div class="chart-filter-group" id="filterGroup">
@@ -735,7 +742,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (item.kategori === 'kader')  map[item.nama_periode].kader  = item.total;
     });
 
-    const ALL_LABELS = Object.keys(map).length ? Object.keys(map) : ['Belum ada data'];
+    const ALL_LABELS = Object.keys(map).length
+    ? Object.keys(map).sort((a, b) => {
+        const tahunA = parseInt(a.split('/')[0]);
+        const tahunB = parseInt(b.split('/')[0]);
+        return tahunA - tahunB;
+    })
+    : ['Belum ada data'];
+    
     const ALL_DHUAFA = ALL_LABELS.map(p => map[p]?.dhuafa ?? 0);
     const ALL_KADER  = ALL_LABELS.map(p => map[p]?.kader  ?? 0);
 

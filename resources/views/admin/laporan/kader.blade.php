@@ -600,12 +600,17 @@
                         <i class="fas fa-calendar"></i>
                         Periode
                     </label>
-                    <select name="periode" class="form-select">
-                        <option value="">Semua Periode</option>
-                        <option value="2024" {{ request('periode') == '2024' ? 'selected' : '' }}>2024</option>
-                        <option value="2023" {{ request('periode') == '2023' ? 'selected' : '' }}>2023</option>
-                        <option value="2022" {{ request('periode') == '2022' ? 'selected' : '' }}>2022</option>
-                    </select>
+                                        <select name="periode" class="form-select">
+                    <option value="">Semua Periode</option>
+
+                    @foreach($periodes as $p)
+                        <option value="{{ $p->id }}" 
+                            {{ request('periode') == $p->id ? 'selected' : '' }}>
+                            {{ $p->nama_periode }}
+                        </option>
+                    @endforeach
+
+                </select>
                 </div>
 
                 <div class="form-group">
@@ -623,19 +628,6 @@
 
                 <div class="form-group">
                     <label class="form-label">
-                        <i class="fas fa-layer-group"></i>
-                        Kategori
-                    </label>
-                    <select name="kategori" class="form-select">
-                        <option value="">Semua Kategori</option>
-                        <option value="organisasi" {{ request('kategori') == 'organisasi' ? 'selected' : '' }}>Organisasi</option>
-                        <option value="prestasi" {{ request('kategori') == 'prestasi' ? 'selected' : '' }}>Prestasi</option>
-                        <option value="leadership" {{ request('kategori') == 'leadership' ? 'selected' : '' }}>Leadership</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
                         <i class="fas fa-sort-amount-down"></i>
                         Urutkan
                     </label>
@@ -643,8 +635,6 @@
                         <option value="ranking_asc" {{ request('sort') == 'ranking_asc' ? 'selected' : '' }}>Ranking Terbaik</option>
                         <option value="score_desc" {{ request('sort') == 'score_desc' ? 'selected' : '' }}>Nilai Tertinggi</option>
                         <option value="score_asc" {{ request('sort') == 'score_asc' ? 'selected' : '' }}>Nilai Terendah</option>
-                        <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Nama A-Z</option>
-                        <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Nama Z-A</option>
                     </select>
                 </div>
             </div>
@@ -731,9 +721,7 @@
                         <tr>
                             <th style="width: 50px;">No</th>
                             <th>Nama Lengkap</th>
-                            <th>NIM/NPM</th>
-                            <th>Universitas</th>
-                            <th>Pengalaman Organisasi</th>
+                            <th>NIM</th>
                             <th style="width: 120px;">Nilai SAW</th>
                             <th style="width: 100px;">Ranking</th>
                             <th style="width: 140px;">Status Beasiswa</th>
@@ -748,24 +736,10 @@
                             {{-- Nama --}}
                             <td>
                                 <strong>{{ $data->alternatif->nama }}</strong><br>
-                                <small class="text-muted">{{ $data->alternatif->email }}</small>
                             </td>
 
                             {{-- NIM --}}
                             <td>{{ $data->alternatif->nim ?? 'N/A' }}</td>
-
-                            {{-- Universitas --}}
-                            <td>
-                                {{ $data->alternatif->universitas ?? '-' }}<br>
-                                <small class="text-muted">{{ $data->alternatif->jurusan ?? '-' }}</small>
-                            </td>
-
-                            {{-- Pengalaman Organisasi --}}
-                            <td>
-                                <small class="text-muted">
-                                    {{ Str::limit($data->alternatif->pengalaman_organisasi ?? '-', 50) }}
-                                </small>
-                            </td>
 
                             {{-- Nilai SAW --}}
                             <td>

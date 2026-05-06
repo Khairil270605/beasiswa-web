@@ -5,1187 +5,1102 @@
 @section('content')
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
     :root {
-        --primary-color: #ff6b35;
-        --secondary-color: #f7931e;
-        --accent-color: #dc3545;
-        --success-color: #28a745;
-        --warning-color: #ffc107;
-        --info-color: #17a2b8;
+        --primary: #e85d26;
+        --primary-light: #f07a48;
+        --primary-ultra-light: #fff4f0;
+        --secondary: #f5a623;
+        --success: #16a34a;
+        --info: #0284c7;
+        --danger: #dc2626;
+        --surface: #ffffff;
+        --surface-2: #fafafa;
+        --surface-3: #f4f4f5;
+        --border: #e4e4e7;
+        --border-focus: #e85d26;
+        --text-primary: #18181b;
+        --text-secondary: #71717a;
+        --text-muted: #a1a1aa;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+        --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+        --shadow-lg: 0 20px 40px rgba(0,0,0,.1);
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
     }
 
-    .create-container {
-        padding: 24px;
-        background-color: #f8f9fa;
+    * { box-sizing: border-box; }
+
+    body { font-family: 'DM Sans', sans-serif; }
+
+    .page-wrap {
+        background: #f1f0ef;
         min-height: 100vh;
+        padding: 28px 20px 60px;
     }
 
-    .main-container {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        margin: 20px auto;
-        max-width: 1000px;
-    }
-
-    .header-section {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: white;
-        padding: 2rem;
-        text-align: center;
+    /* ── Header Card ── */
+    .header-card {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        border-radius: var(--radius-xl);
+        padding: 2rem 2.5rem;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 8px 32px rgba(232,93,38,.35);
     }
 
-    .header-section h1 {
-        font-size: 1.8rem;
-        font-weight: bold;
-        margin: 0;
+    .header-card::before {
+        content: '';
+        position: absolute;
+        top: -60px; right: -60px;
+        width: 200px; height: 200px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.08);
     }
 
-    .kategori-selector {
-        background: white;
-        padding: 2rem;
-        margin: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    .header-card::after {
+        content: '';
+        position: absolute;
+        bottom: -40px; right: 80px;
+        width: 130px; height: 130px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.06);
     }
 
-    .kategori-selector h3 {
-        color: var(--primary-color);
+    .header-icon-wrap {
+        width: 60px; height: 60px;
+        background: rgba(255,255,255,.2);
+        border-radius: var(--radius-md);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.6rem;
+        flex-shrink: 0;
+    }
+
+    .header-text h1 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+        margin: 0 0 4px;
+        line-height: 1.2;
+    }
+
+    .header-text p { color: rgba(255,255,255,.8); margin: 0; font-size: .9rem; }
+
+    .btn-back-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        color: var(--text-secondary);
+        padding: 8px 16px;
+        border-radius: 99px;
+        font-size: .85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all .2s;
+        margin-bottom: 20px;
+    }
+
+    .btn-back-pill:hover {
+        background: var(--primary-ultra-light);
+        border-color: var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    /* ── Kategori Selector ── */
+    .kategori-card-wrap {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+    }
+
+    .kategori-label {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: .75rem;
         font-weight: 700;
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-
-    .kategori-options {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .kategori-card {
-        flex: 1;
-        min-width: 250px;
-        max-width: 350px;
-        border: 3px solid #e9ecef;
-        border-radius: 15px;
-        padding: 2rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-    }
-
-    .kategori-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .kategori-card input[type="radio"] {
-        display: none;
-    }
-
-    .kategori-card input[type="radio"]:checked + .card-content {
-        border-color: var(--primary-color);
-    }
-
-    .kategori-card input[type="radio"]:checked ~ .kategori-card {
-        border-color: var(--primary-color);
-        background: rgba(255, 107, 53, 0.05);
-    }
-
-    .kategori-card.active {
-        border-color: var(--primary-color);
-        background: rgba(255, 107, 53, 0.05);
-    }
-
-    .kategori-icon {
-        font-size: 4rem;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: var(--text-muted);
         margin-bottom: 1rem;
-    }
-
-    .kategori-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #212529;
-        margin-bottom: 0.5rem;
-    }
-
-    .kategori-desc {
-        color: #6c757d;
-        font-size: 0.9rem;
-    }
-
-    .form-content {
-        padding: 2rem;
-        display: none;
-    }
-
-    .form-content.active {
         display: block;
-        animation: slideIn 0.5s ease-out;
     }
 
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .kategori-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
 
-    .form-section {
-        background: #f8f9fa;
-        border-radius: 15px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        border-left: 4px solid var(--primary-color);
-    }
-
-    .section-title {
-        color: var(--primary-color);
-        font-weight: 700;
-        margin-bottom: 1.5rem;
+    .kat-option {
+        border: 2px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 1.2rem;
+        cursor: pointer;
+        transition: all .25s;
         display: flex;
         align-items: center;
         gap: 1rem;
+        background: var(--surface-2);
     }
 
-    .section-icon {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        border-radius: 15px;
+    .kat-option input[type="radio"] { display: none; }
+
+    .kat-option:hover {
+        border-color: var(--primary-light);
+        background: var(--primary-ultra-light);
+    }
+
+    .kat-option.active {
+        border-color: var(--primary);
+        background: var(--primary-ultra-light);
+        box-shadow: 0 0 0 4px rgba(232,93,38,.08);
+    }
+
+    .kat-emoji {
+        font-size: 2rem;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+
+    .kat-info .kat-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        font-size: .95rem;
+        color: var(--text-primary);
+        margin: 0 0 2px;
+    }
+
+    .kat-info .kat-desc {
+        font-size: .78rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    /* ── Main Layout: full width form ── */
+    .form-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* ── Form Sections ── */
+    .form-body { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-card {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+    }
+
+    .card-header {
         display: flex;
         align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.2rem;
+        gap: 12px;
+        padding: 1.1rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface-2);
     }
 
-    .form-floating {
-        position: relative;
-        margin-bottom: 1.5rem;
+    .card-icon {
+        width: 36px; height: 36px;
+        border-radius: var(--radius-sm);
+        display: flex; align-items: center; justify-content: center;
+        font-size: .95rem;
+        flex-shrink: 0;
     }
 
-    .form-floating input,
-    .form-floating select,
-    .form-floating textarea {
-        border: 2px solid #e9ecef;
-        border-radius: 15px;
-        padding: 1rem 1.25rem;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.8);
+    .card-icon.orange { background: rgba(232,93,38,.12); color: var(--primary); }
+    .card-icon.blue   { background: rgba(2,132,199,.12);   color: var(--info); }
+    .card-icon.green  { background: rgba(22,163,74,.12);    color: var(--success); }
+    .card-icon.amber  { background: rgba(245,166,35,.15);   color: #b45309; }
+    .card-icon.rose   { background: rgba(220,38,38,.1);     color: var(--danger); }
+
+    .card-title {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        font-size: .95rem;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .card-subtitle { font-size: .78rem; color: var(--text-secondary); margin: 2px 0 0; }
+
+    .card-body { padding: 1.5rem; }
+
+    /* ── Fields ── */
+    .field-group {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    .field-group.cols-2 { grid-template-columns: 1fr 1fr; }
+    .field-group.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    .field-wrap { display: flex; flex-direction: column; gap: 5px; }
+
+    .field-label {
+        font-size: .78rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        letter-spacing: .01em;
+    }
+
+    .field-label .req { color: var(--danger); margin-left: 2px; }
+
+    .field-control {
         width: 100%;
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 9px 13px;
+        font-size: .88rem;
+        font-family: 'DM Sans', sans-serif;
+        color: var(--text-primary);
+        background: var(--surface);
+        transition: all .2s;
+        line-height: 1.5;
     }
 
-    .form-floating input:focus,
-    .form-floating select:focus,
-    .form-floating textarea:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
-        background: white;
+    .field-control:focus {
         outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(232,93,38,.1);
+        background: #fff;
     }
 
-    .form-floating label {
-        padding: 0 0.5rem;
-        color: #6c757d;
-        font-weight: 500;
-        position: absolute;
-        top: 1rem;
-        left: 1.25rem;
-        pointer-events: none;
-        transition: all 0.3s ease;
-        background: transparent;
+    textarea.field-control { resize: vertical; min-height: 90px; }
+
+    .info-banner {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: var(--radius-sm);
+        padding: 10px 14px;
+        font-size: .8rem;
+        color: #1e40af;
+        margin-bottom: 16px;
     }
 
-    .form-floating input:focus + label,
-    .form-floating input:not(:placeholder-shown) + label,
-    .form-floating select:focus + label,
-    .form-floating select:not([value=""]) + label,
-    .form-floating textarea:focus + label,
-    .form-floating textarea:not(:placeholder-shown) + label {
-        top: -0.5rem;
-        left: 1rem;
-        font-size: 0.85rem;
-        color: var(--primary-color);
+    .info-banner i { margin-top: 1px; flex-shrink: 0; }
+
+    /* ── Upload Grid (compact!) ── */
+    .upload-section-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-size: .8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        color: var(--text-secondary);
+        margin: 20px 0 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
     }
 
-    .upload-area {
-        border: 2px dashed #dee2e6;
-        border-radius: 15px;
-        padding: 2rem;
+    .upload-section-title:first-child { margin-top: 0; }
+
+    .upload-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .upload-tile {
+        border: 1.5px dashed var(--border);
+        border-radius: var(--radius-md);
+        padding: 14px 10px;
         text-align: center;
-        transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.5);
-        margin-bottom: 1.5rem;
+        cursor: pointer;
+        transition: all .25s;
+        background: var(--surface-2);
+        position: relative;
+        min-height: 110px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
     }
 
-    .upload-area:hover {
-        border-color: var(--primary-color);
-        background: rgba(255, 107, 53, 0.05);
+    .upload-tile:hover {
+        border-color: var(--primary-light);
+        background: var(--primary-ultra-light);
     }
 
-    .file-input {
+    .upload-tile.has-file {
+        border-color: var(--success);
+        border-style: solid;
+        background: #f0fdf4;
+    }
+
+    .upload-tile input[type="file"] { display: none; }
+
+    .upload-tile-icon {
+        font-size: 1.4rem;
+        color: var(--text-muted);
+        transition: color .2s;
+        line-height: 1;
+    }
+
+    .upload-tile:hover .upload-tile-icon { color: var(--primary); }
+    .upload-tile.has-file .upload-tile-icon { color: var(--success); }
+
+    .upload-tile-label {
+        font-size: .72rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+
+    .upload-tile-hint {
+        font-size: .65rem;
+        color: var(--text-muted);
+        line-height: 1.3;
+    }
+
+    .upload-tile-filename {
+        font-size: .65rem;
+        color: var(--success);
+        font-weight: 600;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         display: none;
     }
 
-    .upload-btn {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        border: none;
-        color: white;
-        padding: 0.75rem 2rem;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        margin: 0.5rem;
-        cursor: pointer;
+    .upload-tile.has-file .upload-tile-filename { display: block; }
+    .upload-tile.has-file .upload-tile-hint { display: none; }
+
+    .req-badge {
+        position: absolute;
+        top: 6px; right: 6px;
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: var(--danger);
+        opacity: .6;
     }
 
-    .upload-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
-    }
+    /* ── Section: kader only ── */
+    .kader-section { display: none; }
+    .kader-section.active { display: block; }
+    .dhuafa-section { display: block; }
+    .dhuafa-section.hidden { display: none; }
 
-    .file-preview {
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 0.5rem 0;
+    /* ── Submit ── */
+    .submit-card {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-left: 4px solid var(--success-color);
+        gap: 1rem;
     }
 
-    .required-star {
-        color: var(--accent-color);
-    }
+    .submit-hint { font-size: .8rem; color: var(--text-secondary); }
+    .submit-hint strong { color: var(--text-primary); display: block; font-weight: 600; font-size: .88rem; }
 
     .btn-submit {
-        background: linear-gradient(135deg, var(--success-color), var(--info-color));
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
         color: white;
-        padding: 1rem 3rem;
-        border-radius: 25px;
         border: none;
-        font-weight: 600;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
+        padding: 12px 28px;
+        border-radius: 99px;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
+        font-size: .92rem;
         cursor: pointer;
-        width: 100%;
-        margin-top: 2rem;
+        transition: all .25s;
+        box-shadow: 0 4px 16px rgba(232,93,38,.35);
+        white-space: nowrap;
     }
 
     .btn-submit:hover {
         transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        box-shadow: 0 8px 24px rgba(232,93,38,.4);
     }
 
-    .btn-back {
-        background: #6c757d;
-        color: white;
-        padding: 0.75rem 2rem;
-        border-radius: 25px;
-        border: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        margin-bottom: 1rem;
+    /* ── Alert ── */
+    .alert-err {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: var(--danger);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.25rem;
+        margin-bottom: 16px;
+        font-size: .85rem;
     }
 
-    .btn-back:hover {
-        background: #5a6268;
-        color: white;
-        text-decoration: none;
-        transform: translateY(-2px);
+    .alert-err strong { display: block; margin-bottom: 6px; font-size: .9rem; }
+
+    @media (max-width: 900px) {
+        .upload-grid { grid-template-columns: repeat(2, 1fr); }
+        .field-group.cols-3 { grid-template-columns: 1fr 1fr; }
     }
 
-    .form-info {
-        background: rgba(23, 162, 184, 0.1);
-        border-left: 4px solid var(--info-color);
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1.5rem;
-        color: #0c5460;
-    }
-
-    /* Section khusus yang bisa di-hide */
-    .section-kader-only {
-        display: none;
-    }
-
-    .section-kader-only.active {
-        display: block;
-    }
-
-    .doc-dhuafa-only {
-        display: none;
-    }
-
-    .doc-dhuafa-only.active {
-        display: block;
-    }
-
-    .doc-kader-only {
-        display: none;
-    }
-
-    .doc-kader-only.active {
-        display: block;
-    }
-
-    @media (max-width: 768px) {
-        .main-container {
-            margin: 10px;
-            border-radius: 15px;
-        }
-        
-        .kategori-options {
-            flex-direction: column;
-        }
-        
-        .kategori-card {
-            max-width: 100%;
-        }
+    @media (max-width: 580px) {
+        .kategori-grid { grid-template-columns: 1fr; }
+        .upload-grid { grid-template-columns: repeat(2, 1fr); }
+        .field-group.cols-2, .field-group.cols-3 { grid-template-columns: 1fr; }
+        .submit-card { flex-direction: column; }
+        .btn-submit { width: 100%; justify-content: center; }
     }
 </style>
 
-<div class="create-container">
-    <div class="main-container">
-        <!-- Header -->
-        <div class="header-section">
-            <h1>
-                <i class="fas fa-plus-circle me-3"></i>
-                Tambah Pendaftar Beasiswa LAZISMU
-            </h1>
-            <p class="mb-0 mt-2">Silakan pilih kategori dan lengkapi semua data dengan benar</p>
+<div class="page-wrap">
+
+    <!-- Header -->
+    <div class="header-card">
+        <div class="header-icon-wrap">🎓</div>
+        <div class="header-text">
+            <h1>Tambah Pendaftar Beasiswa</h1>
+            <p>LAZISMU · Isi semua data dengan lengkap dan benar</p>
         </div>
+    </div>
 
-        <div style="padding: 2rem;">
-            <a href="{{ route('admin.pendaftar.index') }}" class="btn-back">
-                <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar
-            </a>
+    <a href="{{ route('admin.pendaftar.index') }}" class="btn-back-pill">
+        <i class="fas fa-arrow-left"></i> Kembali ke Daftar
+    </a>
+
+    @if($errors->any())
+    <div class="alert-err">
+        <strong><i class="fas fa-exclamation-triangle me-2"></i>Terjadi kesalahan:</strong>
+        <ul class="mb-0 ps-3">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <!-- Kategori -->
+    <div class="kategori-card-wrap">
+        <span class="kategori-label"><i class="fas fa-layer-group me-1"></i>Kategori Beasiswa</span>
+        <div class="kategori-grid">
+            <label class="kat-option active" id="card-dhuafa">
+                <input type="radio" name="jenis_pendaftaran_display" value="dhuafa" checked>
+                <span class="kat-emoji">📋</span>
+                <div class="kat-info">
+                    <p class="kat-title">Beasiswa Dhuafa</p>
+                    <p class="kat-desc">Mahasiswa dari keluarga kurang mampu</p>
+                </div>
+            </label>
+            <label class="kat-option" id="card-kader">
+                <input type="radio" name="jenis_pendaftaran_display" value="kader">
+                <span class="kat-emoji">🕌</span>
+                <div class="kat-info">
+                    <p class="kat-title">Beasiswa Kader</p>
+                    <p class="kat-desc">Kader aktif Muhammadiyah</p>
+                </div>
+            </label>
         </div>
+    </div>
 
-        <!-- Alert Errors -->
-        @if($errors->any())
-        <div class="alert alert-danger mx-4">
-            <strong>Terjadi kesalahan:</strong>
-            <ul class="mb-0">
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+    <!-- Form -->
+    <form id="createForm" action="{{ route('admin.alternatif.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="jenis_pendaftaran" id="jenis_pendaftaran" value="dhuafa">
 
-        <!-- Kategori Selector -->
-        <div class="kategori-selector">
-            <h3><i class="fas fa-clipboard-list me-2"></i>Pilih Kategori Beasiswa</h3>
-            <div class="kategori-options">
-                <!-- Dhuafa -->
-                <label class="kategori-card" id="card-dhuafa">
-                    <input type="radio" name="jenis_pendaftaran_display" value="dhuafa" checked>
-                    <div class="card-content">
-                        <div class="kategori-icon">📋</div>
-                        <div class="kategori-title">Beasiswa Dhuafa</div>
-                        <div class="kategori-desc">Untuk mahasiswa dari keluarga kurang mampu</div>
-                    </div>
-                </label>
+        <div class="form-layout">
 
-                <!-- Kader -->
-                <label class="kategori-card" id="card-kader">
-                    <input type="radio" name="jenis_pendaftaran_display" value="kader">
-                    <div class="card-content">
-                        <div class="kategori-icon">🎓</div>
-                        <div class="kategori-title">Beasiswa Kader</div>
-                        <div class="kategori-desc">Untuk kader aktif Muhammadiyah</div>
-                    </div>
-                </label>
-            </div>
-        </div>
+            <!-- Form Body (full width, no sidebar) -->
+            <div class="form-body">
 
-        <!-- Form Content -->
-        <form id="createForm" action="{{ route('admin.alternatif.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="hidden" name="jenis_pendaftaran" id="jenis_pendaftaran" value="dhuafa">
-
-            <div class="form-content active">
-                
-                <!-- Data Pribadi -->
-                <div class="form-section">
-                    <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-user"></i>
+                <!-- ① Data Pribadi -->
+                <div class="form-card" id="sec-pribadi">
+                    <div class="card-header">
+                        <div class="card-icon orange"><i class="fas fa-user"></i></div>
+                        <div>
+                            <p class="card-title">Data Pribadi</p>
+                            <p class="card-subtitle">Sesuaikan dengan dokumen resmi</p>
                         </div>
-                        Data Pribadi <span class="required-star">*</span>
-                    </h3>
-
-                    <div class="form-info">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>Petunjuk:</strong> Pastikan semua data pribadi sesuai dengan dokumen resmi.
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="nama" placeholder=" " required>
-                                <label>Nama Lengkap <span class="required-star">*</span></label>
+                    <div class="card-body">
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Nama Lengkap <span class="req">*</span></label>
+                                <input type="text" name="nama" class="field-control" placeholder="Masukkan nama lengkap" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">NIK <span class="req">*</span></label>
+                                <input type="text" name="nik" class="field-control" placeholder="16 digit NIK" maxlength="16" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="nik" placeholder=" " maxlength="16" required>
-                                <label>NIK (Nomor Induk Kependudukan) <span class="required-star">*</span></label>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Tempat Lahir <span class="req">*</span></label>
+                                <input type="text" name="tempat_lahir" class="field-control" placeholder="Kota tempat lahir" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Tanggal Lahir <span class="req">*</span></label>
+                                <input type="date" name="tanggal_lahir" class="field-control" required>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="tempat_lahir" placeholder=" " required>
-                                <label>Tempat Lahir <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" name="tanggal_lahir" placeholder=" " required>
-                                <label>Tanggal Lahir <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <select class="form-select" name="jenis_kelamin" required>
-                                    <option value="">Pilih Jenis Kelamin</option>
+                        <div class="field-group cols-3">
+                            <div class="field-wrap">
+                                <label class="field-label">Jenis Kelamin <span class="req">*</span></label>
+                                <select name="jenis_kelamin" class="field-control" required>
+                                    <option value="">Pilih</option>
                                     <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
                                 </select>
-                                <label>Jenis Kelamin <span class="required-star">*</span></label>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">No. Telepon <span class="req">*</span></label>
+                                <input type="tel" name="no_telepon" class="field-control" placeholder="08xxxxxxxxxx" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Alamat Email <span class="req">*</span></label>
+                                <input type="email" name="email" class="field-control" placeholder="nama@email.com" required>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-floating">
-                        <textarea class="form-control" name="alamat" placeholder=" " style="height: 120px" required></textarea>
-                        <label>Alamat Lengkap <span class="required-star">*</span></label>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="tel" class="form-control" name="no_telepon" placeholder=" " required>
-                                <label>Nomor Telepon <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="email" class="form-control" name="email" placeholder=" " required>
-                                <label>Alamat Email <span class="required-star">*</span></label>
+                        <div class="field-group">
+                            <div class="field-wrap">
+                                <label class="field-label">Alamat Lengkap <span class="req">*</span></label>
+                                <textarea name="alamat" class="field-control" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota" required></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Data Akademik -->
-                <div class="form-section">
-                    <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-graduation-cap"></i>
+                <!-- ② Data Akademik -->
+                <div class="form-card" id="sec-akademik">
+                    <div class="card-header">
+                        <div class="card-icon blue"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <p class="card-title">Data Akademik</p>
+                            <p class="card-subtitle">Sesuaikan dengan data di kampus</p>
                         </div>
-                        Data Akademik <span class="required-star">*</span>
-                    </h3>
-
-                    <div class="form-info">
-                        <i class="fas fa-university me-2"></i>
-                        <strong>Info:</strong> Data akademik harus sesuai dengan data di kampus.
                     </div>
-
-                    <div class="form-floating">
-                        <input type="text" class="form-control" name="asal_kampus" placeholder=" " required>
-                        <label>Asal Kampus/Universitas <span class="required-star">*</span></label>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="nim" placeholder=" " required>
-                                <label>NIM (Nomor Induk Mahasiswa) <span class="required-star">*</span></label>
+                    <div class="card-body">
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Asal Kampus/Universitas <span class="req">*</span></label>
+                                <input type="text" name="asal_kampus" class="field-control" placeholder="Nama universitas" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">NIM <span class="req">*</span></label>
+                                <input type="text" name="nim" class="field-control" placeholder="Nomor Induk Mahasiswa" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <select class="form-select" name="semester" required>
-                                    <option value="">Pilih Semester</option>
-                                    <option value="1">Semester 1</option>
-                                    <option value="2">Semester 2</option>
-                                    <option value="3">Semester 3</option>
-                                    <option value="4">Semester 4</option>
-                                    <option value="5">Semester 5</option>
-                                    <option value="6">Semester 6</option>
-                                    <option value="7">Semester 7</option>
-                                    <option value="8">Semester 8</option>
+                        <div class="field-group cols-3">
+                            <div class="field-wrap">
+                                <label class="field-label">Fakultas <span class="req">*</span></label>
+                                <input type="text" name="fakultas" class="field-control" placeholder="Nama fakultas" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Program Studi <span class="req">*</span></label>
+                                <input type="text" name="jurusan" class="field-control" placeholder="Nama prodi" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Semester <span class="req">*</span></label>
+                                <select name="semester" class="field-control" required>
+                                    <option value="">Pilih</option>
+                                    @for($i = 1; $i <= 8; $i++)
+                                        <option value="{{ $i }}">Semester {{ $i }}</option>
+                                    @endfor
                                 </select>
-                                <label>Semester Saat Ini <span class="required-star">*</span></label>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="fakultas" placeholder=" " required>
-                                <label>Fakultas <span class="required-star">*</span></label>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">IPK <span class="req">*</span></label>
+                                <input type="number" name="ipk" class="field-control" placeholder="0.00 – 4.00" step="0.01" min="0" max="4" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Tahun Masuk <span class="req">*</span></label>
+                                <input type="number" name="tahun_masuk" class="field-control" placeholder="{{ date('Y') }}" min="2015" max="{{ date('Y') + 1 }}">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="jurusan" placeholder=" " required>
-                                <label>Program Studi/Jurusan <span class="required-star">*</span></label>
+                        <div class="field-group">
+                            <div class="field-wrap">
+                                <label class="field-label">Prestasi Akademik/Non-Akademik <small style="font-weight:400;color:var(--text-muted)">(Opsional)</small></label>
+                                <textarea name="prestasi" class="field-control" placeholder="Tuliskan prestasi yang pernah diraih..."></textarea>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" name="ipk" placeholder=" " step="0.01" min="0" max="4" required>
-                                <label>IPK (Indeks Prestasi Kumulatif) <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" name="tahun_masuk" placeholder=" " min="2015" max="{{ date('Y') + 1 }}">
-                                <label>Tahun Masuk <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-floating">
-                        <textarea class="form-control" name="prestasi" placeholder=" " style="height: 120px"></textarea>
-                        <label>Prestasi Akademik/Non-Akademik (Opsional)</label>
                     </div>
                 </div>
 
-                <!-- Data Organisasi (KHUSUS KADER) -->
-                <div class="form-section section-kader-only" id="section-organisasi">
-                    <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-users-cog"></i>
+                <!-- ③ Organisasi (KADER ONLY) -->
+                <div class="form-card kader-section" id="sec-organisasi">
+                    <div class="card-header">
+                        <div class="card-icon green"><i class="fas fa-users-cog"></i></div>
+                        <div>
+                            <p class="card-title">Data Organisasi Muhammadiyah</p>
+                            <p class="card-subtitle">Khusus kader aktif organisasi</p>
                         </div>
-                        Data Organisasi Muhammadiyah <span class="required-star">*</span>
-                    </h3>
-
-                    <div class="form-info">
-                        <i class="fas fa-mosque me-2"></i>
-                        <strong>Khusus:</strong> Data ini khusus untuk kader Muhammadiyah yang aktif dalam organisasi.
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <select class="form-select" name="jenis_organisasi" id="jenis_organisasi">
-                                    <option value="">Pilih Jenis Organisasi</option>
-                                    <option value="Ranting Muhammadiyah">Ranting Muhammadiyah</option>
-                                    <option value="Ranting Aisyiyah">Ranting Aisyiyah</option>
-                                    <option value="IPM">Ikatan Pelajar Muhammadiyah (IPM)</option>
-                                    <option value="IMM">Ikatan Mahasiswa Muhammadiyah (IMM)</option>
-                                    <option value="Pemuda Muhammadiyah">Pemuda Muhammadiyah</option>
-                                    <option value="Nasyiatul Aisyiyah">Nasyiatul Aisyiyah</option>
-                                    <option value="Kokam">Kokam (Komando Kesiapsiagaan)</option>
-                                    <option value="HW">Hizbul Wathan</option>
-                                    <option value="Tapak Suci">Tapak Suci</option>
+                    <div class="card-body">
+                        <div class="info-banner">
+                            <i class="fas fa-mosque"></i>
+                            Data ini khusus diisi oleh kader aktif Muhammadiyah dan organisasi otonom.
+                        </div>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Jenis Organisasi <span class="req">*</span></label>
+                                <select name="jenis_organisasi" id="jenis_organisasi" class="field-control">
+                                    <option value="">Pilih organisasi</option>
+                                    <option>Ranting Muhammadiyah</option>
+                                    <option>Ranting Aisyiyah</option>
+                                    <option>IPM</option>
+                                    <option>IMM</option>
+                                    <option>Pemuda Muhammadiyah</option>
+                                    <option>Nasyiatul Aisyiyah</option>
+                                    <option>Kokam</option>
+                                    <option>HW</option>
+                                    <option>Tapak Suci</option>
                                 </select>
-                                <label>Jenis Organisasi <span class="required-star">*</span></label>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Nama Organisasi/Ranting <span class="req">*</span></label>
+                                <input type="text" name="nama_organisasi" id="nama_organisasi" class="field-control" placeholder="Nama ranting / cabang">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="nama_organisasi" id="nama_organisasi" placeholder=" ">
-                                <label>Nama Organisasi/Ranting <span class="required-star">*</span></label>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Jabatan <span class="req">*</span></label>
+                                <input type="text" name="jabatan" id="jabatan" class="field-control" placeholder="Jabatan dalam organisasi">
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Tahun Bergabung <span class="req">*</span></label>
+                                <input type="number" name="tahun_bergabung" id="tahun_bergabung" class="field-control" placeholder="2020" min="2010" max="{{ date('Y') }}">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="jabatan" id="jabatan" placeholder=" ">
-                                <label>Jabatan dalam Organisasi <span class="required-star">*</span></label>
+                        <div class="field-group">
+                            <div class="field-wrap">
+                                <label class="field-label">Riwayat Aktivitas <span class="req">*</span></label>
+                                <textarea name="riwayat_aktivitas" id="riwayat_aktivitas" class="field-control" placeholder="Aktivitas yang pernah diikuti dalam Muhammadiyah..."></textarea>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" name="tahun_bergabung" id="tahun_bergabung" placeholder=" " min="2010" max="2025">
-                                <label>Tahun Bergabung <span class="required-star">*</span></label>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Kontribusi <span class="req">*</span></label>
+                                <textarea name="kontribusi" id="kontribusi" class="field-control" style="min-height:80px" placeholder="Kontribusi nyata untuk organisasi..."></textarea>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Rencana Masa Depan <span class="req">*</span></label>
+                                <textarea name="rencana_masa_depan" id="rencana_masa_depan" class="field-control" style="min-height:80px" placeholder="Rencana ke depan untuk Muhammadiyah..."></textarea>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-floating">
-                        <textarea class="form-control" name="riwayat_aktivitas" id="riwayat_aktivitas" placeholder=" " style="height: 150px"></textarea>
-                        <label>Riwayat Aktivitas dalam Muhammadiyah <span class="required-star">*</span></label>
-                    </div>
-
-                    <div class="form-floating">
-                        <textarea class="form-control" name="kontribusi" id="kontribusi" placeholder=" " style="height: 120px"></textarea>
-                        <label>Kontribusi untuk Muhammadiyah <span class="required-star">*</span></label>
-                    </div>
-
-                    <div class="form-floating">
-                        <textarea class="form-control" name="rencana_masa_depan" id="rencana_masa_depan" placeholder=" " style="height: 120px"></textarea>
-                        <label>Rencana masa depan untuk Muhammadiyah <span class="required-star">*</span></label>
                     </div>
                 </div>
 
-                <!-- Data Ekonomi Keluarga -->
-                <div class="form-section">
-                    <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        Data Ekonomi Keluarga <span class="required-star">*</span>
-                    </h3>
-
-                    <div class="form-info">
-                        <i class="fas fa-users me-2"></i>
-                        <strong>Penting:</strong> Data ekonomi keluarga akan digunakan untuk menilai kebutuhan beasiswa.
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="nama_ayah" placeholder=" " required>
-                                <label>Nama Ayah <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="pekerjaan_ayah" placeholder=" " required>
-                                <label>Pekerjaan Ayah <span class="required-star">*</span></label>
-                            </div>
+                <!-- ④ Ekonomi Keluarga -->
+                <div class="form-card" id="sec-ekonomi">
+                    <div class="card-header">
+                        <div class="card-icon amber"><i class="fas fa-home"></i></div>
+                        <div>
+                            <p class="card-title">Data Ekonomi Keluarga</p>
+                            <p class="card-subtitle">Digunakan untuk penilaian kebutuhan beasiswa</p>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="nama_ibu" placeholder=" " required>
-                                <label>Nama Ibu <span class="required-star">*</span></label>
+                    <div class="card-body">
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Nama Ayah <span class="req">*</span></label>
+                                <input type="text" name="nama_ayah" class="field-control" placeholder="Nama lengkap ayah" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Pekerjaan Ayah <span class="req">*</span></label>
+                                <input type="text" name="pekerjaan_ayah" class="field-control" placeholder="Pekerjaan ayah" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="pekerjaan_ibu" placeholder=" " required>
-                                <label>Pekerjaan Ibu <span class="required-star">*</span></label>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Nama Ibu <span class="req">*</span></label>
+                                <input type="text" name="nama_ibu" class="field-control" placeholder="Nama lengkap ibu" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Pekerjaan Ibu <span class="req">*</span></label>
+                                <input type="text" name="pekerjaan_ibu" class="field-control" placeholder="Pekerjaan ibu" required>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" name="penghasilan_ayah" placeholder=" " min="0" required>
-                                <label>Penghasilan Ayah (Rp/bulan) <span class="required-star">*</span></label>
+                        <div class="field-group cols-3">
+                            <div class="field-wrap">
+                                <label class="field-label">Penghasilan Ayah (Rp/bln) <span class="req">*</span></label>
+                                <input type="number" name="penghasilan_ayah" class="field-control" placeholder="0" min="0" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Penghasilan Ibu (Rp/bln) <span class="req">*</span></label>
+                                <input type="number" name="penghasilan_ibu" class="field-control" placeholder="0" min="0" required>
+                            </div>
+                            <div class="field-wrap">
+                                <label class="field-label">Jumlah Tanggungan <span class="req">*</span></label>
+                                <input type="number" name="jumlah_tanggungan" class="field-control" placeholder="0" min="1" required>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" name="penghasilan_ibu" placeholder=" " min="0" required>
-                                <label>Penghasilan Ibu (Rp/bulan) <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="number" class="form-control" name="jumlah_tanggungan" placeholder=" " min="1" required>
-                                <label>Jumlah Tanggungan Keluarga <span class="required-star">*</span></label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <select class="form-select" name="status_rumah" required>
-                                    <option value="">Pilih Status Rumah</option>
-                                    <option value="Milik Sendiri">Milik Sendiri</option>
-                                    <option value="Sewa">Sewa/Kontrak</option>
-                                    <option value="Menumpang">Menumpang</option>
-                                    <option value="Warisan">Warisan</option>
+                        <div class="field-group cols-2">
+                            <div class="field-wrap">
+                                <label class="field-label">Status Kepemilikan Rumah <span class="req">*</span></label>
+                                <select name="status_rumah" class="field-control" required>
+                                    <option value="">Pilih status</option>
+                                    <option>Milik Sendiri</option>
+                                    <option>Sewa</option>
+                                    <option>Menumpang</option>
+                                    <option>Warisan</option>
                                 </select>
-                                <label>Status Kepemilikan Rumah <span class="required-star">*</span></label>
+                            </div>
+                        </div>
+                        <div class="field-group">
+                            <div class="field-wrap">
+                                <label class="field-label">Deskripsi Kondisi Ekonomi <span class="req">*</span></label>
+                                <textarea name="kondisi_ekonomi" class="field-control" placeholder="Jelaskan kondisi ekonomi keluarga secara singkat..." required></textarea>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-floating">
-                        <textarea class="form-control" name="kondisi_ekonomi" placeholder=" " style="height: 120px" required></textarea>
-                        <label>Deskripsi Kondisi Ekonomi Keluarga <span class="required-star">*</span></label>
+                <!-- ⑤ Dokumen -->
+                <div class="form-card" id="sec-dokumen">
+                    <div class="card-header">
+                        <div class="card-icon rose"><i class="fas fa-paperclip"></i></div>
+                        <div>
+                            <p class="card-title">Upload Dokumen</p>
+                            <p class="card-subtitle">Format: JPG, PNG, PDF · Klik tile untuk upload</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Identitas -->
+                        <div class="upload-section-title">
+                            <i class="fas fa-id-card" style="color:var(--primary)"></i> Dokumen Identitas
+                        </div>
+                        <div class="upload-grid">
+                            <div class="upload-tile" onclick="triggerUpload('ktp')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="ktp" name="ktp" accept=".jpg,.jpeg,.png,.pdf" required>
+                                <div class="upload-tile-icon"><i class="fas fa-id-card"></i></div>
+                                <div class="upload-tile-label">KTP <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG, PDF · 2MB</div>
+                                <div class="upload-tile-filename" id="ktp-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('kk')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="kk" name="kk" accept=".jpg,.jpeg,.png,.pdf" required>
+                                <div class="upload-tile-icon"><i class="fas fa-users"></i></div>
+                                <div class="upload-tile-label">Kartu Keluarga <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG, PDF · 2MB</div>
+                                <div class="upload-tile-filename" id="kk-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('ktm')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="ktm" name="ktm" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-id-badge"></i></div>
+                                <div class="upload-tile-label">KTM <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="ktm-name"></div>
+                            </div>
+                        </div>
+
+                        <!-- Akademik -->
+                        <div class="upload-section-title">
+                            <i class="fas fa-graduation-cap" style="color:var(--info)"></i> Dokumen Akademik
+                        </div>
+                        <div class="upload-grid">
+                            <div class="upload-tile" onclick="triggerUpload('transkrip')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="transkrip" name="transkrip" accept=".pdf" required>
+                                <div class="upload-tile-icon"><i class="fas fa-file-alt"></i></div>
+                                <div class="upload-tile-label">Transkrip Nilai <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF · 5MB</div>
+                                <div class="upload-tile-filename" id="transkrip-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('cv')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
+                                <div class="upload-tile-icon"><i class="fas fa-file-user"></i></div>
+                                <div class="upload-tile-label">CV <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF, DOC · 2MB</div>
+                                <div class="upload-tile-filename" id="cv-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('motivation_letter')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="motivation_letter" name="motivation_letter" accept=".pdf,.doc,.docx" required>
+                                <div class="upload-tile-icon"><i class="fas fa-envelope-open-text"></i></div>
+                                <div class="upload-tile-label">Motivation Letter <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF, DOC · 2MB</div>
+                                <div class="upload-tile-filename" id="motivation_letter-name"></div>
+                            </div>
+                        </div>
+
+                        <!-- Ekonomi -->
+                        <div class="upload-section-title">
+                            <i class="fas fa-money-check-alt" style="color:#b45309"></i> Dokumen Ekonomi
+                        </div>
+                        <div class="upload-grid">
+                            <div class="upload-tile" onclick="triggerUpload('surat_penghasilan')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="surat_penghasilan" name="surat_penghasilan" accept=".pdf" required>
+                                <div class="upload-tile-icon"><i class="fas fa-money-bill-wave"></i></div>
+                                <div class="upload-tile-label">Surat Keterangan Penghasilan <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF · 3MB</div>
+                                <div class="upload-tile-filename" id="surat_penghasilan-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('slip_gaji_ortu')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="slip_gaji_ortu" name="slip_gaji_ortu" accept=".pdf,.jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-receipt"></i></div>
+                                <div class="upload-tile-label">Slip Gaji Orang Tua <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF, JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="slip_gaji_ortu-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('surat_tidak_menerima_beasiswa')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="surat_tidak_menerima_beasiswa" name="surat_tidak_menerima_beasiswa" accept=".pdf,.jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-file-contract"></i></div>
+                                <div class="upload-tile-label">Surat Tidak Terima Beasiswa Lain <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF, JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="surat_tidak_menerima_beasiswa-name"></div>
+                            </div>
+                        </div>
+
+                        <!-- Dhuafa Only -->
+                        <div class="dhuafa-section" id="doc-dhuafa">
+                            <div class="upload-section-title">
+                                <i class="fas fa-hand-holding-heart" style="color:var(--danger)"></i> Dokumen Khusus Dhuafa
+                            </div>
+                            <div class="upload-grid">
+                                <div class="upload-tile" onclick="triggerUpload('surat_tidak_mampu')">
+                                    <span class="req-badge"></span>
+                                    <input type="file" id="surat_tidak_mampu" name="surat_tidak_mampu" accept=".pdf">
+                                    <div class="upload-tile-icon"><i class="fas fa-file-medical"></i></div>
+                                    <div class="upload-tile-label">SKTM <span style="color:var(--danger)">*</span></div>
+                                    <div class="upload-tile-hint">Surat Tidak Mampu · PDF · 3MB</div>
+                                    <div class="upload-tile-filename" id="surat_tidak_mampu-name"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kader Only -->
+                        <div class="kader-section" id="doc-kader">
+                            <div class="upload-section-title">
+                                <i class="fas fa-star-and-crescent" style="color:var(--success)"></i> Dokumen Khusus Kader
+                            </div>
+                            <div class="upload-grid">
+                                <div class="upload-tile" onclick="triggerUpload('surat_aktif_organisasi')">
+                                    <span class="req-badge"></span>
+                                    <input type="file" id="surat_aktif_organisasi" name="surat_aktif_organisasi" accept=".pdf">
+                                    <div class="upload-tile-icon"><i class="fas fa-file-signature"></i></div>
+                                    <div class="upload-tile-label">SK Aktif Organisasi <span style="color:var(--danger)">*</span></div>
+                                    <div class="upload-tile-hint">PDF · 3MB</div>
+                                    <div class="upload-tile-filename" id="surat_aktif_organisasi-name"></div>
+                                </div>
+                                <div class="upload-tile" onclick="triggerUpload('surat_rekomendasi')">
+                                    <span class="req-badge"></span>
+                                    <input type="file" id="surat_rekomendasi" name="surat_rekomendasi" accept=".pdf">
+                                    <div class="upload-tile-icon"><i class="fas fa-file-signature"></i></div>
+                                    <div class="upload-tile-label">Surat Rekomendasi <span style="color:var(--danger)">*</span></div>
+                                    <div class="upload-tile-hint">PDF · 2MB</div>
+                                    <div class="upload-tile-filename" id="surat_rekomendasi-name"></div>
+                                </div>
+                                <div class="upload-tile" onclick="triggerUpload('ktam')">
+                                    <span class="req-badge"></span>
+                                    <input type="file" id="ktam" name="ktam" accept=".jpg,.jpeg,.png">
+                                    <div class="upload-tile-icon"><i class="fas fa-id-card-alt"></i></div>
+                                    <div class="upload-tile-label">KTAM <span style="color:var(--danger)">*</span></div>
+                                    <div class="upload-tile-hint">Kartu Anggota · JPG, PNG · 2MB</div>
+                                    <div class="upload-tile-filename" id="ktam-name"></div>
+                                </div>
+                                <div class="upload-tile" onclick="triggerUpload('sertifikat_prestasi')">
+                                    <input type="file" id="sertifikat_prestasi" name="sertifikat_prestasi" accept=".pdf">
+                                    <div class="upload-tile-icon"><i class="fas fa-certificate"></i></div>
+                                    <div class="upload-tile-label">Sertifikat Prestasi</div>
+                                    <div class="upload-tile-hint">Opsional · PDF · 5MB</div>
+                                    <div class="upload-tile-filename" id="sertifikat_prestasi-name"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Foto Rumah -->
+                        <div class="upload-section-title">
+                            <i class="fas fa-home" style="color:#7c3aed"></i> Foto Kondisi Rumah
+                        </div>
+                        <div class="upload-grid">
+                            <div class="upload-tile" onclick="triggerUpload('foto_rumah_depan')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="foto_rumah_depan" name="foto_rumah_depan" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-house-user"></i></div>
+                                <div class="upload-tile-label">Tampak Depan <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="foto_rumah_depan-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('foto_rumah_samping')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="foto_rumah_samping" name="foto_rumah_samping" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-home"></i></div>
+                                <div class="upload-tile-label">Tampak Samping <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="foto_rumah_samping-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('foto_ruang_tamu')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="foto_ruang_tamu" name="foto_ruang_tamu" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-couch"></i></div>
+                                <div class="upload-tile-label">Ruang Tamu <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="foto_ruang_tamu-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('foto_kamar_mandi')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="foto_kamar_mandi" name="foto_kamar_mandi" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-bath"></i></div>
+                                <div class="upload-tile-label">Kamar Mandi <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="foto_kamar_mandi-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('foto_dapur')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="foto_dapur" name="foto_dapur" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-utensils"></i></div>
+                                <div class="upload-tile-label">Dapur <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="foto_dapur-name"></div>
+                            </div>
+                        </div>
+
+                        <!-- Pendukung -->
+                        <div class="upload-section-title">
+                            <i class="fas fa-paperclip" style="color:var(--text-secondary)"></i> Dokumen Pendukung
+                        </div>
+                        <div class="upload-grid">
+                            <div class="upload-tile" onclick="triggerUpload('pas_foto')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="pas_foto" name="pas_foto" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-portrait"></i></div>
+                                <div class="upload-tile-label">Pas Foto 3×4 <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="pas_foto-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('twibbon')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="twibbon" name="twibbon" accept=".jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-image"></i></div>
+                                <div class="upload-tile-label">Twibbon <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="twibbon-name"></div>
+                            </div>
+                            <div class="upload-tile" onclick="triggerUpload('surat_kesanggupan_relawan')">
+                                <span class="req-badge"></span>
+                                <input type="file" id="surat_kesanggupan_relawan" name="surat_kesanggupan_relawan" accept=".pdf,.jpg,.jpeg,.png" required>
+                                <div class="upload-tile-icon"><i class="fas fa-hands-helping"></i></div>
+                                <div class="upload-tile-label">Surat Kesanggupan Relawan <span style="color:var(--danger)">*</span></div>
+                                <div class="upload-tile-hint">PDF, JPG, PNG · 2MB</div>
+                                <div class="upload-tile-filename" id="surat_kesanggupan_relawan-name"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- Upload Dokumen -->
-                <div class="form-section">
-                    <h3 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-upload"></i>
-                        </div>
-                        Upload Dokumen <span class="required-star">*</span>
-                    </h3>
-
-                    <div class="form-info">
-                        <i class="fas fa-file-upload me-2"></i>
-                        <strong>Perhatian:</strong> Format yang didukung: JPG, PNG, PDF. Pastikan file jelas dan dapat dibaca.
+                <!-- Submit -->
+                <div class="submit-card">
+                    <div class="submit-hint">
+                        <strong>Siap menyimpan?</strong>
+                        Pastikan semua kolom bertanda <span style="color:var(--danger)">*</span> sudah terisi.
                     </div>
-
-                    <!-- Dokumen Umum (Semua Kategori) -->
-                    <h5 style="color: var(--secondary-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--secondary-color); padding-bottom: 0.5rem;">
-                        <i class="fas fa-id-card me-2"></i>Dokumen Identitas
-                    </h5>
-
-                    <!-- KTP -->
-                    <div class="upload-area">
-                        <i class="fas fa-id-card fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload KTP <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG, PDF (Maks: 2MB)</p>
-                        <input type="file" id="ktp" name="ktp" class="file-input" accept=".jpg,.jpeg,.png,.pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('ktp').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File KTP
-                        </button>
-                        <div id="ktp-preview"></div>
-                    </div>
-
-                    <!-- Kartu Keluarga -->
-                    <div class="upload-area">
-                        <i class="fas fa-users fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Kartu Keluarga <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG, PDF (Maks: 2MB)</p>
-                        <input type="file" id="kk" name="kk" class="file-input" accept=".jpg,.jpeg,.png,.pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('kk').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File KK
-                        </button>
-                        <div id="kk-preview"></div>
-                    </div>
-
-                    <h5 style="color: var(--secondary-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--secondary-color); padding-bottom: 0.5rem;">
-                        <i class="fas fa-graduation-cap me-2"></i>Dokumen Akademik
-                    </h5>
-
-                    <!-- Transkrip -->
-                    <div class="upload-area">
-                        <i class="fas fa-file-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Transkrip Nilai <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF (Maks: 5MB)</p>
-                        <input type="file" id="transkrip" name="transkrip" class="file-input" accept=".pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('transkrip').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Transkrip
-                        </button>
-                        <div id="transkrip-preview"></div>
-                    </div>
-
-                    <h5 style="color: var(--secondary-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--secondary-color); padding-bottom: 0.5rem;">
-                        <i class="fas fa-money-check-alt me-2"></i>Dokumen Ekonomi
-                    </h5>
-
-                    <!-- Surat Penghasilan -->
-                    <div class="upload-area">
-                        <i class="fas fa-money-bill-wave fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Keterangan Penghasilan <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF (Maks: 3MB)</p>
-                        <input type="file" id="surat_penghasilan" name="surat_penghasilan" class="file-input" accept=".pdf" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_penghasilan').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="surat_penghasilan-preview"></div>
-                    </div>
-
-                    <!-- Slip Gaji Ortu -->
-                    <div class="upload-area">
-                        <i class="fas fa-receipt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Slip Gaji Orang Tua <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF, JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="slip_gaji_ortu" name="slip_gaji_ortu" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('slip_gaji_ortu').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Slip Gaji
-                        </button>
-                        <div id="slip_gaji_ortu-preview"></div>
-                    </div>
-
-                    <!-- Surat Tidak Menerima Beasiswa -->
-                    <div class="upload-area">
-                        <i class="fas fa-file-contract fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Tidak Menerima Beasiswa Lain <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF, JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="surat_tidak_menerima_beasiswa" name="surat_tidak_menerima_beasiswa" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_tidak_menerima_beasiswa').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="surat_tidak_menerima_beasiswa-preview"></div>
-                    </div>
-
-                    <!-- DOKUMEN KHUSUS DHUAFA -->
-                    <div class="doc-dhuafa-only active">
-                        <h5 style="color: var(--danger-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--danger-color); padding-bottom: 0.5rem;">
-                            <i class="fas fa-hand-holding-heart me-2"></i>Dokumen Khusus Dhuafa
-                        </h5>
-
-                        <!-- Surat Tidak Mampu -->
-                        <div class="upload-area">
-                            <i class="fas fa-file-medical fa-3x mb-3" style="color: var(--primary-color);"></i>
-                            <h5>Upload Surat Keterangan Tidak Mampu <span class="required-star">*</span></h5>
-                            <p class="mb-3 text-muted">Format: PDF (Maks: 3MB)</p>
-                            <input type="file" id="surat_tidak_mampu" name="surat_tidak_mampu" class="file-input" accept=".pdf">
-                            <button type="button" class="upload-btn" onclick="document.getElementById('surat_tidak_mampu').click()">
-                                <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File SKTM
-                            </button>
-                            <div id="surat_tidak_mampu-preview"></div>
-                        </div>
-                    </div>
-
-                    <!-- DOKUMEN KHUSUS KADER -->
-                    <div class="doc-kader-only">
-                        <h5 style="color: var(--success-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--success-color); padding-bottom: 0.5rem;">
-                            <i class="fas fa-star-and-crescent me-2"></i>Dokumen Khusus Kader Muhammadiyah
-                        </h5>
-
-                        <!-- Surat Aktif Organisasi -->
-                        <div class="upload-area">
-                            <i class="fas fa-file-signature fa-3x mb-3" style="color: var(--primary-color);"></i>
-                            <h5>Upload Surat Keterangan Aktif Organisasi <span class="required-star">*</span></h5>
-                            <p class="mb-3 text-muted">Format: PDF (Maks: 3MB)</p>
-                            <input type="file" id="surat_aktif_organisasi" name="surat_aktif_organisasi" class="file-input" accept=".pdf">
-                            <button type="button" class="upload-btn" onclick="document.getElementById('surat_aktif_organisasi').click()">
-                                <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                            </button>
-                            <div id="surat_aktif_organisasi-preview"></div>
-                        </div>
-
-                        <!-- Sertifikat Prestasi -->
-                        <div class="upload-area">
-                            <i class="fas fa-certificate fa-3x mb-3" style="color: var(--secondary-color);"></i>
-                            <h5>Upload Sertifikat/Piagam Prestasi</h5>
-                            <p class="mb-3 text-muted">Format: PDF (Maks: 5MB) - Opsional</p>
-                            <input type="file" id="sertifikat_prestasi" name="sertifikat_prestasi" class="file-input" accept=".pdf">
-                            <button type="button" class="upload-btn" onclick="document.getElementById('sertifikat_prestasi').click()">
-                                <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Sertifikat
-                            </button>
-                            <div id="sertifikat_prestasi-preview"></div>
-                        </div>
-
-                        <!-- Surat Rekomendasi -->
-                        <div class="upload-area">
-                            <i class="fas fa-file-signature fa-3x mb-3" style="color: var(--primary-color);"></i>
-                            <h5>Upload Surat Rekomendasi <span class="required-star">*</span></h5>
-                            <p class="mb-3 text-muted">Format: PDF (Maks: 2MB)</p>
-                            <input type="file" id="surat_rekomendasi" name="surat_rekomendasi" class="file-input" accept=".pdf">
-                            <button type="button" class="upload-btn" onclick="document.getElementById('surat_rekomendasi').click()">
-                                <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                            </button>
-                            <div id="surat_rekomendasi-preview"></div>
-                        </div>
-
-                        <!-- KTAM -->
-                        <div class="upload-area">
-                            <i class="fas fa-id-card-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                            <h5>Upload KTAM (Kartu Tanda Anggota Muhammadiyah) <span class="required-star">*</span></h5>
-                            <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                            <input type="file" id="ktam" name="ktam" class="file-input" accept=".jpg,.jpeg,.png">
-                            <button type="button" class="upload-btn" onclick="document.getElementById('ktam').click()">
-                                <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto KTAM
-                            </button>
-                            <div id="ktam-preview"></div>
-                        </div>
-                    </div>
-
-                    <h5 style="color: var(--secondary-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--secondary-color); padding-bottom: 0.5rem;">
-                        <i class="fas fa-home me-2"></i>Foto Kondisi Rumah
-                    </h5>
-
-                    <!-- Foto Rumah Depan -->
-                    <div class="upload-area">
-                        <i class="fas fa-home fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Rumah Tampak Depan <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="foto_rumah_depan" name="foto_rumah_depan" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_rumah_depan').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_rumah_depan-preview"></div>
-                    </div>
-
-                    <!-- Foto Rumah Samping -->
-                    <div class="upload-area">
-                        <i class="fas fa-home fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Rumah Tampak Samping <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="foto_rumah_samping" name="foto_rumah_samping" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_rumah_samping').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_rumah_samping-preview"></div>
-                    </div>
-
-                    <!-- Foto Ruang Tamu -->
-                    <div class="upload-area">
-                        <i class="fas fa-couch fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Ruang Tamu <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="foto_ruang_tamu" name="foto_ruang_tamu" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_ruang_tamu').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_ruang_tamu-preview"></div>
-                    </div>
-
-                    <!-- Foto Kamar Mandi -->
-                    <div class="upload-area">
-                        <i class="fas fa-bath fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Kamar Mandi <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="foto_kamar_mandi" name="foto_kamar_mandi" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_kamar_mandi').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_kamar_mandi-preview"></div>
-                    </div>
-
-                    <!-- Foto Dapur -->
-                    <div class="upload-area">
-                        <i class="fas fa-utensils fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Foto Dapur <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="foto_dapur" name="foto_dapur" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('foto_dapur').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Foto
-                        </button>
-                        <div id="foto_dapur-preview"></div>
-                    </div>
-
-                    <h5 style="color: var(--secondary-color); font-weight: 600; margin: 2rem 0 1rem; border-bottom: 2px solid var(--secondary-color); padding-bottom: 0.5rem;">
-                        <i class="fas fa-file-alt me-2"></i>Dokumen Pendukung Lainnya
-                    </h5>
-
-                    <!-- CV -->
-                    <div class="upload-area">
-                        <i class="fas fa-file-alt fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload CV (Curriculum Vitae) <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF, DOC, DOCX (Maks: 2MB)</p>
-                        <input type="file" id="cv" name="cv" class="file-input" accept=".pdf,.doc,.docx" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('cv').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File CV
-                        </button>
-                        <div id="cv-preview"></div>
-                    </div>
-
-                    <!-- Pas Foto -->
-                    <div class="upload-area">
-                        <i class="fas fa-portrait fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Pas Foto 3x4 <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="pas_foto" name="pas_foto" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('pas_foto').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih Pas Foto
-                        </button>
-                        <div id="pas_foto-preview"></div>
-                    </div>
-
-                    <!-- Motivation Letter -->
-                    <div class="upload-area">
-                        <i class="fas fa-envelope-open-text fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Motivation Letter <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF, DOC, DOCX (Maks: 2MB)</p>
-                        <input type="file" id="motivation_letter" name="motivation_letter" class="file-input" accept=".pdf,.doc,.docx" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('motivation_letter').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File
-                        </button>
-                        <div id="motivation_letter-preview"></div>
-                    </div>
-
-                    <!-- KTM -->
-                    <div class="upload-area">
-                        <i class="fas fa-id-badge fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Kartu Tanda Mahasiswa (KTM) <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="ktm" name="ktm" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('ktm').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File KTM
-                        </button>
-                        <div id="ktm-preview"></div>
-                    </div>
-
-                    <!-- Twibbon -->
-                    <div class="upload-area">
-                        <i class="fas fa-image fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Twibbon <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="twibbon" name="twibbon" class="file-input" accept=".jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('twibbon').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Twibbon
-                        </button>
-                        <div id="twibbon-preview"></div>
-                    </div>
-
-                    <!-- Surat Kesanggupan Relawan -->
-                    <div class="upload-area">
-                        <i class="fas fa-hands-helping fa-3x mb-3" style="color: var(--primary-color);"></i>
-                        <h5>Upload Surat Kesanggupan Relawan <span class="required-star">*</span></h5>
-                        <p class="mb-3 text-muted">Format: PDF, JPG, PNG (Maks: 2MB)</p>
-                        <input type="file" id="surat_kesanggupan_relawan" name="surat_kesanggupan_relawan" class="file-input" accept=".pdf,.jpg,.jpeg,.png" required>
-                        <button type="button" class="upload-btn" onclick="document.getElementById('surat_kesanggupan_relawan').click()">
-                            <i class="fas fa-cloud-upload-alt me-2"></i>Pilih File Surat
-                        </button>
-                        <div id="surat_kesanggupan_relawan-preview"></div>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="form-section" style="text-align: center;">
                     <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane me-2"></i>Simpan Data Pendaftar
+                        <i class="fas fa-paper-plane"></i> Simpan Data Pendaftar
                     </button>
                 </div>
 
-            </div>
-        </form>
-    </div>
+            </div><!-- end form-body -->
+        </div><!-- end form-layout -->
+    </form>
 </div>
 
 <script>
-// Toggle kategori
-document.addEventListener('DOMContentLoaded', function() {
-    const cardDhuafa = document.getElementById('card-dhuafa');
-    const cardKader = document.getElementById('card-kader');
-    const radioDhuafa = document.querySelector('input[value="dhuafa"]');
-    const radioKader = document.querySelector('input[value="kader"]');
+function triggerUpload(id) {
+    document.getElementById(id).click();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── Kategori toggle ── */
+    const cardDhuafa  = document.getElementById('card-dhuafa');
+    const cardKader   = document.getElementById('card-kader');
     const hiddenInput = document.getElementById('jenis_pendaftaran');
-    
-    const sectionOrganisasi = document.getElementById('section-organisasi');
-    const docDhuafa = document.querySelector('.doc-dhuafa-only');
-    const docKader = document.querySelector('.doc-kader-only');
-    
-    // Fields organisasi kader
-    const fieldsKader = ['jenis_organisasi', 'nama_organisasi', 'jabatan', 'tahun_bergabung', 'riwayat_aktivitas', 'kontribusi', 'rencana_masa_depan'];
-    const filesKader = ['surat_aktif_organisasi', 'surat_rekomendasi', 'ktam'];
+
+    const kaderSections  = document.querySelectorAll('.kader-section');
+    const dhuafaSections = document.querySelectorAll('.dhuafa-section');
+
+    const fieldsKader = ['jenis_organisasi','nama_organisasi','jabatan','tahun_bergabung','riwayat_aktivitas','kontribusi','rencana_masa_depan'];
+    const filesKader  = ['surat_aktif_organisasi','surat_rekomendasi','ktam'];
     const filesDhuafa = ['surat_tidak_mampu'];
-    
+
     function toggleKategori(jenis) {
         hiddenInput.value = jenis;
-        
-        if (jenis === 'kader') {
-            // Visual
-            cardKader.classList.add('active');
-            cardDhuafa.classList.remove('active');
-            
-            // Show/Hide sections
-            sectionOrganisasi.classList.add('active');
-            docKader.classList.add('active');
-            docDhuafa.classList.remove('active');
-            
-            // Set required untuk field kader
-            fieldsKader.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.setAttribute('required', 'required');
-            });
-            
-            filesKader.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.setAttribute('required', 'required');
-            });
-            
-            // Remove required dari dhuafa
-            filesDhuafa.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.removeAttribute('required');
-            });
-            
-        } else {
-            // Visual
-            cardDhuafa.classList.add('active');
-            cardKader.classList.remove('active');
-            
-            // Show/Hide sections
-            sectionOrganisasi.classList.remove('active');
-            docKader.classList.remove('active');
-            docDhuafa.classList.add('active');
-            
-            // Remove required dari field kader
-            fieldsKader.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.removeAttribute('required');
-            });
-            
-            filesKader.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.removeAttribute('required');
-            });
-            
-            // Set required untuk dhuafa
-            filesDhuafa.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.setAttribute('required', 'required');
-            });
-        }
+        const isKader = jenis === 'kader';
+
+        cardKader.classList.toggle('active', isKader);
+        cardDhuafa.classList.toggle('active', !isKader);
+
+        kaderSections.forEach(el => el.classList.toggle('active', isKader));
+        dhuafaSections.forEach(el => el.classList.toggle('hidden', isKader));
+
+        fieldsKader.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) isKader ? el.setAttribute('required','') : el.removeAttribute('required');
+        });
+        filesKader.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) isKader ? el.setAttribute('required','') : el.removeAttribute('required');
+        });
+        filesDhuafa.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) isKader ? el.removeAttribute('required') : el.setAttribute('required','');
+        });
     }
-    
-    // Event listeners
-    cardDhuafa.addEventListener('click', function() {
-        radioDhuafa.checked = true;
-        toggleKategori('dhuafa');
-    });
-    
-    cardKader.addEventListener('click', function() {
-        radioKader.checked = true;
-        toggleKategori('kader');
-    });
-    
-    // Initialize
+
+    cardDhuafa.addEventListener('click', () => toggleKategori('dhuafa'));
+    cardKader.addEventListener('click',  () => toggleKategori('kader'));
     toggleKategori('dhuafa');
-    
-    // File upload preview
-    const fileInputs = document.querySelectorAll('.file-input');
-    fileInputs.forEach(input => {
-        input.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const previewDiv = document.getElementById(this.id + '-preview');
-            
-            if (file) {
-                const fileSize = file.size / 1024 / 1024;
-                const maxSize = 5;
-                
-                if (fileSize > maxSize) {
-                    alert(`File terlalu besar. Maksimal ${maxSize}MB`);
-                    this.value = '';
-                    return;
-                }
-                
-                previewDiv.innerHTML = `
-                    <div class="file-preview">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-file me-3 text-success"></i>
-                            <div class="flex-grow-1">
-                                <div style="font-weight: 600; color: var(--primary-color);">${file.name}</div>
-                                <small class="text-muted">${(fileSize).toFixed(2)} MB</small>
-                            </div>
-                            <div style="color: var(--success-color);">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                        </div>
-                    </div>
-                `;
+
+    /* ── File upload tile feedback ── */
+    document.querySelectorAll('input[type="file"]').forEach(input => {
+        input.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File terlalu besar. Maksimal 5MB.');
+                this.value = '';
+                return;
             }
+
+            const tile   = this.closest('.upload-tile');
+            const nameEl = document.getElementById(this.id + '-name');
+            const iconEl = tile.querySelector('.upload-tile-icon i');
+
+            tile.classList.add('has-file');
+            iconEl.className = 'fas fa-check-circle';
+            if (nameEl) nameEl.textContent = file.name.length > 22
+                ? file.name.substring(0, 19) + '…'
+                : file.name;
         });
     });
 });

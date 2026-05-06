@@ -567,14 +567,6 @@
         </div>
     </div>
 
-    <!-- Success Alert -->
-    @if (session('success'))
-        <div class="alert-success fade-in">
-            <i class="fas fa-check-circle"></i>
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- Statistics Cards (Optional) -->
     @php
         $totalBanners = count($banners);

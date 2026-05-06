@@ -500,11 +500,16 @@
                         Periode
                     </label>
                     <select name="periode" class="form-select">
-                        <option value="">Semua Periode</option>
-                        <option value="2024" {{ request('periode') == '2024' ? 'selected' : '' }}>2024</option>
-                        <option value="2023" {{ request('periode') == '2023' ? 'selected' : '' }}>2023</option>
-                        <option value="2022" {{ request('periode') == '2022' ? 'selected' : '' }}>2022</option>
-                    </select>
+                    <option value="">Semua Periode</option>
+
+                    @foreach($periodes as $p)
+                        <option value="{{ $p->id }}" 
+                            {{ request('periode') == $p->id ? 'selected' : '' }}>
+                            {{ $p->nama_periode }}
+                        </option>
+                    @endforeach
+
+                </select>
                 </div>
 
                 <div class="form-group">
@@ -529,8 +534,6 @@
                         <option value="ranking_asc" {{ request('sort') == 'ranking_asc' ? 'selected' : '' }}>Ranking Terbaik</option>
                         <option value="score_desc" {{ request('sort') == 'score_desc' ? 'selected' : '' }}>Nilai Tertinggi</option>
                         <option value="score_asc" {{ request('sort') == 'score_asc' ? 'selected' : '' }}>Nilai Terendah</option>
-                        <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Nama A-Z</option>
-                        <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Nama Z-A</option>
                     </select>
                 </div>
             </div>

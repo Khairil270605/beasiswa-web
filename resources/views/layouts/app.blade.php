@@ -429,6 +429,14 @@
   </div>
 @endif
 
+@if(session('info'))
+  <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+    <i class="fas fa-info-circle me-2"></i>
+    {{ session('info') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+@endif
+
     @yield('content')
 </main>
 
@@ -476,7 +484,7 @@
       </div>
     </div>
     <div class="text-center mt-4 border-top pt-3 border-light">
-      <small>© 2025 Lazismu D.I. Yogyakarta</small>
+      <small>© 2026 Lazismu D.I. Yogyakarta</small>
     </div>
   </div>
 </footer>

@@ -84,8 +84,9 @@ public function updateStatusBeasiswa(Request $request, Alternatif $alternatif)
 
             $kriteria = Kriteria::where('kategori', $kategori)->get();
             $semuaAlternatif = Alternatif::where('jenis_pendaftaran', $kategori)
-    ->where('status_administrasi', 'lulus')
-    ->get();
+            ->where('status_administrasi', 'lulus')
+            ->where('status_data', 'aktif') // 🔥 WAJIB
+            ->get();
 
 
             $nilaiEkstrim = [];

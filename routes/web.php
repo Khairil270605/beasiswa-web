@@ -76,7 +76,7 @@ Route::post('/accessibility/reset', [AccessibilityController::class, 'resetSetti
 // =====================
 // 🔐 USER ROUTES (LOGIN)
 // =====================
-Route::middleware(['auth','role:user'])->group(function () {
+Route::middleware(['role:user'])->group(function () {
 
     // Dashboard User
     Route::get('/beasiswa', [UserController::class, 'beasiswa'])->name('user.beasiswa');
@@ -254,6 +254,11 @@ Route::get('periode/{id}/pendaftar',
 Route::get('periode/{id}/export', 
     [\App\Http\Controllers\Admin\PeriodeController::class, 'export']
 )->name('periode.export');
+
+Route::post('periode/{id}/import', 
+    [\App\Http\Controllers\Admin\PeriodeController::class, 'import']
+)->name('periode.import');
+
 });
 
 // =====================

@@ -659,14 +659,6 @@
         </div>
     </div>
 
-    <!-- Alert -->
-    @if(session('success'))
-        <div class="alert-success fade-in">
-            <i class="fas fa-check-circle"></i>
-            {{ session('success') }}
-        </div>
-    @endif
-
     <!-- Action Bar -->
     <div class="action-bar fade-in">
         <div class="filter-section">

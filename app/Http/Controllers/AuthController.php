@@ -10,9 +10,13 @@ class AuthController extends Controller
 {
     // ====== LOGIN ======
     public function loginForm()
-    {
-        return view('auth.login');
+{
+    if (request('info') == 'login') {
+        session()->flash('info', 'Silakan login terlebih dahulu');
     }
+
+    return view('auth.login');
+}
 
     public function login(Request $request)
 {
@@ -46,7 +50,9 @@ class AuthController extends Controller
             ->with('success', 'Login berhasil');
     }
 
-    return back()->with('error', 'Login gagal, periksa email dan password.');
+    return back()->withErrors([
+    'email' => 'Login gagal, periksa email dan password.'
+]);
 }
 
 
