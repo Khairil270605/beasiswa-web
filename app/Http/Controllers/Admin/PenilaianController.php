@@ -17,12 +17,14 @@ class PenilaianController extends Controller
     public function dhuafa()
     {
         $pageTitle = 'Penilaian Beasiswa Dhuafa';
+        $pageTitle = 'Penilaian Beasiswa Dhuafa';
 
         // ✅ Ambil peserta dhuafa yang LOLOS administrasi saja
         $alternatifs = Alternatif::where('jenis_pendaftaran', 'dhuafa')
-            ->where('status_administrasi', 'lulus')
-            ->where('status_data', 'aktif')
-            ->get();
+        ->where('status_administrasi', 'lulus')
+        ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
+        ->where('status_data', 'aktif')
+        ->get();
 
         // Ambil kriteria & sub kriteria berdasarkan kategori
         $kriterias = Kriteria::where('kategori', 'dhuafa')->get();
@@ -32,9 +34,10 @@ class PenilaianController extends Controller
         $penilaian = Penilaian::with('subKriteria')
             ->whereHas('alternatif', function ($query) {
                 $query->where('jenis_pendaftaran', 'dhuafa')
-                      ->where('status_administrasi', 'lulus')
-                      ->where('status_data', 'aktif');
-            })
+                ->where('status_administrasi', 'lulus')
+                ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
+                ->where('status_data', 'aktif');
+                        })
             ->get();
 
         // Susun array [alternatif_id][kriteria_id]
@@ -58,12 +61,14 @@ class PenilaianController extends Controller
     public function kader()
     {
         $pageTitle = 'Penilaian Beasiswa Kader';
+        $pageTitle = 'Penilaian Beasiswa Kader';
 
         // ✅ Ambil peserta kader yang LOLOS administrasi saja
         $alternatifs = Alternatif::where('jenis_pendaftaran', 'kader')
-            ->where('status_administrasi', 'lulus')
-            ->where('status_data', 'aktif')
-            ->get();
+    ->where('status_administrasi', 'lulus')
+    ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
+    ->where('status_data', 'aktif')
+    ->get();
 
         $kriterias = Kriteria::where('kategori', 'kader')->get();
         $subkriterias = SubKriteria::where('kategori', 'kader')->get();
@@ -73,6 +78,7 @@ class PenilaianController extends Controller
             ->whereHas('alternatif', function ($query) {
                 $query->where('jenis_pendaftaran', 'kader')
                       ->where('status_administrasi', 'lulus')
+                      ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
                       ->where('status_data', 'aktif');
             })
             ->get();

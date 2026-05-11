@@ -115,6 +115,8 @@ public function dhuafa()
                 ]
             );
         }
+        $alternatif->status_wawancara = 'selesai';
+$alternatif->save();
 
         return redirect()
             ->route('pewawancara.dashboard')
