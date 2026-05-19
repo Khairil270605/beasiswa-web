@@ -484,7 +484,7 @@
                         </button>
                     </div>
                     <div class="col">
-                        <h2 class="mb-0 fw-bold text-dark">{{ $pageTitle ?? 'Admin Panel' }}</h2>
+                        <h2 class="mb-0 fw-bold text-dark">@yield('title', 'Admin Panel')</h2>
                     </div>
                     <div class="col-auto">
                         <div class="d-flex align-items-center">

@@ -119,7 +119,7 @@
                                    id="nilai" 
                                    class="form-input {{ $errors->has('nilai') ? 'error' : '' }}" 
                                    value="{{ old('nilai') }}"
-                                   placeholder="Contoh: 0.25, 1.00, 5.00" 
+                                   placeholder="Contoh: 1, 3, 5" 
                                    required>
                             <span class="input-addon">
                                 <i class="fas fa-hashtag"></i>
