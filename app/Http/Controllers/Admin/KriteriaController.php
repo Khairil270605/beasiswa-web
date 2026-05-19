@@ -33,24 +33,35 @@ class KriteriaController extends Controller
      * ======================= */
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'kode_kriteria' => 'required|unique:kriteria,kode_kriteria',
-            'nama_kriteria' => 'required|string|max:255',
-            'bobot'         => 'required|numeric|min:0',
-            'jenis'         => 'required|in:benefit,cost',
-            'kategori'      => 'required|in:dhuafa,kader',
-        ]);
+{
+    $validated = $request->validate([
+        'kode_kriteria' => 'required|unique:kriteria,kode_kriteria',
+        'nama_kriteria' => 'required|string|max:255',
+        'bobot'         => 'required|numeric|min:0',
+        'jenis'         => 'required|in:benefit,cost',
+        'kategori'      => 'required|in:dhuafa,kader',
+    ]);
 
-        Kriteria::create($validated);
+    $totalBobot = Kriteria::where('kategori', $validated['kategori'])
+        ->sum('bobot');
 
-        return redirect()->route(
-    $validated['kategori'] === 'dhuafa'
-        ? 'admin.kriteria.dhuafa'
-        : 'admin.kriteria.kader'
-)->with('success', 'Kriteria berhasil ditambahkan.');
+    if (($totalBobot + $validated['bobot']) > 1) {
 
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Total bobot tidak boleh lebih dari 1');
     }
+
+    Kriteria::create($validated);
+
+    return redirect()->route(
+        $validated['kategori'] === 'dhuafa'
+            ? 'admin.kriteria.dhuafa'
+            : 'admin.kriteria.kader'
+    )->with('success', 'Kriteria berhasil ditambahkan.');
+}
+
+    
 public function createDhuafa()
 {
     $pageTitle = 'Tambah Kriteria Dhuafa';
@@ -79,19 +90,30 @@ public function createKader()
     }
 
     public function update(Request $request, Kriteria $kriteria)
-    {
-        $validated = $request->validate([
-            'kode_kriteria' => 'required|unique:kriteria,kode_kriteria,' . $kriteria->id,
-            'nama_kriteria' => 'required|string|max:255',
-            'bobot'         => 'required|numeric|min:0',
-            'jenis'         => 'required|in:benefit,cost',
-        ]);
+{
+    $validated = $request->validate([
+        'kode_kriteria' => 'required|unique:kriteria,kode_kriteria,' . $kriteria->id,
+        'nama_kriteria' => 'required|string|max:255',
+        'bobot'         => 'required|numeric|min:0',
+        'jenis'         => 'required|in:benefit,cost',
+    ]);
 
-        $kriteria->update($validated);
+    $totalBobot = Kriteria::where('kategori', $kriteria->kategori)
+        ->where('id', '!=', $kriteria->id)
+        ->sum('bobot');
+
+    if (($totalBobot + $validated['bobot']) > 1) {
 
         return redirect()->back()
-            ->with('success', 'Kriteria berhasil diperbarui.');
+            ->withInput()
+            ->with('error', 'Total bobot tidak boleh lebih dari 1');
     }
+
+    $kriteria->update($validated);
+
+    return redirect()->back()
+        ->with('success', 'Kriteria berhasil diperbarui.');
+}
 
     /* =======================
      *  HAPUS DATA

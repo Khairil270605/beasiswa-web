@@ -798,10 +798,10 @@
                         <label class="upload-card" id="card-surat_rekomendasi" for="surat_rekomendasi">
                             <i class="fas fa-file-signature card-icon"></i>
                             <p class="card-label">Surat Rekomendasi <span class="required-star">*</span></p>
-                            <p class="card-hint">PDF/JPG/PNG · maks 2MB</p>
+                            <p class="card-hint">PDF · maks 2MB</p>
                             <span class="card-filename" id="name-surat_rekomendasi"></span>
                             <button type="button" class="remove-btn" id="rm-surat_rekomendasi" onclick="removeFileCard(event,'surat_rekomendasi')" style="display:none">✕</button>
-                            <input type="file" id="surat_rekomendasi" name="surat_rekomendasi" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" id="surat_rekomendasi" name="surat_rekomendasi" accept=".pdf" required>
                         </label>
 
                         <label class="upload-card" id="card-sertifikat" for="sertifikat">

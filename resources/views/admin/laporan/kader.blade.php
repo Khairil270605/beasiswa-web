@@ -808,7 +808,7 @@ function exportExcel() {
         const no = index + 1;
         const nama = (data.alternatif?.nama || 'N/A').replace(/"/g, '""'); // Escape quotes
         const email = (data.alternatif?.email || '-').replace(/"/g, '""');
-        const nim = data.alternatif?.nim || 'N/A';
+        const nim = `="${data.alternatif?.nim || 'N/A'}"`;
         const universitas = (data.alternatif?.universitas || '-').replace(/"/g, '""');
         const jurusan = (data.alternatif?.jurusan || '-').replace(/"/g, '""');
         const pengalaman = (data.alternatif?.pengalaman_organisasi || '-').replace(/"/g, '""').replace(/\n/g, ' ');

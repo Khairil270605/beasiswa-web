@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 class UserManagementController extends Controller
 {
     public function index()
-    {
-        $users = User::whereIn('role', ['admin','pewawancara'])->get();
-        return view('admin.users.index', compact('users'));
-    }
+{
+    $users = User::whereIn('role', ['admin','pewawancara'])
+        ->where('email', '!=', 'Superadmin@gmail.com')
+        ->get();
+
+    return view('admin.users.index', compact('users'));
+}
 
     public function create()
     {

@@ -700,14 +700,6 @@
         </div>
     </div>
 
-    <!-- Success Alert -->
-    @if(session('success'))
-    <div class="alert-success fade-in">
-        <i class="fas fa-check-circle"></i>
-        {{ session('success') }}
-    </div>
-    @endif
-
     <!-- Action Buttons -->
     <div class="action-buttons fade-in">
         <a href="{{ route('admin.dhuafa') }}" class="btn-action btn-primary">

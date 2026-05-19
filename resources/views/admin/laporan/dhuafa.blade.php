@@ -708,7 +708,7 @@ function exportExcel() {
     hasilSeleksi.forEach((data, index) => {
         const no = index + 1;
         const nama = (data.alternatif?.nama || 'N/A').replace(/"/g, '""'); // Escape quotes
-        const nim = data.alternatif?.nim || 'N/A';
+        const nim = `="${data.alternatif?.nim || 'N/A'}"`;
         const nilai = data.nilai_akhir ? parseFloat(data.nilai_akhir).toFixed(4) : '0.0000';
         const ranking = data.ranking || '-';
         
