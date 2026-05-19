@@ -61,16 +61,19 @@ class DaftarController extends Controller
         // ==========================================
         $tahun = now()->year;
 
-        $sudahDaftar = Alternatif::where('email', $request->email)
-            ->where('jenis_pendaftaran', 'dhuafa')
-            ->where('periode_id', $periode->id)
-            ->exists();
+        $sudahDaftar = Alternatif::where('jenis_pendaftaran', 'dhuafa')
+    ->where('periode_id', $periode->id)
+    ->where(function ($query) use ($request) {
+        $query->where('email', $request->email)
+              ->orWhere('nik', $request->nik);
+    })
+    ->exists();
 
-        if ($sudahDaftar) {
-            return back()->withInput()->withErrors([
-                'msg' => "Email ini sudah terdaftar Beasiswa Dhuafa pada tahun {$tahun}. Silakan cek status pendaftaran."
-            ]);
-        }
+if ($sudahDaftar) {
+    return back()->withInput()->withErrors([
+        'msg' => "Email atau NIK ini sudah terdaftar Beasiswa Dhuafa pada periode ini."
+    ]);
+}
 
         $validated = $request->validate([
             // ======================
@@ -188,16 +191,19 @@ class DaftarController extends Controller
         // ==========================================
         $tahun = now()->year;
 
-        $sudahDaftar = Alternatif::where('email', $request->email)
-            ->where('jenis_pendaftaran', 'kader')
-            ->where('periode_id', $periode->id)
-            ->exists();
+        $sudahDaftar = Alternatif::where('jenis_pendaftaran', 'kader')
+    ->where('periode_id', $periode->id)
+    ->where(function ($query) use ($request) {
+        $query->where('email', $request->email)
+              ->orWhere('nik', $request->nik);
+    })
+    ->exists();
 
-        if ($sudahDaftar) {
-            return back()->withInput()->withErrors([
-                'msg' => "Email ini sudah terdaftar Beasiswa Kader pada tahun {$tahun}. Silakan cek status pendaftaran."
-            ]);
-        }
+if ($sudahDaftar) {
+    return back()->withInput()->withErrors([
+        'msg' => "Email atau NIK ini sudah terdaftar Beasiswa Kader pada periode ini."
+    ]);
+}
 
         $validated = $request->validate([
             // DATA PRIBADI (WAJIB)

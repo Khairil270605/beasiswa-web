@@ -473,9 +473,20 @@
 
         <div class="timeline-item">
             <div class="timeline-header">
-                <strong>{{ $aplikasi->nama }}</strong>
-                <span class="text-muted">#{{ str_pad($aplikasi->id ?? 0, 6, '0', STR_PAD_LEFT) }}</span>
-            </div>
+    <div>
+        <strong>{{ $aplikasi->nama }}</strong><br>
+
+        <span class="badge bg-primary">
+            {{ $aplikasi->periode->nama_periode ?? 'Periode tidak tersedia' }}
+        </span>
+
+        <span class="badge bg-success">
+            {{ ucfirst($aplikasi->jenis_pendaftaran ?? '-') }}
+        </span>
+    </div>
+
+    <span class="text-muted">#{{ str_pad($aplikasi->id ?? 0, 6, '0', STR_PAD_LEFT) }}</span>
+</div>
             
             <div class="progress-timeline">
                 <!-- Tahap 1: Pendaftaran (SELALU SELESAI) -->
@@ -685,6 +696,10 @@
                             <i class="fas fa-user-tag"></i>
                             <span>Jenis: {{ ucfirst($aplikasi->jenis_pendaftaran ?? '-') }}</span>
                         </div>
+                        <div class="item">
+    <i class="fas fa-calendar-check"></i>
+    <span>Periode: {{ $aplikasi->periode->nama_periode ?? 'Periode tidak tersedia' }}</span>
+</div>
                     </div>
                 </div>
             @empty
