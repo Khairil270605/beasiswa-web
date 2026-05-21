@@ -354,6 +354,14 @@
                         Pendaftar Beasiswa
                     </a>
                 </li>
+                <!-- Plotting Pewawancara -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.plotting-wawancara.index') }}" 
+                    class="nav-link {{ request()->routeIs('admin.plotting-wawancara.*') ? 'active' : '' }}">
+                        <i class="fas fa-user-check"></i>
+                        Plotting Pewawancara
+                    </a>
+                </li>
 
                 <!-- Nilai Wawancara -->
                 <li class="nav-item">

@@ -32,7 +32,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\AdminWawancaraController;
 use App\Http\Controllers\Admin\UserManagementController;
-
+use App\Http\Controllers\Admin\PlottingWawancara;
 
 // =====================
 // 🔓 PUBLIC ROUTES
@@ -42,6 +42,13 @@ Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 
 Route::get('/kontak', [KontakController::class, 'index'])->name('kontak');
 Route::post('/kontak', [KontakController::class, 'kirimPesan'])->name('kontak.kirim');
+Route::get('/info/dhuafa', function () {
+        return view('daftar.info-dhuafa');
+    })->name('info.dhuafa');
+
+    Route::get('/info/kader', function () {
+        return view('daftar.info-kader');
+    })->name('info.kader');
 
 // =====================
 // 🔐 AUTH
@@ -93,14 +100,7 @@ Route::middleware(['role:user'])->group(function () {
 
     // =====================
     // 📌 INFO BEASISWA (LOGIN REQUIRED)
-    // =====================
-    Route::get('/info/dhuafa', function () {
-        return view('daftar.info-dhuafa');
-    })->name('info.dhuafa');
-
-    Route::get('/info/kader', function () {
-        return view('daftar.info-kader');
-    })->name('info.kader');
+    // ====================
 
 
     // =====================
@@ -181,6 +181,14 @@ Route::middleware(['auth','role:admin'])
     Route::get('/wawancara', [AdminWawancaraController::class, 'index'])
     ->name('wawancara.index');
 
+    Route::get('/plotting-wawancara', [PlottingWawancara::class, 'index'])
+    ->name('plotting-wawancara.index');
+
+Route::put('/plotting-wawancara/bulk-update', [PlottingWawancara::class, 'bulkUpdate'])
+    ->name('plotting-wawancara.bulk-update');
+
+Route::put('/plotting-wawancara/{id}', [PlottingWawancara::class, 'update'])
+    ->name('plotting-wawancara.update');
     // =====================
     // PENILAIAN
     // =====================

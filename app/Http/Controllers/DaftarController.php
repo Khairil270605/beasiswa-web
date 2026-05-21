@@ -61,8 +61,7 @@ class DaftarController extends Controller
         // ==========================================
         $tahun = now()->year;
 
-        $sudahDaftar = Alternatif::where('jenis_pendaftaran', 'dhuafa')
-    ->where('periode_id', $periode->id)
+       $sudahDaftar = Alternatif::where('periode_id', $periode->id)
     ->where(function ($query) use ($request) {
         $query->where('email', $request->email)
               ->orWhere('nik', $request->nik);
@@ -71,7 +70,7 @@ class DaftarController extends Controller
 
 if ($sudahDaftar) {
     return back()->withInput()->withErrors([
-        'msg' => "Email atau NIK ini sudah terdaftar Beasiswa Dhuafa pada periode ini."
+        'msg' => 'Anda sudah terdaftar pada periode ini dan hanya boleh memilih satu jenis beasiswa.'
     ]);
 }
 
@@ -191,8 +190,7 @@ if ($sudahDaftar) {
         // ==========================================
         $tahun = now()->year;
 
-        $sudahDaftar = Alternatif::where('jenis_pendaftaran', 'kader')
-    ->where('periode_id', $periode->id)
+       $sudahDaftar = Alternatif::where('periode_id', $periode->id)
     ->where(function ($query) use ($request) {
         $query->where('email', $request->email)
               ->orWhere('nik', $request->nik);
@@ -201,7 +199,7 @@ if ($sudahDaftar) {
 
 if ($sudahDaftar) {
     return back()->withInput()->withErrors([
-        'msg' => "Email atau NIK ini sudah terdaftar Beasiswa Kader pada periode ini."
+        'msg' => 'Anda sudah terdaftar pada periode ini dan hanya boleh memilih satu jenis beasiswa.'
     ]);
 }
 

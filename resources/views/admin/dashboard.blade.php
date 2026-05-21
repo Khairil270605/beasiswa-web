@@ -423,7 +423,7 @@
                 <div>
                     <span class="feature-tag"><i class="fas fa-users me-1"></i> Kelola Peserta</span>
                     <span class="feature-tag"><i class="fas fa-clipboard-check me-1"></i> Input Penilaian</span>
-                    <span class="feature-tag"><i class="fas fa-chart-line me-1"></i> Hasil SAW</span>
+                    <span class="feature-tag"><i class="fas fa-chart-line me-1"></i> Hasil Perhitungan</span>
                     <span class="feature-tag"><i class="fas fa-file-pdf me-1"></i> Generate Laporan</span>
                 </div>
             </div>

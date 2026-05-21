@@ -130,6 +130,11 @@ class Alternatif extends Model
         return $this->hasMany(\App\Models\NilaiWawancara::class, 'alternatif_id');
     }
 
+    public function pewawancara()
+{
+    return $this->belongsTo(User::class, 'pewawancara_id');
+}
+
     // =====================
     // HELPER FILE (OPSIONAL, DISARANKAN)
     // =====================

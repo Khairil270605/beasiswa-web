@@ -18,8 +18,9 @@ class PewawancaraController extends Controller
         $pageTitle = 'Dashboard Pewawancara';
 
         $peserta = Alternatif::where('status_administrasi', 'lulus')
-            ->orderBy('created_at', 'desc')
-            ->get();
+    ->where('pewawancara_id', auth()->id())
+    ->orderBy('created_at', 'desc')
+    ->get();
 
         return view('pewawancara.dashboard', compact('pageTitle', 'peserta'));
     }
@@ -28,9 +29,10 @@ class PewawancaraController extends Controller
     $pageTitle = 'Penilaian Wawancara Kader';
 
     $peserta = Alternatif::where('status_administrasi', 'lulus')
-        ->where('jenis_pendaftaran', 'kader')
-        ->orderBy('created_at', 'desc')
-        ->get();
+    ->where('jenis_pendaftaran', 'kader')
+    ->where('pewawancara_id', auth()->id())
+    ->orderBy('created_at', 'desc')
+    ->get();
 
     return view('pewawancara.kader', compact('pageTitle', 'peserta'));
 }
@@ -40,9 +42,10 @@ public function dhuafa()
     $pageTitle = 'Penilaian Wawancara Dhuafa';
 
     $peserta = Alternatif::where('status_administrasi', 'lulus')
-        ->where('jenis_pendaftaran', 'dhuafa')
-        ->orderBy('created_at', 'desc')
-        ->get();
+    ->where('jenis_pendaftaran', 'dhuafa')
+    ->where('pewawancara_id', auth()->id())
+    ->orderBy('created_at', 'desc')
+    ->get();
 
     return view('pewawancara.dhuafa', compact('pageTitle', 'peserta'));
 }
