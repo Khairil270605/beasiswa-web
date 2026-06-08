@@ -482,7 +482,7 @@
                             <div class="form-floating">
                                 <select class="form-select" id="semester" name="semester" required>
                                     <option value="">Pilih Semester</option>
-                                    @for($i=1;$i<=8;$i++)
+                                    @for($i=2;$i<=5;$i++)
                                         <option value="{{ $i }}">Semester {{ $i }}</option>
                                     @endfor
                                 </select>

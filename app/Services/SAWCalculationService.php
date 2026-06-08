@@ -11,15 +11,17 @@ class SAWCalculationService
     /**
      * Hitung SAW berdasarkan kategori (dhuafa / kader)
      */
-    public function calculateByKategori(string $kategori): array
+    public function calculateByKategori(string $kategori, $periodeId = null): array
     {
         // Ambil alternatif sesuai kategori
         $alternatifs = Alternatif::with('penilaian')
-        ->where('jenis_pendaftaran', $kategori)
-        ->where('status_administrasi', 'lulus')
-        ->where('status_data', 'aktif')
-        ->get();
-
+            ->where('jenis_pendaftaran', $kategori)
+            ->where('status_administrasi', 'lulus')
+            ->where('status_data', 'aktif')
+            ->when($periodeId, function ($query) use ($periodeId) {
+                $query->where('periode_id', $periodeId);
+            })
+            ->get();
 
         // Ambil kriteria sesuai kategori
         $kriterias = Kriteria::where('kategori', $kategori)->get();
@@ -35,6 +37,7 @@ class SAWCalculationService
 
         foreach ($alternatifs as $alt) {
             foreach ($kriterias as $k) {
+
                 $nilai = $alt->penilaian
                     ->where('kriteria_id', $k->id)
                     ->first();
@@ -49,6 +52,7 @@ class SAWCalculationService
         $normalisasi = [];
 
         foreach ($kriterias as $k) {
+
             // Ambil semua nilai per kriteria
             $values = array_column($matrix, $k->id);
 
@@ -59,18 +63,21 @@ class SAWCalculationService
             $min = !empty($validValues) ? min($validValues) : 1;
 
             foreach ($matrix as $altId => $row) {
+
                 $nilai = $row[$k->id];
 
                 if ($k->jenis === 'benefit') {
+
                     $normalisasi[$altId][$k->id] = $nilai > 0
                         ? $nilai / $max
                         : 0;
+
                 } else { // cost
+
                     $normalisasi[$altId][$k->id] = $nilai > 0
                         ? $min / $nilai
                         : 0;
                 }
-
             }
         }
 
@@ -80,16 +87,18 @@ class SAWCalculationService
         $hasil = [];
 
         foreach ($alternatifs as $alt) {
+
             $total = 0;
 
             foreach ($kriterias as $k) {
+
                 $total += $normalisasi[$alt->id][$k->id] * $k->bobot;
             }
 
             $hasil[] = [
                 'alternatif_id' => $alt->id,
                 'alternatif'    => $alt,
-                'nilai_akhir' => $total,
+                'nilai_akhir'   => $total,
             ];
         }
 
@@ -105,7 +114,7 @@ class SAWCalculationService
         /* ==========================
          * STEP 5: SIMPAN HASIL
          * ========================== */
-        $this->saveResults($hasil, $kategori);
+        $this->saveResults($hasil, $kategori, $periodeId);
 
         return $hasil;
     }
@@ -113,17 +122,23 @@ class SAWCalculationService
     /**
      * Simpan hasil perhitungan ke database
      */
-    private function saveResults(array $hasil, string $kategori): void
+    private function saveResults(array $hasil, string $kategori, $periodeId = null): void
     {
-        // Hapus hasil lama sesuai kategori
-       HasilPerhitungan::whereHas('alternatif', function ($q) use ($kategori) {
-    $q->where('jenis_pendaftaran', $kategori)
-      ->where('status_administrasi', 'lulus')
-      ->where('status_data', 'aktif');
-    })->delete();
+        // Hapus hasil lama sesuai kategori + periode
+        HasilPerhitungan::whereHas('alternatif', function ($q) use ($kategori, $periodeId) {
 
+            $q->where('jenis_pendaftaran', $kategori)
+                ->where('status_administrasi', 'lulus')
+                ->where('status_data', 'aktif');
+
+            if ($periodeId) {
+                $q->where('periode_id', $periodeId);
+            }
+
+        })->delete();
 
         foreach ($hasil as $row) {
+
             HasilPerhitungan::create([
                 'alternatif_id' => $row['alternatif_id'],
                 'nilai_akhir'   => $row['nilai_akhir'],

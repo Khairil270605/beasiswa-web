@@ -10,8 +10,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
-  <!-- OpenDyslexic Font for Accessibility -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/opendyslexic/0.91.12/opendyslexic-regular.min.css" rel="stylesheet"/>
+  <!-- OpenDyslexic Font for Accessibility
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/opendyslexic/0.91.12/opendyslexic-regular.min.css" rel="stylesheet"/> -->
 
   <style>
     body {
@@ -253,21 +253,6 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      z-index: 999;
-      padding: 1em;
-      background-color: #000;
-      color: #fff;
-      opacity: 0;
-    }
-
-    .skip-link:focus {
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 1;
-    }
     @media (max-width: 991.98px) {
     .hover-dropdown .dropdown-menu {
         display: block !important;
@@ -295,12 +280,6 @@
   @stack('styles')
 </head>
 <body>
-
-<!-- Skip to Content Link -->
-<a href="#main-content" class="skip-link">Lewati ke Konten Utama</a>
-
-<!-- Accessibility Toolbar Component -->
-@include('component.accessibility-toolbar')
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3" role="navigation" aria-label="Menu Utama">

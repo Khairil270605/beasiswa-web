@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use App\Models\Alternatif;
 
@@ -12,11 +13,26 @@ class PendaftarController extends Controller
 {
     $pageTitle = 'Data Pendaftar';
 
-    $alternatifs = Alternatif::where('status_data', 'aktif')
-        ->latest()
-        ->get();
+    $periodeAktif = Periode::where('status', 'aktif')->first();
 
-    return view('admin.alternatif.index', compact('pageTitle', 'alternatifs'));
+    if (!$periodeAktif) {
+
+        $alternatifs = collect();
+
+    } else {
+
+        $alternatifs = Alternatif::where('status_data', 'aktif')
+            ->where('periode_id', $periodeAktif->id)
+            ->latest()
+            ->get();
+
+    }
+
+    return view('admin.alternatif.index', compact(
+        'pageTitle',
+        'alternatifs',
+        'periodeAktif'
+    ));
 }
 
     public function updateStatusAdministrasi(Request $request, Alternatif $alternatif)

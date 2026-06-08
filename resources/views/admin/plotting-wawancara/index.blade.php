@@ -513,13 +513,13 @@
         </div>
     </div>
 
-    {{-- Session Alert --}}
+    <!-- {{-- Session Alert --}}
     @if(session('success'))
         <div class="alert-lazismu mb-4" style="background: linear-gradient(45deg, rgba(40,167,69,0.1), rgba(40,167,69,0.05)); border: 1px solid rgba(40,167,69,0.2); color:#155724; padding:16px; border-radius:8px; display:flex; align-items:center;">
             <i class="fas fa-check-circle" style="color: var(--success-color); margin-right:12px; font-size:1.2rem;"></i>
             {{ session('success') }}
         </div>
-    @endif
+    @endif -->
 
     {{-- Main Card --}}
     <div class="card card-custom">

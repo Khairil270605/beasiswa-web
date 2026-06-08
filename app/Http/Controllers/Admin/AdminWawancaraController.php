@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Alternatif;
+use App\Models\Periode;
 
 class AdminWawancaraController extends Controller
 {
@@ -11,11 +12,26 @@ class AdminWawancaraController extends Controller
     {
         $pageTitle = 'Hasil Wawancara';
 
-        $peserta = Alternatif::whereHas('nilaiWawancara')
-            ->with(['nilaiWawancara.pewawancara'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $periodeAktif = Periode::where('status', 'aktif')->first();
 
-        return view('admin.wawancara.index', compact('pageTitle', 'peserta'));
+        if (!$periodeAktif) {
+
+            $peserta = collect();
+
+        } else {
+
+            $peserta = Alternatif::whereHas('nilaiWawancara')
+                ->where('periode_id', $periodeAktif->id)
+                ->with(['nilaiWawancara.pewawancara'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+        }
+
+        return view('admin.wawancara.index', compact(
+            'pageTitle',
+            'peserta',
+            'periodeAktif'
+        ));
     }
 }

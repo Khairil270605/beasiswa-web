@@ -410,10 +410,10 @@
                 <i class="fas fa-check-circle"></i>
                 <strong>Memiliki riwayat aktivitas dan kontribusi untuk Muhammadiyah</strong>
             </div>
-            <div class="req-item">
+            <!-- <div class="req-item">
                 <i class="fas fa-check-circle"></i>
                 <strong>Melampirkan foto kondisi rumah (5 foto)</strong>
-            </div>
+            </div> -->
         </div>
 
         <div class="org-list">
@@ -506,14 +506,14 @@
                 <h6 class="small fw-bold mb-1">Surat Rekomendasi</h6>
                 <small class="text-muted">PDF/JPG/PNG<br>Max: 2MB</small>
             </div>
-            <div class="doc-card optional">
-                <i class="fas fa-certificate"></i>
-                <h6 class="small fw-bold mb-1">Sertifikat/Piagam</h6>
-                <small class="text-muted">PDF (Opsional)<br>Max: 5MB</small>
-            </div>
+            <div class="doc-card">
+    <i class="fas fa-certificate"></i>
+    <h6 class="small fw-bold mb-1">Sertifikat/Piagam</h6>
+    <small class="text-muted">PDF (Opsional)<br>Max: 5MB</small>
+</div>
         </div>
 
-        <h6 class="doc-section-title"><i class="fas fa-home me-2"></i>Foto Kondisi Rumah</h6>
+        <!-- <h6 class="doc-section-title"><i class="fas fa-home me-2"></i>Foto Kondisi Rumah</h6>
         <div class="documents-grid">
             <div class="doc-card">
                 <i class="fas fa-home"></i>
@@ -540,7 +540,7 @@
                 <h6 class="small fw-bold mb-1">Foto Dapur</h6>
                 <small class="text-muted">JPG/PNG<br>Max: 2MB</small>
             </div>
-        </div>
+        </div> -->
 
         <h6 class="doc-section-title"><i class="fas fa-file-alt me-2"></i>Dokumen Pendukung Lainnya</h6>
         <div class="documents-grid">

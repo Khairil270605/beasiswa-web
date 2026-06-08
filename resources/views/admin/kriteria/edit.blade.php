@@ -409,6 +409,15 @@ document.querySelector('form').addEventListener('submit', function(e) {
 
 <style>
 /* Form Styles untuk Edit Kriteria */
+:root {
+    --primary-color:   #ff6b35;
+    --secondary-color: #f7931e;
+    --success-color:   #28a745;
+    --danger-color:    #dc3545;
+    --warning-color:   #ffc107;
+    --info-color:      #17a2b8;
+}
+
 .kriteria-container {
     padding: 24px;
     background-color: #f8f9fa;
@@ -421,6 +430,11 @@ document.querySelector('form').addEventListener('submit', function(e) {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 24px;
     margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+.page-header:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.1);
 }
 
 .page-title {
@@ -437,7 +451,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .btn-back {
-    background-color: #6c757d;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     color: white;
     padding: 12px 20px;
     border-radius: 8px;
@@ -448,14 +462,13 @@ document.querySelector('form').addEventListener('submit', function(e) {
     transition: all 0.3s ease;
     border: none;
 }
-
 .btn-back:hover {
-    background-color: #5a6268;
+    background: linear-gradient(45deg, #e55a2b, #e6841a);
     color: white;
     text-decoration: none;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
-
 .btn-back i {
     margin-right: 8px;
 }
@@ -465,19 +478,19 @@ document.querySelector('form').addEventListener('submit', function(e) {
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     margin-bottom: 24px;
-    border-left: 4px solid #17a2b8;
+    border-left: 4px solid var(--primary-color);
 }
 
 .current-data-header {
-    background-color: #d1ecf1;
+    background: linear-gradient(45deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
     padding: 16px 24px;
     border-radius: 10px 10px 0 0;
-    border-bottom: 1px solid #bee5eb;
+    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
 }
 
 .current-data-header h5 {
     margin: 0;
-    color: #0c5460;
+    color: #495057;
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -485,6 +498,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 
 .current-data-header i {
     margin-right: 8px;
+    color: var(--primary-color);
 }
 
 .current-data-content {
@@ -513,10 +527,15 @@ document.querySelector('form').addEventListener('submit', function(e) {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     overflow: hidden;
     margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+.form-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.1);
 }
 
 .form-header {
-    background: linear-gradient(135deg, #28a745 0%, #20692e 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--danger-color) 100%);
     color: white;
     padding: 20px 24px;
 }
@@ -556,7 +575,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .required {
-    color: #dc3545;
+    color: var(--danger-color);
     margin-left: 4px;
 }
 
@@ -573,14 +592,14 @@ document.querySelector('form').addEventListener('submit', function(e) {
 
 .form-input:focus,
 .form-select:focus {
-    border-color: #28a745;
-    box-shadow: 0 0 0 3px rgba(40,167,69,0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
     outline: none;
 }
 
 .form-input.error,
 .form-select.error {
-    border-color: #dc3545;
+    border-color: var(--danger-color);
 }
 
 .input-group {
@@ -614,10 +633,11 @@ document.querySelector('form').addEventListener('submit', function(e) {
 .form-help i {
     margin-right: 6px;
     font-size: 0.8rem;
+    color: var(--primary-color);
 }
 
 .error-message {
-    color: #dc3545;
+    color: var(--danger-color);
     font-size: 0.85rem;
     margin-top: 6px;
     display: flex;
@@ -637,7 +657,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .change-header {
-    background-color: #ffc107;
+    background-color: var(--warning-color);
     color: #212529;
     padding: 16px 20px;
     font-weight: 600;
@@ -682,7 +702,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .old-value {
-    color: #dc3545;
+    color: var(--danger-color);
     text-decoration: line-through;
     background-color: #f8d7da;
     padding: 4px 8px;
@@ -691,7 +711,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .new-value {
-    color: #28a745;
+    color: var(--success-color);
     font-weight: 600;
     background-color: #d4edda;
     padding: 4px 8px;
@@ -711,7 +731,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .warning-header {
-    background-color: #dc3545;
+    background-color: var(--danger-color);
     color: white;
     padding: 16px 20px;
     font-weight: 600;
@@ -760,7 +780,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 .warning-note {
     margin-top: 16px;
     padding: 12px;
-    background-color: rgba(220,53,69,0.1);
+    background-color: rgba(220, 53, 69, 0.1);
     border-radius: 6px;
     font-size: 0.9rem;
     color: #721c24;
@@ -784,7 +804,6 @@ document.querySelector('form').addEventListener('submit', function(e) {
     transition: all 0.3s ease;
     border: none;
 }
-
 .btn-cancel:hover {
     background-color: #5a6268;
     color: white;
@@ -793,7 +812,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .btn-reset {
-    background-color: #ffc107;
+    background-color: var(--warning-color);
     color: #212529;
     padding: 12px 24px;
     border-radius: 8px;
@@ -804,14 +823,13 @@ document.querySelector('form').addEventListener('submit', function(e) {
     border: none;
     cursor: pointer;
 }
-
 .btn-reset:hover {
     background-color: #e0a800;
     transform: translateY(-2px);
 }
 
 .btn-update {
-    background-color: #28a745;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     color: white;
     padding: 12px 24px;
     border-radius: 8px;
@@ -822,11 +840,10 @@ document.querySelector('form').addEventListener('submit', function(e) {
     border: none;
     cursor: pointer;
 }
-
 .btn-update:hover {
-    background-color: #218838;
+    background: linear-gradient(45deg, #e55a2b, #e6841a);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
 }
 
 .btn-cancel i,
@@ -848,8 +865,8 @@ document.querySelector('form').addEventListener('submit', function(e) {
 }
 
 .preview-card {
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
+    background: linear-gradient(45deg, rgba(255, 107, 53, 0.05), rgba(247, 147, 30, 0.05));
+    border: 1px solid rgba(255, 107, 53, 0.2);
     border-radius: 8px;
     padding: 16px;
 }
@@ -868,25 +885,27 @@ document.querySelector('form').addEventListener('submit', function(e) {
 
 .bobot-display {
     font-weight: 600;
-    color: #007bff;
+    color: var(--primary-color);
 }
 
 .badge-tipe {
-    padding: 4px 8px;
-    border-radius: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
 }
 
 .badge-benefit {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(40, 167, 69, 0.2);
 }
 
 .badge-cost {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(220, 53, 69, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -897,13 +916,13 @@ document.querySelector('form').addEventListener('submit', function(e) {
     .form-actions .d-flex { flex-direction: column; gap: 12px; }
     .form-actions .d-flex > div { align-self: stretch; }
     .form-actions .d-flex > div .d-flex { justify-content: space-between; }
-    
+
     .change-item {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
     }
-    
+
     .change-values {
         align-self: stretch;
         justify-content: space-between;

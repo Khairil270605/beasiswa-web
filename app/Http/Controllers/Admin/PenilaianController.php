@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Penilaian;
 use App\Models\Alternatif;
 use App\Models\Kriteria;
+use App\Models\Periode;
 use App\Models\SubKriteria;
 use Illuminate\Http\Request;
 
@@ -15,87 +16,99 @@ class PenilaianController extends Controller
      *  HALAMAN PENILAIAN DHUAFA
      * ======================= */
     public function dhuafa()
-    {
-        $pageTitle = 'Penilaian Beasiswa Dhuafa';
-        $pageTitle = 'Penilaian Beasiswa Dhuafa';
+{
+    $pageTitle = 'Penilaian Beasiswa Dhuafa';
 
-        // ✅ Ambil peserta dhuafa yang LOLOS administrasi saja
+    $periodeAktif = Periode::where('status', 'aktif')->first();
+
+    if (!$periodeAktif) {
+        $alternatifs = collect();
+        $penilaian = collect();
+    } else {
         $alternatifs = Alternatif::where('jenis_pendaftaran', 'dhuafa')
-        ->where('status_administrasi', 'lulus')
-        ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
-        ->where('status_data', 'aktif')
-        ->get();
-
-        // Ambil kriteria & sub kriteria berdasarkan kategori
-        $kriterias = Kriteria::where('kategori', 'dhuafa')->get();
-        $subkriterias = SubKriteria::where('kategori', 'dhuafa')->get();
-
-        // ✅ Ambil penilaian hanya untuk peserta dhuafa yang LOLOS administrasi
-        $penilaian = Penilaian::with('subKriteria')
-            ->whereHas('alternatif', function ($query) {
-                $query->where('jenis_pendaftaran', 'dhuafa')
-                ->where('status_administrasi', 'lulus')
-                ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
-                ->where('status_data', 'aktif');
-                        })
+            ->where('periode_id', $periodeAktif->id)
+            ->where('status_administrasi', 'lulus')
+            ->where('status_wawancara', 'selesai')
+            ->where('status_data', 'aktif')
             ->get();
 
-        // Susun array [alternatif_id][kriteria_id]
-        $penilaianArray = [];
-        foreach ($penilaian as $p) {
-            $penilaianArray[$p->alternatif_id][$p->kriteria_id] = $p;
-        }
-
-        return view('admin.penilaian.dhuafa', compact(
-            'pageTitle',
-            'alternatifs',
-            'kriterias',
-            'subkriterias',
-            'penilaianArray'
-        ))->with('penilaian', $penilaianArray);
+        $penilaian = Penilaian::with('subKriteria')
+            ->whereHas('alternatif', function ($query) use ($periodeAktif) {
+                $query->where('jenis_pendaftaran', 'dhuafa')
+                    ->where('periode_id', $periodeAktif->id)
+                    ->where('status_administrasi', 'lulus')
+                    ->where('status_wawancara', 'selesai')
+                    ->where('status_data', 'aktif');
+            })
+            ->get();
     }
+
+    $kriterias = Kriteria::where('kategori', 'dhuafa')->get();
+    $subkriterias = SubKriteria::where('kategori', 'dhuafa')->get();
+
+    $penilaianArray = [];
+    foreach ($penilaian as $p) {
+        $penilaianArray[$p->alternatif_id][$p->kriteria_id] = $p;
+    }
+
+    return view('admin.penilaian.dhuafa', compact(
+        'pageTitle',
+        'alternatifs',
+        'kriterias',
+        'subkriterias',
+        'penilaianArray',
+        'periodeAktif'
+    ))->with('penilaian', $penilaianArray);
+}
 
     /* =======================
      *  HALAMAN PENILAIAN KADER
      * ======================= */
     public function kader()
-    {
-        $pageTitle = 'Penilaian Beasiswa Kader';
-        $pageTitle = 'Penilaian Beasiswa Kader';
+{
+    $pageTitle = 'Penilaian Beasiswa Kader';
 
-        // ✅ Ambil peserta kader yang LOLOS administrasi saja
+    $periodeAktif = Periode::where('status', 'aktif')->first();
+
+    if (!$periodeAktif) {
+        $alternatifs = collect();
+        $penilaian = collect();
+    } else {
         $alternatifs = Alternatif::where('jenis_pendaftaran', 'kader')
-    ->where('status_administrasi', 'lulus')
-    ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
-    ->where('status_data', 'aktif')
-    ->get();
-
-        $kriterias = Kriteria::where('kategori', 'kader')->get();
-        $subkriterias = SubKriteria::where('kategori', 'kader')->get();
-
-        // ✅ Ambil penilaian hanya untuk peserta kader yang LOLOS administrasi
-        $penilaian = Penilaian::with('subKriteria')
-            ->whereHas('alternatif', function ($query) {
-                $query->where('jenis_pendaftaran', 'kader')
-                      ->where('status_administrasi', 'lulus')
-                      ->where('status_wawancara', 'selesai') // 🔥 TAMBAHAN
-                      ->where('status_data', 'aktif');
-            })
+            ->where('periode_id', $periodeAktif->id)
+            ->where('status_administrasi', 'lulus')
+            ->where('status_wawancara', 'selesai')
+            ->where('status_data', 'aktif')
             ->get();
 
-        $penilaianArray = [];
-        foreach ($penilaian as $p) {
-            $penilaianArray[$p->alternatif_id][$p->kriteria_id] = $p;
-        }
-
-        return view('admin.penilaian.kader', compact(
-            'pageTitle',
-            'alternatifs',
-            'kriterias',
-            'subkriterias',
-            'penilaianArray'
-        ))->with('penilaian', $penilaianArray);
+        $penilaian = Penilaian::with('subKriteria')
+            ->whereHas('alternatif', function ($query) use ($periodeAktif) {
+                $query->where('jenis_pendaftaran', 'kader')
+                    ->where('periode_id', $periodeAktif->id)
+                    ->where('status_administrasi', 'lulus')
+                    ->where('status_wawancara', 'selesai')
+                    ->where('status_data', 'aktif');
+            })
+            ->get();
     }
+
+    $kriterias = Kriteria::where('kategori', 'kader')->get();
+    $subkriterias = SubKriteria::where('kategori', 'kader')->get();
+
+    $penilaianArray = [];
+    foreach ($penilaian as $p) {
+        $penilaianArray[$p->alternatif_id][$p->kriteria_id] = $p;
+    }
+
+    return view('admin.penilaian.kader', compact(
+        'pageTitle',
+        'alternatifs',
+        'kriterias',
+        'subkriterias',
+        'penilaianArray',
+        'periodeAktif'
+    ))->with('penilaian', $penilaianArray);
+}
 
     /* =======================
      *  SIMPAN PENILAIAN

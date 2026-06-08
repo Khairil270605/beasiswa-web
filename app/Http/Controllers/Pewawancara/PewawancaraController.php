@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pewawancara;
 
 use App\Http\Controllers\Controller;
 use App\Models\Alternatif;
+use App\Models\Periode;
 use App\Models\NilaiWawancara;
 use Illuminate\Http\Request;
 
@@ -14,25 +15,47 @@ class PewawancaraController extends Controller
      * Menampilkan peserta yang lulus administrasi
      */
     public function dashboard()
-    {
-        $pageTitle = 'Dashboard Pewawancara';
+{
+    $pageTitle = 'Dashboard Pewawancara';
+
+    $periodeAktif = Periode::where('status', 'aktif')->first();
+
+    if (!$periodeAktif) {
+
+        $peserta = collect();
+
+    } else {
 
         $peserta = Alternatif::where('status_administrasi', 'lulus')
-    ->where('pewawancara_id', auth()->id())
-    ->orderBy('created_at', 'desc')
-    ->get();
+            ->where('periode_id', $periodeAktif->id)
+            ->where('pewawancara_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        return view('pewawancara.dashboard', compact('pageTitle', 'peserta'));
     }
+
+    return view('pewawancara.dashboard', compact('pageTitle', 'peserta'));
+}
     public function kader()
 {
     $pageTitle = 'Penilaian Wawancara Kader';
 
-    $peserta = Alternatif::where('status_administrasi', 'lulus')
-    ->where('jenis_pendaftaran', 'kader')
-    ->where('pewawancara_id', auth()->id())
-    ->orderBy('created_at', 'desc')
-    ->get();
+    $periodeAktif = Periode::where('status', 'aktif')->first();
+
+    if (!$periodeAktif) {
+
+        $peserta = collect();
+
+    } else {
+
+        $peserta = Alternatif::where('status_administrasi', 'lulus')
+            ->where('periode_id', $periodeAktif->id)
+            ->where('jenis_pendaftaran', 'kader')
+            ->where('pewawancara_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+    }
 
     return view('pewawancara.kader', compact('pageTitle', 'peserta'));
 }
@@ -41,11 +64,22 @@ public function dhuafa()
 {
     $pageTitle = 'Penilaian Wawancara Dhuafa';
 
-    $peserta = Alternatif::where('status_administrasi', 'lulus')
-    ->where('jenis_pendaftaran', 'dhuafa')
-    ->where('pewawancara_id', auth()->id())
-    ->orderBy('created_at', 'desc')
-    ->get();
+    $periodeAktif = Periode::where('status', 'aktif')->first();
+
+    if (!$periodeAktif) {
+
+        $peserta = collect();
+
+    } else {
+
+        $peserta = Alternatif::where('status_administrasi', 'lulus')
+            ->where('periode_id', $periodeAktif->id)
+            ->where('jenis_pendaftaran', 'dhuafa')
+            ->where('pewawancara_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+    }
 
     return view('pewawancara.dhuafa', compact('pageTitle', 'peserta'));
 }
