@@ -113,52 +113,57 @@ public function dhuafa()
      * Simpan nilai wawancara (status = draft)
      */
     public function store(Request $request, $alternatifId)
-    {
-        $alternatif = Alternatif::findOrFail($alternatifId);
+{
+    $alternatif = Alternatif::findOrFail($alternatifId);
 
-        // Proteksi: hanya yang lulus administrasi boleh diwawancara
-        if ($alternatif->status_administrasi !== 'lulus') {
-            return back()->with('error', 'Peserta belum lulus administrasi, tidak bisa dinilai wawancara.');
-        }
-
-        $komponen = $this->komponenByKategori($alternatif->jenis_pendaftaran);
-
-        // Validasi nilai: harus ada untuk setiap komponen, angka 1-5
-        $request->validate([
-            'nilai' => 'required|array',
-        ]);
-
-        foreach ($komponen as $k) {
-            $request->validate([
-                "nilai.$k" => 'required|integer|min:1|max:5',
-                "catatan.$k" => 'nullable|string',
-            ]);
-        }
-
-        $pewawancaraId = auth()->id();
-
-        // Simpan / update per komponen (biar kalau ngisi ulang tidak dobel)
-        foreach ($komponen as $k) {
-            NilaiWawancara::updateOrCreate(
-                [
-                    'alternatif_id' => $alternatif->id,
-                    'komponen' => $k,
-                ],
-                [
-                    'nilai' => (int) $request->input("nilai.$k"),
-                    'catatan' => $request->input("catatan.$k"),
-                    'pewawancara_id' => $pewawancaraId,
-                    'status' => 'draft',
-                ]
-            );
-        }
-        $alternatif->status_wawancara = 'selesai';
-$alternatif->save();
-
-        return redirect()
-            ->route('pewawancara.dashboard')
-            ->with('success', 'Nilai wawancara berhasil disimpan (draft).');
+    // Proteksi: hanya yang lulus administrasi boleh diwawancara
+    if ($alternatif->status_administrasi !== 'lulus') {
+        return back()->with('error', 'Peserta belum lulus administrasi, tidak bisa dinilai wawancara.');
     }
+
+    $komponen = $this->komponenByKategori($alternatif->jenis_pendaftaran);
+
+    // Validasi
+    $request->validate([
+        'nilai' => 'required|array',
+        'catatan_akhir' => 'nullable|string|max:5000',
+    ]);
+
+    foreach ($komponen as $k) {
+        $request->validate([
+            "nilai.$k" => 'required|integer|min:1|max:5',
+            "catatan.$k" => 'nullable|string',
+        ]);
+    }
+
+    $pewawancaraId = auth()->id();
+    $catatanAkhir = $request->catatan_akhir;
+
+    // Simpan / update per komponen
+    foreach ($komponen as $k) {
+        NilaiWawancara::updateOrCreate(
+            [
+                'alternatif_id' => $alternatif->id,
+                'komponen'      => $k,
+            ],
+            [
+                'nilai'          => (int) $request->input("nilai.$k"),
+                'catatan'        => $request->input("catatan.$k"),
+                'catatan_akhir'  => $catatanAkhir,
+                'pewawancara_id' => $pewawancaraId,
+                'status'         => 'draft',
+            ]
+        );
+    }
+
+    // Update status wawancara peserta
+    $alternatif->status_wawancara = 'selesai';
+    $alternatif->save();
+
+    return redirect()
+        ->route('pewawancara.dashboard')
+        ->with('success', 'Nilai wawancara berhasil disimpan.');
+}
 
     /**
      * Daftar komponen wawancara berdasarkan kategori

@@ -159,6 +159,21 @@
             </div>
         </div>
         @endforeach
+        <div class="card mb-3">
+    <div class="card-header card-header-lazismu py-2 px-3">
+        <h6 class="mb-0">
+            <i class="fas fa-clipboard-list me-2"></i>
+            Catatan Keseluruhan Pewawancara
+        </h6>
+    </div>
+    <div class="card-body">
+        <textarea
+            name="catatan_akhir"
+            class="form-control catatan-akhir"
+            rows="4"
+            placeholder="Tuliskan kesimpulan atau rekomendasi hasil wawancara peserta..."></textarea>
+    </div>
+</div>
 
         <!-- Progress & Action Row -->
         <div class="card mb-3">
@@ -357,6 +372,20 @@
         box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.12);
         background: #fffaf8;
     }
+    .catatan-akhir {
+    border-radius: 8px;
+    border: 1.5px solid #e2e8f0;
+    font-size: 0.9rem;
+    min-height: 120px;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+
+.catatan-akhir:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.12);
+    background: #fffaf8;
+}
 
     /* Progress bar */
     .progress-bar-lazismu {

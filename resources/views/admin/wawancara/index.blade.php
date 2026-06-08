@@ -789,7 +789,27 @@
                             </tbody>
                         </table>
                     </div>
+
+                    @php
+    $catatanAkhir = $p->nilaiWawancara->first()?->catatan_akhir;
+@endphp
+
+@if($catatanAkhir)
+<div class="card border-warning mt-3">
+    <div class="card-header bg-warning text-dark">
+        <strong>
+            <i class="bi bi-chat-left-text-fill me-2"></i>
+            Catatan Keseluruhan Pewawancara
+        </strong>
+    </div>
+    <div class="card-body">
+        {{ $catatanAkhir }}
+    </div>
+</div>
+@endif
                 </div>
+
+                
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

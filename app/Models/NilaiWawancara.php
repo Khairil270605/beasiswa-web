@@ -18,6 +18,7 @@ class NilaiWawancara extends Model
         'pewawancara_id',
         'catatan',
         'status',
+        'catatan_akhir'
     ];
 
     /* ==========================
